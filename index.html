@@ -1,0 +1,1955 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>左侧导航示例 - 完整版</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+
+        :root {
+            --bg: #F4F7FE;
+            --side-bg: #FFFFFF;
+            --text: #2B3674;
+            --muted: #A3AED0;
+            --primary: #4318FF;
+            --primary-light: #F4F7FE;
+            --secondary: #6AD2FF;
+            --hover: #F8F9FF;
+            --border: #E0E5F2;
+            --icon: #A3AED0;
+            --radius: 20px;
+            --shadow: 0 20px 27px 0 rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 4px 10px rgba(112, 144, 176, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 260px;
+            background: var(--side-bg);
+            display: flex;
+            flex-direction: column;
+            padding: 24px 16px;
+            gap: 12px;
+            z-index: 10;
+        }
+
+        .nav-header {
+            font-weight: 700;
+            font-size: 24px;
+            padding: 0 16px 20px;
+            color: var(--text);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 10px;
+            background: transparent;
+        }
+
+        .menu {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            overflow-y: auto;
+        }
+
+        .menu::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .menu::-webkit-scrollbar-thumb {
+            background: #E0E5F2;
+            border-radius: 4px;
+        }
+
+        .menu-item {
+            border-radius: 12px;
+            transition: all 0.2s ease;
+        }
+
+        /* Menu Titles */
+        .menu-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            cursor: pointer;
+            user-select: none;
+            color: var(--muted);
+            font-weight: 500;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .menu-title:hover {
+            color: var(--text);
+            background: rgba(67, 24, 255, 0.05);
+            border-radius: 12px;
+        }
+
+        .menu-item.active>.menu-title {
+            color: var(--text);
+            font-weight: 700;
+        }
+
+        /* Icons */
+        .menu-title .icon {
+            width: 24px;
+            height: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: inherit;
+            font-size: 16px;
+            background: transparent;
+        }
+
+        .menu-title .label {
+            flex: 1;
+            font-size: 15px;
+        }
+
+        .menu-title .chevron {
+            font-size: 12px;
+            opacity: 0.7;
+            transition: transform 0.2s ease;
+        }
+
+        .menu-title.expanded .chevron {
+            transform: rotate(90deg);
+            color: var(--primary);
+        }
+
+        /* Submenu */
+        .submenu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding-left: 12px;
+            background: transparent;
+            border: none;
+        }
+
+        .submenu.open {
+            max-height: 1000px;
+        }
+
+        .submenu .menu-title {
+            padding: 10px 16px;
+            font-size: 14px;
+        }
+
+        .link {
+            display: block;
+            padding: 10px 16px;
+            text-decoration: none;
+            color: var(--muted);
+            font-size: 14px;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .link:hover {
+            color: var(--text);
+            background: transparent;
+            padding-left: 20px;
+        }
+
+        .link::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 4px;
+            background: var(--muted);
+            border-radius: 50%;
+            opacity: 0;
+            transition: all 0.2s ease;
+        }
+
+        .link:hover::before {
+            opacity: 1;
+            background: var(--primary);
+        }
+
+        /* Main Content */
+        .content {
+            flex: 1;
+            padding: 24px;
+            display: flex;
+            gap: 24px;
+            align-items: flex-start;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Cards and Panels */
+        .card,
+        .perm-panel {
+            background: #fff;
+            border: none;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 24px;
+            height: calc(100vh - 48px);
+            overflow-y: auto;
+            position: relative;
+            scrollbar-width: thin;
+        }
+
+        .card {
+            width: 460px;
+        }
+
+        .perm-panel {
+            flex: 1;
+            min-width: 0;
+        }
+
+        /* Toolbar & Inputs */
+        .card-toolbar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        input {
+            height: 44px;
+            padding: 0 20px;
+            border: none;
+            background: var(--bg);
+            border-radius: 50px;
+            font-size: 14px;
+            color: var(--text);
+            width: 100%;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .card input {
+            flex: 1;
+        }
+
+        input:focus {
+            box-shadow: 0 0 0 2px var(--primary);
+            background: #fff;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            padding: 0 24px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            height: 44px;
+            white-space: nowrap;
+            box-shadow: 0 4px 10px rgba(67, 24, 255, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 7px 14px rgba(67, 24, 255, 0.5);
+            background: #3300FF;
+        }
+
+        .btn-secondary {
+            background: #fff;
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            padding: 0 24px;
+            font-size: 14px;
+            cursor: pointer;
+            height: 44px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg);
+            border-color: var(--muted);
+        }
+
+        /* Tables */
+        .table,
+        .perm-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .table th,
+        .perm-table th {
+            text-align: left;
+            padding: 16px;
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border);
+            background: transparent;
+            white-space: nowrap;
+        }
+
+        .table td,
+        .perm-table td {
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .table tr:hover td {
+            background: rgba(67, 24, 255, 0.02);
+            transition: background 0.2s ease;
+        }
+
+        /* Action Buttons in Table */
+        .table td.actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .table td.actions span {
+            color: var(--primary);
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .table td.actions span:hover {
+            text-decoration: underline;
+        }
+
+        /* Permission Tabs */
+        .perm-tabs {
+            display: flex;
+            gap: 12px;
+            padding: 6px;
+            background: var(--bg);
+            border-radius: 50px;
+            width: fit-content;
+            margin-bottom: 24px;
+        }
+
+        .perm-tab {
+            padding: 8px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--muted);
+            transition: all 0.2s ease;
+            border: none;
+            background: transparent;
+            user-select: none;
+        }
+
+        .perm-tab.active {
+            background: #fff;
+            color: var(--text);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .perm-section {
+            display: none;
+            height: 100%;
+        }
+
+        .perm-section.active {
+            display: block;
+            animation: fadeIn 0.2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Permission Table Specifics */
+        .perm-table th,
+        .perm-table td {
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .perm-table th:first-child,
+        .perm-table td:first-child {
+            text-align: left;
+            border-left: none;
+        }
+
+        .perm-table th:last-child,
+        .perm-table td:last-child {
+            border-right: none;
+        }
+
+        .perm-name {
+            font-weight: 500;
+        }
+
+        .perm-name.level-1 {
+            padding-left: 10px !important;
+            background-color: #fafbfc;
+            font-weight: 700;
+        }
+
+        .perm-name.level-2 {
+            padding-left: 30px !important;
+            font-weight: 600;
+        }
+
+        .perm-name.level-3 {
+            padding-left: 50px !important;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .perm-name.level-4 {
+            padding-left: 70px !important;
+            font-weight: 400;
+            color: #777;
+        }
+
+        .perm-toggle {
+            cursor: pointer;
+            display: inline-flex;
+            width: 20px;
+            height: 20px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            margin-right: 8px;
+            color: var(--muted);
+            transition: all 0.1s ease;
+        }
+
+        .perm-toggle:hover {
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .perm-toggle.collapsed {
+            transform: rotate(-90deg);
+        }
+
+        /* Checkboxes */
+        input[type="checkbox"],
+        input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        /* Modal */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal {
+            background: #fff;
+            border-radius: var(--radius);
+            box-shadow: 0 50px 100px rgba(0, 0, 0, 0.3), 0 15px 35px rgba(0, 0, 0, 0.2);
+            border: none;
+            padding: 32px;
+            width: 400px;
+            transform: scale(1.05);
+            /* Make it slightly larger */
+        }
+
+        .modal h3 {
+            font-size: 20px;
+            margin-bottom: 24px;
+            color: var(--text);
+        }
+
+        .modal-form label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .modal-form input {
+            border: 1px solid var(--border);
+            margin-bottom: 16px;
+        }
+
+        /* Sub-sections in data perm */
+        .block {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .block h4 {
+            color: var(--text);
+            font-size: 16px;
+            margin-bottom: 16px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <aside class="sidebar">
+        <div class="nav-header">导航</div>
+        <ul class="menu">
+            <li class="menu-item">
+                <div class="menu-title"><span class="icon">🏠</span><span class="label">工作台</span></div>
+            </li>
+            <li class="menu-item">
+                <div class="menu-title toggle"><span class="icon">🧾</span><span class="label">订单管理</span><span
+                        class="chevron">›</span></div>
+                <div class="submenu">
+                    <div class="menu-item level-2">
+                        <div class="menu-title toggle"><span class="label">运单</span><span class="chevron">›</span></div>
+                        <div class="submenu"><a class="link" href="javascript:void(0)">整车</a><a class="link"
+                                href="javascript:void(0)">零担</a><a class="link" href="javascript:void(0)">短驳</a></div>
+                    </div>
+                    <div class="menu-item level-2">
+                        <div class="menu-title"><span class="label">配载</span></div>
+                    </div>
+                    <div class="menu-item level-2">
+                        <div class="menu-title"><span class="label">货源</span></div>
+                    </div>
+                </div>
+            </li>
+            <li class="menu-item">
+                <div class="menu-title toggle"><span class="icon">🚚</span><span class="label">调度管理</span><span
+                        class="chevron">›</span></div>
+                <div class="submenu"></div>
+            </li>
+            <li class="menu-item">
+                <div class="menu-title toggle"><span class="icon">💰</span><span class="label">报价管理</span><span
+                        class="chevron">›</span></div>
+                <div class="submenu"></div>
+            </li>
+            <li class="menu-item">
+                <div class="menu-title toggle"><span class="icon">📑</span><span class="label">结价管理</span><span
+                        class="chevron">›</span></div>
+                <div class="submenu"></div>
+            </li>
+            <li class="menu-item">
+                <div class="menu-title toggle"><span class="icon">📊</span><span class="label">财务管理</span><span
+                        class="chevron">›</span></div>
+                <div class="submenu">
+                    <a class="link" href="javascript:void(0)">凭证管理</a>
+                    <a class="link" href="javascript:void(0)">期末处理</a>
+                    <a class="link" href="javascript:void(0)">账簿管理</a>
+                    <a class="link" href="javascript:void(0)">报表管理</a>
+                    <a class="link" href="javascript:void(0)">财务管理</a>
+                    <a class="link" href="javascript:void(0)">初始化</a>
+                </div>
+            </li>
+            <li class="menu-item">
+                <div class="menu-title toggle"><span class="icon">🧾</span><span class="label">回单管理</span><span
+                        class="chevron">›</span></div>
+                <div class="submenu"></div>
+            </li>
+            <li class="menu-item">
+                <div class="menu-title toggle"><span class="icon">📈</span><span class="label">报表管理</span><span
+                        class="chevron">›</span></div>
+                <div class="submenu"></div>
+            </li>
+            <li class="menu-item">
+                <div class="menu-title toggle"><span class="icon">📦</span><span class="label">客商管理</span><span
+                        class="chevron">›</span></div>
+                <div class="submenu"><a class="link" href="javascript:void(0)">承运商(外部公司、司机)</a><a class="link"
+                        href="javascript:void(0)">合同档案</a></div>
+            </li>
+            <li class="menu-item">
+                <div class="menu-title"><span class="icon">💼</span><span class="label">CRM</span></div>
+            </li>
+            <li class="menu-item">
+                <div class="menu-title toggle"><span class="icon">📁</span><span class="label">基础档案</span><span
+                        class="chevron">›</span></div>
+                <div class="submenu"><a class="link" href="javascript:void(0)">自有车辆</a><a class="link"
+                        href="javascript:void(0)">基础数据</a><a class="link" href="javascript:void(0)">编制规则</a><a
+                        class="link" href="javascript:void(0)">单位管理</a></div>
+            </li>
+            <li class="menu-item">
+                <div class="menu-title"><span class="icon">📝</span><span class="label">评价反馈</span></div>
+            </li>
+            <li class="menu-item">
+                <div class="menu-title"><span class="icon">🔒</span><span class="label">权限设置</span></div>
+            </li>
+            <li class="menu-item">
+                <div class="menu-title"><span class="icon">⚙️</span><span class="label">系统设置</span></div>
+            </li>
+        </ul>
+    </aside>
+
+    <main class="content">
+        <div class="card">
+            <div class="card-toolbar"><input type="text" id="roleSearch" placeholder="角色名称、角色代码" /><button
+                    class="btn-primary" id="openAddRole">新增角色</button></div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>角色</th>
+                        <th>创建公司</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="rolesTbody">
+                    <tr>
+                        <td>GM/总经理</td>
+                        <td>贝撷测试有限公司</td>
+                        <td class="actions"><span>编辑</span><span>复制</span><span>删除</span></td>
+                    </tr>
+                    <tr>
+                        <td>SALE/业务员</td>
+                        <td>贝撷测试有限公司</td>
+                        <td class="actions"><span>编辑</span><span>复制</span><span>删除</span></td>
+                    </tr>
+                    <tr>
+                        <td>CSER/客服</td>
+                        <td>贝撷测试有限公司</td>
+                        <td class="actions"><span>编辑</span><span>复制</span><span>删除</span></td>
+                    </tr>
+                    <tr>
+                        <td>OPER/操作员</td>
+                        <td>贝撷测试有限公司</td>
+                        <td class="actions"><span>编辑</span><span>复制</span><span>删除</span></td>
+                    </tr>
+                    <tr>
+                        <td>DIER/调度员</td>
+                        <td>贝撷测试有限公司</td>
+                        <td class="actions"><span>编辑</span><span>复制</span><span>删除</span></td>
+                    </tr>
+                    <tr>
+                        <td>FIEL/财务专员</td>
+                        <td>贝撷测试有限公司</td>
+                        <td class="actions"><span>编辑</span><span>复制</span><span>删除</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="perm-panel">
+            <div class="perm-tabs">
+                <div class="perm-tab active" data-target="perm-func">功能权限</div>
+                <div class="perm-tab" data-target="perm-data">数据权限</div>
+                <div class="perm-tab" data-target="perm-role">角色人员</div>
+            </div>
+
+            <div class="perm-section active" id="perm-func">
+                <table class="perm-table">
+                    <thead>
+                        <tr>
+                            <th>功能/菜单</th>
+                            <th>查看</th>
+                            <th>新增</th>
+                            <th>修改</th>
+                            <th>删除</th>
+                            <th>复制</th>
+                            <th>导入</th>
+                            <th>导出</th>
+                            <th>打印</th>
+                            <th>其他</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="perm-row" data-row-id="workbench">
+                            <td class="perm-name level-1">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="workbench">▸</span>工作台</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox" checked></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-row-id="orders">
+                            <td class="perm-name level-1">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="orders">▸</span>订单管理</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox" checked></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-row-id="yundan" data-parent-id="orders">
+                            <td class="perm-name level-2">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="yundan">▸</span>运单</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox" checked></td>
+                            <td><input type="checkbox" class="perm-checkbox" checked></td>
+                            <td><input type="checkbox" class="perm-checkbox" checked></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-row-id="zhengche" data-parent-id="yundan">
+                            <td class="perm-name level-3">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="zhengche">▸</span>整车</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox" checked></td>
+                            <td><input type="checkbox" class="perm-checkbox" checked></td>
+                            <td><input type="checkbox" class="perm-checkbox" checked></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox" checked></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-parent-id="zhengche">
+                            <td class="perm-name level-4">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        style="display:inline-block;width:12px;"></span>基本信息</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox" checked></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-parent-id="zhengche">
+                            <td class="perm-name level-4">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        style="display:inline-block;width:12px;"></span>派车</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox" checked></td>
+                            <td><input type="checkbox" class="perm-checkbox" checked></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox" checked></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-parent-id="zhengche">
+                            <td class="perm-name level-4">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        style="display:inline-block;width:12px;"></span>INVOICE</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-parent-id="zhengche">
+                            <td class="perm-name level-4">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        style="display:inline-block;width:12px;"></span>轨迹</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox" checked></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-parent-id="zhengche">
+                            <td class="perm-name level-4">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        style="display:inline-block;width:12px;"></span>电子文档</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox" checked></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox" checked></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox" checked></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-row-id="lingdan" data-parent-id="yundan">
+                            <td class="perm-name level-3">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="lingdan">▸</span>零担</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-parent-id="lingdan">
+                            <td class="perm-name level-4">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        style="display:inline-block;width:12px;"></span>基本信息</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-parent-id="lingdan">
+                            <td class="perm-name level-4">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        style="display:inline-block;width:12px;"></span>派车</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-parent-id="lingdan">
+                            <td class="perm-name level-4">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        style="display:inline-block;width:12px;"></span>INVOICE</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-parent-id="lingdan">
+                            <td class="perm-name level-4">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        style="display:inline-block;width:12px;"></span>轨迹</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-parent-id="lingdan">
+                            <td class="perm-name level-4">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        style="display:inline-block;width:12px;"></span>电子文档</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-row-id="duanbo" data-parent-id="yundan">
+                            <td class="perm-name level-3">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="duanbo">▸</span>短驳</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-parent-id="duanbo">
+                            <td class="perm-name level-4">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        style="display:inline-block;width:12px;"></span>基本信息</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-parent-id="duanbo">
+                            <td class="perm-name level-4">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        style="display:inline-block;width:12px;"></span>派车</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-parent-id="duanbo">
+                            <td class="perm-name level-4">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        style="display:inline-block;width:12px;"></span>INVOICE</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-parent-id="duanbo">
+                            <td class="perm-name level-4">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        style="display:inline-block;width:12px;"></span>轨迹</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-parent-id="duanbo">
+                            <td class="perm-name level-4">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        style="display:inline-block;width:12px;"></span>电子文档</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-row-id="yundanfeiyong" data-parent-id="yundan">
+                            <td class="perm-name level-3">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="yundanfeiyong">▸</span>运费费用</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-parent-id="yundanfeiyong">
+                            <td class="perm-name level-4">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        style="display:inline-block;width:12px;"></span>应付费用</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-parent-id="yundanfeiyong">
+                            <td class="perm-name level-4">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        style="display:inline-block;width:12px;"></span>应收费用</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-parent-id="yundanfeiyong">
+                            <td class="perm-name level-4">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        style="display:inline-block;width:12px;"></span>增减费用</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-parent-id="yundanfeiyong">
+                            <td class="perm-name level-4">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        style="display:inline-block;width:12px;"></span>费用确认</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-parent-id="yundanfeiyong">
+                            <td class="perm-name level-4">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        style="display:inline-block;width:12px;"></span>业务员成本</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-row-id="peizaidanfeiyong" data-parent-id="yundan">
+                            <td class="perm-name level-3">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="peizaidanfeiyong">▸</span>配载单费用</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-parent-id="peizaidanfeiyong">
+                            <td class="perm-name level-4">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        style="display:inline-block;width:12px;"></span>应付费用</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-parent-id="peizaidanfeiyong">
+                            <td class="perm-name level-4">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        style="display:inline-block;width:12px;"></span>应收费用</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-parent-id="peizaidanfeiyong">
+                            <td class="perm-name level-4">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        style="display:inline-block;width:12px;"></span>增减费用</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-parent-id="peizaidanfeiyong">
+                            <td class="perm-name level-4">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        style="display:inline-block;width:12px;"></span>费用确认</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-parent-id="peizaidanfeiyong">
+                            <td class="perm-name level-4">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        style="display:inline-block;width:12px;"></span>业务员成本</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-row-id="peizai" data-parent-id="orders">
+                            <td class="perm-name level-2">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="peizai">▸</span>配载</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-row-id="huoyuan" data-parent-id="orders">
+                            <td class="perm-name level-2">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="huoyuan">▸</span>货源</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-row-id="diaodu">
+                            <td class="perm-name level-1">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="diaodu">▸</span>调度管理</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-row-id="baojia">
+                            <td class="perm-name level-1">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="baojia">▸</span>报价管理</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-row-id="jiesuan">
+                            <td class="perm-name level-1">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="jiesuan">▸</span>结算管理</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-row-id="yingshouyingfu_x" data-parent-id="jiesuan">
+                            <td class="perm-name level-2">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="yingshouyingfu_x">▸</span>应收应付</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-row-id="shoufu_x" data-parent-id="jiesuan">
+                            <td class="perm-name level-2">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="shoufu_x">▸</span>收付</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-row-id="fangdanfanghuo_x" data-parent-id="jiesuan">
+                            <td class="perm-name level-2">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="fangdanfanghuo_x">▸</span>放单放货</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-row-id="fapiao_x" data-parent-id="jiesuan">
+                            <td class="perm-name level-2">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="fapiao_x">▸</span>发票</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-row-id="jiesuanzhuti_x" data-parent-id="jiesuan">
+                            <td class="perm-name level-2">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="jiesuanzhuti_x">▸</span>结算主体</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-row-id="yinqizhilia_x" data-parent-id="jiesuan">
+                            <td class="perm-name level-2">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="yinqizhilia_x">▸</span>银企直连</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <!-- 财务管理 Section -->
+                        <tr class="perm-row" data-row-id="caiwu_mgt">
+                            <td class="perm-name level-1">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="caiwu_mgt">▸</span>财务管理</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-row-id="pingzheng_mgt" data-parent-id="caiwu_mgt">
+                            <td class="perm-name level-2">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="pingzheng_mgt">▸</span>凭证管理</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-row-id="qimo_mgt" data-parent-id="caiwu_mgt">
+                            <td class="perm-name level-2">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="qimo_mgt">▸</span>期末处理</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-row-id="zhangbu_mgt" data-parent-id="caiwu_mgt">
+                            <td class="perm-name level-2">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="zhangbu_mgt">▸</span>账簿管理</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-row-id="baobiao_caiwu" data-parent-id="caiwu_mgt">
+                            <td class="perm-name level-2">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="baobiao_caiwu">▸</span>报表管理</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-row-id="caiwu_sub" data-parent-id="caiwu_mgt">
+                            <td class="perm-name level-2">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="caiwu_sub">▸</span>财务管理</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-row-id="chushihua_mgt" data-parent-id="caiwu_mgt">
+                            <td class="perm-name level-2">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="chushihua_mgt">▸</span>初始化</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <!-- 回单管理 Section -->
+                        <tr class="perm-row" data-row-id="huidan_mgt">
+                            <td class="perm-name level-1">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="huidan_mgt">▸</span>回单管理</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <!-- 报表管理 Section -->
+                        <tr class="perm-row" data-row-id="baobiao_mgt">
+                            <td class="perm-name level-1">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="baobiao_mgt">▸</span>报表管理</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <!-- 客商管理 Section -->
+                        <tr class="perm-row" data-row-id="keshang_mgt">
+                            <td class="perm-name level-1">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="keshang_mgt">▸</span>客商管理</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-row-id="chengyunshang" data-parent-id="keshang_mgt">
+                            <td class="perm-name level-2">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="chengyunshang">▸</span>承运商</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-row-id="hetongdang'an" data-parent-id="keshang_mgt">
+                            <td class="perm-name level-2">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="hetongdang'an">▸</span>合同档案</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <!-- CRM Section -->
+                        <tr class="perm-row" data-row-id="crm_mgt">
+                            <td class="perm-name level-1">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="crm_mgt">▸</span>CRM</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <!-- 基础档案 Section -->
+                        <tr class="perm-row" data-row-id="jichudang'an">
+                            <td class="perm-name level-1">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="jichudang'an">▸</span>基础档案</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-row-id="ziyoucheliang" data-parent-id="jichudang'an">
+                            <td class="perm-name level-2">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="ziyoucheliang">▸</span>自有车辆</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-row-id="jichushuju" data-parent-id="jichudang'an">
+                            <td class="perm-name level-2">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="jichushuju">▸</span>基础数据</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-row-id="bianmaguize" data-parent-id="jichudang'an">
+                            <td class="perm-name level-2">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="bianmaguize">▸</span>编码规则</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-row-id="danwen_mgt" data-parent-id="jichudang'an">
+                            <td class="perm-name level-2">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="danwen_mgt">▸</span>单位管理</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <!-- 评价反馈 Section -->
+                        <tr class="perm-row" data-row-id="feedback_mgt">
+                            <td class="perm-name level-1">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="feedback_mgt">▸</span>评价反馈</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <!-- 权限管理 Section -->
+                        <tr class="perm-row" data-row-id="perm_mgt_root">
+                            <td class="perm-name level-1">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="perm_mgt_root">▸</span>权限管理</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <!-- 系统设置 Section -->
+                        <tr class="perm-row" data-row-id="system_settings">
+                            <td class="perm-name level-1">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="system_settings">▸</span>系统设置</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="perm-section" id="perm-data">
+                <div class="block" style="margin-bottom: 20px;">
+                    <div style="font-weight:600; margin-bottom:10px;">字段权限</div>
+                    <div style="display:flex; flex-direction:column; gap:8px;">
+                        <div
+                            style="display:flex; gap:32px; align-items:center; border-bottom: 1px solid #e8e8e8; margin-bottom: 15px;">
+                            <div
+                                style="padding-bottom: 8px; color: #1890ff; border-bottom: 2px solid #1890ff; cursor: pointer; font-weight: 500;">
+                                收入成本类</div>
+                            <div
+                                style="padding-bottom: 8px; cursor: pointer; display: flex; align-items: center; gap: 4px; color: #333;">
+                                客户信息类
+                                <span
+                                    style="display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; background-color: #333; color: #fff; border-radius: 50%; font-size: 10px; font-weight: bold;">?</span>
+                            </div>
+                            <div style="padding-bottom: 8px; cursor: pointer; color: #333;">供应商信息类</div>
+                            <div style="padding-bottom: 8px; cursor: pointer; color: #333;">订单信息类</div>
+                        </div>
+                        <div style="display:flex; gap:24px; align-items:center; flex-wrap:wrap;">
+                            <label class="item" style="margin:0;"><input type="checkbox" checked> 查看应收费用</label>
+                            <label class="item" style="margin:0;"><input type="checkbox" checked> 查看应付费用</label>
+                            <label class="item" style="margin:0;"><input type="checkbox" checked> 查看利润</label>
+                            <label class="item" style="margin:0;"><input type="checkbox"> 业务员成本</label>
+                            <label class="item" style="margin:0;"><input type="checkbox"> 业务员利润</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="block" style="margin-bottom: 20px;">
+                    <h4 style="margin: 0 0 10px; font-weight:600;">订单可见范围权限</h4>
+                    <div style="display:flex; flex-direction:column; gap:8px;">
+                        <label class="item"><input type="checkbox"> 我创建的订单</label>
+                        <label class="item"><input type="checkbox"> 我负责的业务员的订单</label>
+                        <label class="item"><input type="checkbox"> 我作为协同人员参与的订单</label>
+                        <label class="item"><input type="checkbox"> 当前登录公司里，我有权限的部门的订单</label>
+                        <label class="item"><input type="checkbox"> 当前登录公司的所有订单</label>
+                    </div>
+                </div>
+
+                <div class="block" style="margin-bottom: 20px;">
+                    <h4 style="margin: 0 0 10px; font-weight:600;">查看资源可见度权限</h4>
+                    <div style="display:flex; flex-direction:column; gap:10px;">
+                        <div style="display:flex; gap:12px; align-items:center;">
+                            <label style="display:flex; align-items:center; gap:4px;"><input type="radio"
+                                    name="res-scope" checked> 全部</label>
+                            <label style="display:flex; align-items:center; gap:4px;"><input type="radio"
+                                    name="res-scope"> 客户</label>
+                            <label style="display:flex; align-items:center; gap:4px;"><input type="radio"
+                                    name="res-scope"> 供应商</label>
+                        </div>
+                        <label class="item"><input type="checkbox"> 我创建的客商和关联我的客商</label>
+                        <label class="item"><input type="checkbox" checked> 我负责的业务员的客商</label>
+                        <label class="item"><input type="checkbox"> 当前登录公司里，我有权限的部门的客商</label>
+                        <label class="item"><input type="checkbox"> 当前登录公司的全部客商</label>
+                    </div>
+                </div>
+
+                <div class="block" style="margin-bottom: 20px;">
+                    <h4 style="margin: 0 0 10px; font-weight:600;">费用单可见度权限</h4>
+                    <div style="display:flex; flex-direction:column; gap:8px;">
+                        <label class="item"><input type="checkbox"> 全部费用单</label>
+                        <label class="item"><input type="checkbox"> 当前登录公司里，我创建的费用单</label>
+                        <label class="item"><input type="checkbox"> 当前登录公司的所有费用单</label>
+                    </div>
+                </div>
+
+                <div class="block" style="margin-bottom: 20px;">
+                    <h4 style="margin: 0 0 10px; font-weight:600;">费用审批可见度权限</h4>
+                    <div style="display:flex; flex-direction:column; gap:8px;">
+                        <label class="item"><input type="checkbox"> 当前登录公司里，我创建的费用申请</label>
+                        <label class="item"><input type="checkbox"> 当前登录公司里，所有的费用申请</label>
+                    </div>
+                </div>
+
+                <div class="block">
+                    <h4 style="margin: 0 0 10px; font-weight:600;">费用项目权限</h4>
+                    <div style="display:flex; gap:12px; align-items:center;">
+                        <label style="display:flex; align-items:center; gap:4px;"><input type="radio" name="cost-item"
+                                value="all" checked> 全部费用项目</label>
+                        <label style="display:flex; align-items:center; gap:4px;"><input type="radio" name="cost-item"
+                                value="specified">
+                            指定费用项目</label>
+                        <label style="display:flex; align-items:center; gap:4px;"><input type="radio" name="cost-item"
+                                value="no_permission">
+                            无权限费用项目</label>
+                    </div>
+                    <div id="cost-item-table" style="margin-top: 15px; display: none;">
+                        <table style="width: 100%; border-collapse: collapse; border: 1px solid #eee;">
+                            <thead>
+                                <tr style="background-color: #f7f7f7; text-align: left; color: #666; font-size: 13px;">
+                                    <th style="padding: 10px; border-bottom: 1px solid #eee; font-weight: normal;">费用代码
+                                    </th>
+                                    <th style="padding: 10px; border-bottom: 1px solid #eee; font-weight: normal;">费用名称
+                                    </th>
+                                    <th style="padding: 10px; border-bottom: 1px solid #eee; font-weight: normal;">
+                                        费用名称(英)</th>
+                                    <th
+                                        style="padding: 10px; border-bottom: 1px solid #eee; font-weight: normal; width: 60px;">
+                                        操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Data rows will be added here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal-backdrop" id="modalBackdrop">
+            <div class="modal">
+                <h3>新增角色</h3>
+                <form class="modal-form" id="roleForm">
+                    <label><span class="required">*</span>角色代码</label><input name="roleCode" placeholder="请输入" />
+                    <label><span class="required">*</span>角色名称</label><input name="roleName" placeholder="请输入" />
+                    <label>角色名称(英)</label><input name="roleNameEn" placeholder="请输入" />
+                    <div class="modal-actions"><button type="button" class="btn-secondary"
+                            id="cancelModal">取消</button><button type="submit" class="btn-primary">确认</button></div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.querySelectorAll('.menu-title.toggle').forEach(title => {
+            title.addEventListener('click', () => {
+                const submenu = title.parentElement.querySelector('.submenu');
+                const expanded = submenu.classList.toggle('open');
+                title.classList.toggle('expanded', expanded);
+            });
+        });
+
+        const openBtn = document.getElementById('openAddRole');
+        const backdrop = document.getElementById('modalBackdrop');
+        const cancelBtn = document.getElementById('cancelModal');
+        const roleForm = document.getElementById('roleForm');
+        const rolesTbody = document.getElementById('rolesTbody');
+
+        const hideModal = () => { backdrop.style.display = 'none'; roleForm.reset(); };
+        openBtn.addEventListener('click', () => { backdrop.style.display = 'flex'; roleForm.roleCode.focus(); });
+        cancelBtn.addEventListener('click', hideModal);
+        backdrop.addEventListener('click', (e) => { if (e.target === backdrop) hideModal(); });
+
+        roleForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const code = roleForm.roleCode.value.trim();
+            const name = roleForm.roleName.value.trim();
+            if (!code || !name) return alert('请填写必填项');
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td>${code}/${name}</td><td>贝撷测试有限公司</td><td class="actions"><span>编辑</span><span>复制</span><span>删除</span></td>`;
+            rolesTbody.appendChild(tr);
+            hideModal();
+        });
+
+        rolesTbody.addEventListener('click', (e) => {
+            if (e.target.textContent.trim() === '删除' && confirm('确认删除？')) {
+                e.target.closest('tr').remove();
+            }
+        });
+
+        const roleSearch = document.getElementById('roleSearch');
+        roleSearch.addEventListener('input', () => {
+            const query = roleSearch.value.trim().toLowerCase();
+            const rows = rolesTbody.querySelectorAll('tr');
+            rows.forEach(row => {
+                const text = row.cells[0].textContent.toLowerCase();
+                const parts = text.split('/');
+                const code = parts[0] || '';
+                const name = parts[1] || '';
+                if (code.startsWith(query) || name.startsWith(query)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+
+        const permTabs = document.querySelectorAll('.perm-tab');
+        const permSections = document.querySelectorAll('.perm-section');
+        permTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                permTabs.forEach(t => t.classList.remove('active'));
+                permSections.forEach(s => s.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.target).classList.add('active');
+            });
+        });
+
+        const permRows = Array.from(document.querySelectorAll('.perm-row'));
+        const setChildrenVisibility = (parentId, hidden) => {
+            permRows.forEach(row => {
+                if (row.dataset.parentId === parentId) {
+                    row.classList.toggle('hidden', hidden);
+                    const toggle = row.querySelector('.perm-toggle');
+                    if (hidden) {
+                        const childId = row.dataset.rowId;
+                        if (childId) setChildrenVisibility(childId, true);
+                        if (toggle) toggle.classList.add('collapsed');
+                    }
+                }
+            });
+        };
+
+        document.querySelectorAll('.perm-toggle').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const isCollapsed = btn.classList.toggle('collapsed');
+                setChildrenVisibility(btn.dataset.toggle, isCollapsed);
+            });
+        });
+
+        const permTable = document.querySelector('.perm-table');
+        const isDescendant = (row, parentId) => {
+            let pid = row.dataset.parentId;
+            while (pid) {
+                if (pid === parentId) return true;
+                const pRow = document.querySelector(`.perm-row[data-row-id="${pid}"]`);
+                pid = pRow ? pRow.dataset.parentId : null;
+            }
+            return false;
+        };
+
+        permTable.addEventListener('change', (e) => {
+            if (e.target.classList.contains('perm-row-master')) {
+                const row = e.target.closest('tr');
+                row.querySelectorAll('input.perm-checkbox').forEach(cb => cb.checked = e.target.checked);
+            } else if (e.target.classList.contains('perm-checkbox')) {
+                const row = e.target.closest('tr');
+                const rowId = row.dataset.rowId;
+                if (!rowId) return;
+                const colIndex = Array.from(row.children).indexOf(e.target.closest('td'));
+                permRows.forEach(r => {
+                    if (isDescendant(r, rowId)) {
+                        const cb = r.children[colIndex].querySelector('input.perm-checkbox');
+                        if (cb) cb.checked = e.target.checked;
+                    }
+                });
+            }
+        });
+
+        // Fee Item Table Toggle Logic
+        const costItemRadios = document.querySelectorAll('input[name="cost-item"]');
+        const costItemTable = document.getElementById('cost-item-table');
+
+        const toggleCostTable = () => {
+            const selected = document.querySelector('input[name="cost-item"]:checked');
+            if (selected && (selected.value === 'specified' || selected.value === 'no_permission')) {
+                costItemTable.style.display = 'block';
+            } else {
+                costItemTable.style.display = 'none';
+            }
+        };
+
+        costItemRadios.forEach(radio => {
+            radio.addEventListener('change', toggleCostTable);
+        });
+    </script>
+</body>
+
+</html>
