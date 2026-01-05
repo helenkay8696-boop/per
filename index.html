@@ -540,6 +540,199 @@
         .hidden {
             display: none;
         }
+
+        .field-tab {
+            padding-bottom: 8px;
+            cursor: pointer;
+            color: #333;
+            border-bottom: 2px solid transparent;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .field-tab.active {
+            color: #1890ff;
+            border-bottom: 2px solid #1890ff;
+        }
+
+        /* Role Members Section Styles */
+        .role-members-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .role-members-count {
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .role-members-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .search-wrapper {
+            position: relative;
+            width: 280px;
+        }
+
+        .search-wrapper input {
+            padding-right: 40px;
+            height: 36px;
+            font-size: 13px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background: #fff;
+        }
+
+        .search-wrapper .search-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted);
+            font-size: 16px;
+        }
+
+        .btn-add-member {
+            background: #E6F0FF;
+            color: var(--primary);
+            border: 1px solid #D1E4FF;
+            border-radius: 4px;
+            height: 36px;
+            padding: 0 16px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-add-member:hover {
+            background: #D1E4FF;
+        }
+
+        .members-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .members-table th {
+            background: #F7F9FC;
+            color: #666;
+            font-weight: 600;
+            text-align: left;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+        }
+
+        .members-table td {
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            color: #333;
+        }
+
+        .members-table tr:hover td {
+            background: #F8F9FF;
+        }
+
+        .btn-remove {
+            color: #ff4d4f;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .btn-remove:hover {
+            text-decoration: underline;
+        }
+
+        /* Employee Modal Specific Styles */
+        #employeeModal .modal {
+            width: 900px;
+            max-width: 95vw;
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-header {
+            padding: 16px 24px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            cursor: pointer;
+            font-size: 20px;
+            color: #999;
+        }
+
+        .modal-toolbar {
+            padding: 16px 24px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 16px;
+            align-items: center;
+            background: #fff;
+        }
+
+        .modal-table-container {
+            flex: 1;
+            overflow-y: auto;
+            max-height: 450px;
+            padding: 0 24px;
+        }
+
+        .modal-footer {
+            padding: 16px 24px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .btn-save-member {
+            background: #1890ff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            height: 36px;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .btn-save-member:hover {
+            background: #40a9ff;
+        }
+
+        .company-select {
+            height: 36px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 0 10px;
+            width: 200px;
+            color: #666;
+            font-size: 13px;
+        }
     </style>
 </head>
 
@@ -560,7 +753,12 @@
                                 href="javascript:void(0)">零担</a><a class="link" href="javascript:void(0)">短驳</a></div>
                     </div>
                     <div class="menu-item level-2">
-                        <div class="menu-title"><span class="label">配载</span></div>
+                        <div class="menu-title toggle"><span class="label">配载</span><span class="chevron">›</span></div>
+                        <div class="submenu">
+                            <a class="link" href="javascript:void(0)">接货配载</a>
+                            <a class="link" href="javascript:void(0)">送货配载</a>
+                            <a class="link" href="javascript:void(0)">短驳配载</a>
+                        </div>
                     </div>
                     <div class="menu-item level-2">
                         <div class="menu-title"><span class="label">货源</span></div>
@@ -647,32 +845,32 @@
                 <tbody id="rolesTbody">
                     <tr>
                         <td>GM/总经理</td>
-                        <td>贝撷测试有限公司</td>
+                        <td>贝塔测试有限公司</td>
                         <td class="actions"><span>编辑</span><span>复制</span><span>删除</span></td>
                     </tr>
                     <tr>
                         <td>SALE/业务员</td>
-                        <td>贝撷测试有限公司</td>
+                        <td>贝塔测试有限公司</td>
                         <td class="actions"><span>编辑</span><span>复制</span><span>删除</span></td>
                     </tr>
                     <tr>
                         <td>CSER/客服</td>
-                        <td>贝撷测试有限公司</td>
+                        <td>贝塔测试有限公司</td>
                         <td class="actions"><span>编辑</span><span>复制</span><span>删除</span></td>
                     </tr>
                     <tr>
                         <td>OPER/操作员</td>
-                        <td>贝撷测试有限公司</td>
+                        <td>贝塔测试有限公司</td>
                         <td class="actions"><span>编辑</span><span>复制</span><span>删除</span></td>
                     </tr>
                     <tr>
                         <td>DIER/调度员</td>
-                        <td>贝撷测试有限公司</td>
+                        <td>贝塔测试有限公司</td>
                         <td class="actions"><span>编辑</span><span>复制</span><span>删除</span></td>
                     </tr>
                     <tr>
                         <td>FIEL/财务专员</td>
-                        <td>贝撷测试有限公司</td>
+                        <td>贝塔测试有限公司</td>
                         <td class="actions"><span>编辑</span><span>复制</span><span>删除</span></td>
                     </tr>
 
@@ -684,7 +882,7 @@
             <div class="perm-tabs">
                 <div class="perm-tab active" data-target="perm-func">功能权限</div>
                 <div class="perm-tab" data-target="perm-data">数据权限</div>
-                <div class="perm-tab" data-target="perm-role">角色人员</div>
+                <div class="perm-tab" data-target="perm-role">角色成员</div>
             </div>
 
             <div class="perm-section active" id="perm-func">
@@ -1214,6 +1412,51 @@
                             <td><input type="checkbox" class="perm-checkbox"></td>
                             <td><input type="checkbox" class="perm-checkbox"></td>
                         </tr>
+                        <tr class="perm-row" data-row-id="jiehuopeizai" data-parent-id="peizai">
+                            <td class="perm-name level-3">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="jiehuopeizai">▸</span>接货配载</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-row-id="songhuopeizai" data-parent-id="peizai">
+                            <td class="perm-name level-3">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="songhuopeizai">▸</span>送货配载</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
+                        <tr class="perm-row" data-row-id="duanbopeizai" data-parent-id="peizai">
+                            <td class="perm-name level-3">
+                                <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
+                                        class="perm-toggle" data-toggle="duanbopeizai">▸</span>短驳配载</div>
+                            </td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                            <td><input type="checkbox" class="perm-checkbox"></td>
+                        </tr>
                         <tr class="perm-row" data-row-id="huoyuan" data-parent-id="orders">
                             <td class="perm-name level-2">
                                 <div class="perm-cell-name"><input type="checkbox" class="perm-row-master"><span
@@ -1698,19 +1941,17 @@
                     <div style="display:flex; flex-direction:column; gap:8px;">
                         <div
                             style="display:flex; gap:32px; align-items:center; border-bottom: 1px solid #e8e8e8; margin-bottom: 15px;">
-                            <div
-                                style="padding-bottom: 8px; color: #1890ff; border-bottom: 2px solid #1890ff; cursor: pointer; font-weight: 500;">
-                                收入成本类</div>
-                            <div
-                                style="padding-bottom: 8px; cursor: pointer; display: flex; align-items: center; gap: 4px; color: #333;">
+                            <div class="field-tab active" data-field-type="income">收入成本类</div>
+                            <div class="field-tab" data-field-type="customer">
                                 客户信息类
                                 <span
                                     style="display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; background-color: #333; color: #fff; border-radius: 50%; font-size: 10px; font-weight: bold;">?</span>
                             </div>
-                            <div style="padding-bottom: 8px; cursor: pointer; color: #333;">供应商信息类</div>
-                            <div style="padding-bottom: 8px; cursor: pointer; color: #333;">订单信息类</div>
+                            <div class="field-tab" data-field-type="supplier">供应商信息类</div>
+                            <div class="field-tab" data-field-type="order">订单信息类</div>
                         </div>
-                        <div style="display:flex; gap:24px; align-items:center; flex-wrap:wrap;">
+                        <div id="field-perm-checkboxes"
+                            style="display:flex; gap:24px; align-items:center; flex-wrap:wrap;">
                             <label class="item" style="margin:0;"><input type="checkbox" checked> 查看应收费用</label>
                             <label class="item" style="margin:0;"><input type="checkbox" checked> 查看应付费用</label>
                             <label class="item" style="margin:0;"><input type="checkbox" checked> 查看利润</label>
@@ -1800,6 +2041,99 @@
                     </div>
                 </div>
             </div>
+
+            <div class="perm-section" id="perm-role">
+                <div class="role-members-header">
+                    <div class="role-members-count">已关联成员(7)</div>
+                    <div class="role-members-actions">
+                        <div class="search-wrapper">
+                            <input type="text" placeholder="员工姓名/员工代码">
+                            <span class="search-icon">🔍</span>
+                        </div>
+                        <button class="btn-add-member">
+                            <span style="font-size: 18px; line-height: 1;">+</span> 选择员工
+                        </button>
+                    </div>
+                </div>
+                <table class="members-table">
+                    <thead>
+                        <tr>
+                            <th>员工姓名</th>
+                            <th>员工代码</th>
+                            <th>手机号</th>
+                            <th>所属公司</th>
+                            <th>所属部门</th>
+                            <th>员工类别</th>
+                            <th style="width: 80px; text-align: center;">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>管理员</td>
+                            <td>admin</td>
+                            <td>13800138000</td>
+                            <td>贝塔测试有限公司</td>
+                            <td>总经办</td>
+                            <td>经理</td>
+                            <td style="text-align: center;"><span class="btn-remove">移除</span></td>
+                        </tr>
+                        <tr>
+                            <td>张三</td>
+                            <td>ZHANGS</td>
+                            <td>13912345678</td>
+                            <td>贝塔测试有限公司</td>
+                            <td>销售部</td>
+                            <td>销售</td>
+                            <td style="text-align: center;"><span class="btn-remove">移除</span></td>
+                        </tr>
+                        <tr>
+                            <td>李四</td>
+                            <td>LIS</td>
+                            <td>13788889999</td>
+                            <td>贝塔测试有限公司</td>
+                            <td>财务部</td>
+                            <td>财务</td>
+                            <td style="text-align: center;"><span class="btn-remove">移除</span></td>
+                        </tr>
+                        <tr>
+                            <td>王五</td>
+                            <td>WANGW</td>
+                            <td>13566667777</td>
+                            <td>贝塔测试有限公司</td>
+                            <td>技术部</td>
+                            <td>操作</td>
+                            <td style="text-align: center;"><span class="btn-remove">移除</span></td>
+                        </tr>
+                        <tr>
+                            <td>赵六</td>
+                            <td>ZHAOL</td>
+                            <td>13633334444</td>
+                            <td>贝塔测试有限公司</td>
+                            <td>客服部</td>
+                            <td>客服</td>
+                            <td style="text-align: center;"><span class="btn-remove">移除</span></td>
+                        </tr>
+                        <tr>
+                            <td>陈七</td>
+                            <td>CHENQ</td>
+                            <td>13411112222</td>
+                            <td>贝塔测试有限公司</td>
+                            <td>人事部</td>
+                            <td>人事</td>
+                            <td style="text-align: center;"><span class="btn-remove">移除</span></td>
+                        </tr>
+                        <tr>
+                            <td>周八</td>
+                            <td>ZHOUB</td>
+                            <td>13322221111</td>
+                            <td>贝塔测试有限公司</td>
+                            <td>行政部</td>
+                            <td>人事</td>
+                            <td style="text-align: center;"><span class="btn-remove">移除</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <!-- Modal -->
@@ -1813,6 +2147,116 @@
                     <div class="modal-actions"><button type="button" class="btn-secondary"
                             id="cancelModal">取消</button><button type="submit" class="btn-primary">确认</button></div>
                 </form>
+            </div>
+        </div>
+
+        <!-- Select Employee Modal -->
+        <div class="modal-backdrop" id="employeeModal">
+            <div class="modal">
+                <div class="modal-header">
+                    <h3>选择员工</h3>
+                    <span class="modal-close" id="closeEmployeeModal">×</span>
+                </div>
+                <div class="modal-toolbar">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 13px; color: #333;">公司</span>
+                        <select class="company-select">
+                            <option value="">请选择</option>
+                            <option value="1">贝塔测试科技有限公司</option>
+                            <option value="2">汇森锁物流集团</option>
+                        </select>
+                    </div>
+                    <div class="search-wrapper">
+                        <input type="text" placeholder="员工姓名/员工代码">
+                        <span class="search-icon">🔍</span>
+                    </div>
+                </div>
+                <div class="modal-table-container">
+                    <table class="members-table" id="selectableMembersTable">
+                        <thead>
+                            <tr>
+                                <th style="width: 40px; text-align: center;"><input type="checkbox"
+                                        id="selectAllEmployees"></th>
+                                <th>员工姓名</th>
+                                <th>员工代码</th>
+                                <th>手机号</th>
+                                <th>所属公司</th>
+                                <th>所属部门</th>
+                                <th>员工类别</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="text-align: center;"><input type="checkbox" class="employee-cb"></td>
+                                <td>测试</td>
+                                <td>ceshi</td>
+                                <td>ceshi</td>
+                                <td>贝塔测试科技有限公司</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: center;"><input type="checkbox" class="employee-cb"></td>
+                                <td>4565</td>
+                                <td>4565</td>
+                                <td>18999999999</td>
+                                <td>汇森锁物流集团</td>
+                                <td>业务部门</td>
+                                <td>客服,操作,业务</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: center;"><input type="checkbox" class="employee-cb"></td>
+                                <td>陈五</td>
+                                <td>chenwu</td>
+                                <td>13888998899</td>
+                                <td>汇森锁物流集团</td>
+                                <td></td>
+                                <td>客服,操作,业务,采购,市场</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: center;"><input type="checkbox" class="employee-cb"></td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>18888888888</td>
+                                <td>贝塔测试科技有限公司</td>
+                                <td></td>
+                                <td>商务,客服,操作,业务,财务,...</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: center;"><input type="checkbox" class="employee-cb"></td>
+                                <td>Jason</td>
+                                <td>Jason</td>
+                                <td>133333333</td>
+                                <td>贝塔测试科技有限公司</td>
+                                <td></td>
+                                <td>操作,业务,财务</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: center;"><input type="checkbox" class="employee-cb"></td>
+                                <td>老大</td>
+                                <td>laoda</td>
+                                <td>548974555</td>
+                                <td>贝塔测试科技有限公司</td>
+                                <td></td>
+                                <td>商务,客服,操作,业务,财务,...</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: center;"><input type="checkbox" class="employee-cb"></td>
+                                <td>MS.周</td>
+                                <td>zhouhui</td>
+                                <td>4654846</td>
+                                <td>贝塔测试科技有限公司</td>
+                                <td></td>
+                                <td>商务,操作,财务,单证,采购</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-save-member" id="saveEmployees">
+                        <span style="font-size: 16px;">💾</span> 保存
+                    </button>
+                </div>
             </div>
         </div>
     </main>
@@ -1948,6 +2392,134 @@
 
         costItemRadios.forEach(radio => {
             radio.addEventListener('change', toggleCostTable);
+        });
+
+        // Field Permission Toggle Logic
+        const fieldTabs = document.querySelectorAll('.field-tab');
+        const fieldCheckboxContainer = document.getElementById('field-perm-checkboxes');
+
+        const fieldPermData = {
+            income: [
+                { label: '查看应收费用', checked: true },
+                { label: '查看应付费用', checked: true },
+                { label: '查看利润', checked: true },
+                { label: '业务员成本', checked: false },
+                { label: '业务员利润', checked: false }
+            ],
+            customer: [
+                { label: '名称', checked: true },
+                { label: '联系人', checked: true },
+                { label: '联系电话', checked: true },
+                { label: '邮箱', checked: true },
+                { label: '手机号', checked: true }
+            ],
+            supplier: [
+                { label: '名称', checked: true },
+                { label: '联系人', checked: true },
+                { label: '联系电话', checked: true },
+                { label: '邮箱', checked: true },
+                { label: '手机号', checked: true }
+            ],
+            order: [
+                { label: '订单编号', checked: true },
+                { label: '下单日期', checked: true },
+                { label: '客户名称', checked: true },
+                { label: '业务类型', checked: true },
+                { label: '订单状态', checked: true }
+            ]
+        };
+
+        fieldTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const type = tab.dataset.fieldType;
+                if (!type || !fieldPermData[type]) return;
+
+                // Update active state
+                fieldTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                // Update checkboxes
+                fieldCheckboxContainer.innerHTML = '';
+                fieldPermData[type].forEach(item => {
+                    const label = document.createElement('label');
+                    label.className = 'item';
+                    label.style.margin = '0';
+                    label.innerHTML = `<input type="checkbox" ${item.checked ? 'checked' : ''}> ${item.label}`;
+                    fieldCheckboxContainer.appendChild(label);
+                });
+            });
+        });
+
+        // Select Employee Modal Logic
+        const employeeModal = document.getElementById('employeeModal');
+        const openEmployeeBtn = document.querySelector('.btn-add-member');
+        const closeEmployeeBtn = document.getElementById('closeEmployeeModal');
+        const saveEmployeesBtn = document.getElementById('saveEmployees');
+        const mainMembersTbody = document.querySelector('.perm-section#perm-role tbody');
+        const memberCountDisplay = document.querySelector('.role-members-count');
+
+        openEmployeeBtn.addEventListener('click', () => {
+            employeeModal.style.display = 'flex';
+        });
+
+        const closeEmployee = () => {
+            employeeModal.style.display = 'none';
+            // Reset checkboxes
+            document.querySelectorAll('.employee-cb').forEach(cb => cb.checked = false);
+            document.getElementById('selectAllEmployees').checked = false;
+        };
+
+        closeEmployeeBtn.addEventListener('click', closeEmployee);
+        employeeModal.addEventListener('click', (e) => {
+            if (e.target === employeeModal) closeEmployee();
+        });
+
+        document.getElementById('selectAllEmployees').addEventListener('change', (e) => {
+            document.querySelectorAll('.employee-cb').forEach(cb => cb.checked = e.target.checked);
+        });
+
+        saveEmployeesBtn.addEventListener('click', () => {
+            const selectedRows = document.querySelectorAll('.employee-cb:checked');
+            if (selectedRows.length === 0) {
+                closeEmployee();
+                return;
+            }
+
+            selectedRows.forEach(cb => {
+                const row = cb.closest('tr');
+                const cells = row.cells;
+                const newRow = document.createElement('tr');
+
+                // Construct cells based on modal data
+                newRow.innerHTML = `
+                    <td>${cells[1].textContent}</td>
+                    <td>${cells[2].textContent}</td>
+                    <td>${cells[3].textContent}</td>
+                    <td>${cells[4].textContent}</td>
+                    <td>${cells[5].textContent}</td>
+                    <td>${cells[6].textContent}</td>
+                    <td style="text-align: center;"><span class="btn-remove">移除</span></td>
+                `;
+                mainMembersTbody.appendChild(newRow);
+            });
+
+            // Update count
+            const currentRows = mainMembersTbody.querySelectorAll('tr').length;
+            memberCountDisplay.textContent = `已关联成员(${currentRows})`;
+
+            alert(`成功添加 ${selectedRows.length} 名员工`);
+            closeEmployee();
+        });
+
+        // Removal logic for main table
+        mainMembersTbody.addEventListener('click', (e) => {
+            if (e.target.classList.contains('btn-remove')) {
+                if (confirm('确认移除该成员？')) {
+                    e.target.closest('tr').remove();
+                    const currentRows = mainMembersTbody.querySelectorAll('tr').length;
+                    memberCountDisplay.textContent = `已关联成员(${currentRows})`;
+                }
+            }
         });
     </script>
 </body>
