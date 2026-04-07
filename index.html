@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 
 <head>
@@ -38,15 +38,172 @@
             overflow: hidden;
         }
 
-        /* Sidebar Styles */
-        .sidebar {
-            width: 260px;
-            background: var(--side-bg);
+        /* Primary Sidebar Styles */
+        .primary-sidebar {
+            width: 70px;
+            background: #2D3A55;
             display: flex;
             flex-direction: column;
-            padding: 24px 16px;
+            align-items: center;
+            padding: 16px 0;
+            gap: 4px;
+            z-index: 20;
+            overflow-y: auto;
+            flex-shrink: 0;
+            scrollbar-width: none;
+        }
+        .primary-sidebar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .primary-logo {
+            background: #fff;
+            width: 40px;
+            height: 44px;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 12px;
+            color: #2D3A55;
+        }
+
+        .primary-menu-item {
+            width: 70px;
+            height: 64px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #92A3C1;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .primary-menu-item:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .primary-menu-item.active {
+            background: rgba(4, 21, 62, 0.5); /* Deep dark background for active */
+            color: #6AD2FF;
+        }
+
+        /* The active bright blue selection border from the image */
+        .primary-menu-item.active::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 3px;
+            height: 100%;
+            background-color: #3b82f6; 
+        }
+
+        .primary-menu-item svg {
+            width: 22px;
+            height: 22px;
+            margin-bottom: 6px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .primary-menu-item.active svg {
+            fill: #3b82f6; 
+            stroke: #3b82f6;
+        }
+
+        .primary-menu-item.active .label {
+            color: #fff;
+        }
+
+        .primary-menu-item .label {
+            font-size: 12px;
+        }
+
+        /* Secondary Sidebar Styles */
+        .secondary-sidebar {
+            width: 280px;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #F0F2F5;
+            padding: 24px 0;
+            overflow-y: auto;
+            flex-shrink: 0;
+            box-shadow: 2px 0 8px rgba(0,0,0,0.02);
+            z-index: 15;
+            transition: all 0.3s ease;
+        }
+
+        .secondary-sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .secondary-sidebar::-webkit-scrollbar-thumb {
+            background: #E0E5F2;
+            border-radius: 4px;
+        }
+
+        .sec-section {
+            margin-bottom: 8px;
+            padding: 0 20px;
+            border-bottom: 1px solid #F4F5F7;
+            padding-bottom: 16px;
+            margin-top: 12px;
+        }
+
+        .sec-section:last-child {
+            border-bottom: none;
+        }
+
+        .sec-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #17213A; /* dark navy */
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .sec-title svg {
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: #17213A;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .sec-menu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px 12px;
+        }
+
+        .sec-menu-item {
+            font-size: 13px;
+            color: #62738E;
+            cursor: pointer;
+            padding: 4px 0;
+            transition: color 0.2s;
+        }
+
+        .sec-menu-item:hover {
+            color: #3b82f6; 
+        }
+
+        .sec-menu-grid-1 {
+            display: grid;
+            grid-template-columns: 1fr;
             gap: 12px;
-            z-index: 10;
         }
 
         .nav-header {
@@ -1330,107 +1487,180 @@
             justify-content: center;
             font-size: 20px;
         }
+        .input-group {
+            display: flex;
+            align-items: center;
+        }
+        .input-group-addon {
+            background-color: #f5f7fa;
+            border: 1px solid #dcdfe6;
+            border-right: none;
+            color: #909399;
+            padding: 0 12px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            border-radius: 4px 0 0 4px;
+            font-size: 13px;
+        }
+        .input-group input {
+            border-radius: 0 4px 4px 0;
+            height: 32px !important;
+            border: 1px solid #dcdfe6;
+            padding: 0 10px;
+            outline: none;
+            box-sizing: border-box;
+        }
+        .input-group input:focus {
+            border-color: #3b82f6;
+        }
+        .btn-reset {
+            background: #fff;
+            border: 1px solid #dcdfe6;
+            color: #606266;
+            height: 32px;
+            padding: 0 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+            font-size: 13px;
+        }
+        .btn-reset:hover {
+            color: #3b82f6;
+            border-color: #c6e2ff;
+            background-color: #ecf5ff;
+        }
+        .btn-query {
+            background: #409eff;
+            border: 1px solid #409eff;
+            color: #fff;
+            height: 32px;
+            padding: 0 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+            font-size: 13px;
+        }
+        .btn-query:hover {
+            background: #66b1ff;
+            border-color: #66b1ff;
+        }
+        .sec-menu-item.active {
+            color: #3b82f6;
+            background: #f0f7ff;
+            font-weight: 500;
+        }
     </style>
 </head>
 
 <body>
-    <aside class="sidebar">
-        <div class="nav-header">导航</div>
-        <ul class="menu">
-            <li class="menu-item">
-                <div class="menu-title"><span class="icon">🏠</span><span class="label">工作台</span></div>
-            </li>
-            <li class="menu-item">
-                <div class="menu-title toggle"><span class="icon">🧾</span><span class="label">订单管理</span><span
-                        class="chevron">›</span></div>
-                <div class="submenu">
-                    <div class="menu-item level-2">
-                        <div class="menu-title toggle"><span class="label">运单</span><span class="chevron">›</span></div>
-                        <div class="submenu"><a class="link" href="javascript:void(0)">整车</a><a class="link"
-                                href="javascript:void(0)">零担</a><a class="link" href="javascript:void(0)">短驳</a></div>
-                    </div>
-                    <div class="menu-item level-2">
-                        <div class="menu-title toggle"><span class="label">配载</span><span class="chevron">›</span></div>
-                        <div class="submenu">
-                            <a class="link" href="javascript:void(0)">接货配载</a>
-                            <a class="link" href="javascript:void(0)">送货配载</a>
-                            <a class="link" href="javascript:void(0)">短驳配载</a>
-                        </div>
-                    </div>
-                    <div class="menu-item level-2">
-                        <div class="menu-title"><span class="label">货源</span></div>
-                    </div>
-                </div>
-            </li>
-            <li class="menu-item">
-                <div class="menu-title toggle"><span class="icon">🚚</span><span class="label">调度管理</span><span
-                        class="chevron">›</span></div>
-                <div class="submenu"></div>
-            </li>
-            <li class="menu-item">
-                <div class="menu-title toggle"><span class="icon">💰</span><span class="label">报价管理</span><span
-                        class="chevron">›</span></div>
-                <div class="submenu"></div>
-            </li>
-            <li class="menu-item">
-                <div class="menu-title toggle"><span class="icon">📑</span><span class="label">结价管理</span><span
-                        class="chevron">›</span></div>
-                <div class="submenu"></div>
-            </li>
-            <li class="menu-item">
-                <div class="menu-title toggle"><span class="icon">📊</span><span class="label">财务管理</span><span
-                        class="chevron">›</span></div>
-                <div class="submenu">
-                    <a class="link" href="javascript:void(0)">凭证管理</a>
-                    <a class="link" href="javascript:void(0)">期末处理</a>
-                    <a class="link" href="javascript:void(0)">账簿管理</a>
-                    <a class="link" href="javascript:void(0)">报表管理</a>
-                    <a class="link" href="javascript:void(0)">财务管理</a>
-                    <a class="link" href="javascript:void(0)">初始化</a>
-                </div>
-            </li>
-            <li class="menu-item">
-                <div class="menu-title toggle"><span class="icon">🧾</span><span class="label">回单管理</span><span
-                        class="chevron">›</span></div>
-                <div class="submenu"></div>
-            </li>
-            <li class="menu-item">
-                <div class="menu-title toggle"><span class="icon">📈</span><span class="label">报表管理</span><span
-                        class="chevron">›</span></div>
-                <div class="submenu"></div>
-            </li>
-            <li class="menu-item">
-                <div class="menu-title toggle"><span class="icon">📦</span><span class="label">客商管理</span><span
-                        class="chevron">›</span></div>
-                <div class="submenu"><a class="link" href="javascript:void(0)">承运商(外部公司、司机)</a><a class="link"
-                        href="javascript:void(0)">合同档案</a></div>
-            </li>
-            <li class="menu-item">
-                <div class="menu-title"><span class="icon">💼</span><span class="label">CRM</span></div>
-            </li>
-            <li class="menu-item">
-                <div class="menu-title toggle"><span class="icon">📁</span><span class="label">基础档案</span><span
-                        class="chevron">›</span></div>
-                <div class="submenu"><a class="link" href="javascript:void(0)">自有车辆</a><a class="link"
-                        href="javascript:void(0)">基础数据</a><a class="link" href="javascript:void(0)">编制规则</a><a
-                        class="link" href="javascript:void(0)">单位管理</a></div>
-            </li>
-            <li class="menu-item">
-                <div class="menu-title"><span class="icon">📝</span><span class="label">评价反馈</span></div>
-            </li>
-            <li class="menu-item">
-                <div class="menu-title toggle"><span class="icon">🔒</span><span class="label">权限设置</span><span
-                        class="chevron">›</span></div>
-                <div class="submenu">
-                    <a class="link" href="javascript:void(0)" id="nav-org-mgmt">组织机构</a>
-                    <a class="link" href="javascript:void(0)" id="nav-role-mgmt">角色管理</a>
-                    <a class="link" href="javascript:void(0)" id="nav-employee-mgmt">员工档案</a>
-                </div>
-            </li>
-            <li class="menu-item">
-                <div class="menu-title"><span class="icon">⚙️</span><span class="label">系统设置</span></div>
-            </li>
-        </ul>
+    <aside class="primary-sidebar">
+        <div class="primary-logo">
+            <svg viewBox="0 0 24 24" fill="currentColor" stroke="none" style="width: 28px; height: 28px;">
+                <path d="M4 4h16v16H4V4zm2 2v12h12V6H6zm2 2h3v8H8V8zm4 0h4v2h-4V8zm0 3h4v2h-4v-2zm0 3h4v2h-4v-2z" fill="#3b82f6"/>
+                <rect x="12" y="8" width="4" height="2" fill="#ef4444" />
+            </svg>
+        </div>
+
+        <div class="primary-menu-item active">
+            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+            <span class="label">工作台</span>
+        </div>
+        <div class="primary-menu-item">
+            <svg viewBox="0 0 24 24"><path d="M4 22V8l7-4 7 4v14"/><path d="M14 14h4v8"/><path d="M8 12h3"/></svg>
+            <span class="label">供应链</span>
+        </div>
+        <div class="primary-menu-item">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
+            <span class="label">业务</span>
+        </div>
+        <div class="primary-menu-item">
+            <svg viewBox="0 0 24 24"><path d="M3 10l9-6 9 6v10H3z"/><path d="M9 20v-6h6v6"/><rect x="10" y="14" width="4" height="4"/></svg>
+            <span class="label">仓库</span>
+        </div>
+        <div class="primary-menu-item">
+            <svg viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><text x="12" y="16.5" text-anchor="middle" font-size="11" stroke="none" fill="currentColor">¥</text></svg>
+            <span class="label">报价</span>
+        </div>
+        <div class="primary-menu-item">
+            <svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M16 21v-2a4 4 0 0 0-3.2-3.9"/><path d="M9 14a6 6 0 0 0-6 6v1h12v-1a6 6 0 0 0-2.8-5.1"/><circle cx="17.5" cy="11.5" r="3.5"/><path d="M21.5 11.5h1m-9 0h1m3.5-4v1m0 8v1m2.8-7.8l-.7.7m-4.2 4.2l-.7.7m0-5.6l.7.7m4.2 4.2l.7.7"/></svg>
+            <span class="label">管理</span>
+        </div>
+        <div class="primary-menu-item">
+            <svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="10" y2="14"/><line x1="14" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="10" y2="18"/><line x1="14" y1="18" x2="16" y2="18"/></svg>
+            <span class="label">结算</span>
+        </div>
+        <div class="primary-menu-item">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2" ry="2"/><circle cx="12" cy="12" r="4"/><text x="12" y="15.5" text-anchor="middle" font-size="11" stroke="none" fill="currentColor">¥</text></svg>
+            <span class="label">财务</span>
+        </div>
+        <div class="primary-menu-item">
+            <svg viewBox="0 0 24 24"><rect x="4" y="6" width="4" height="14"/><rect x="10" y="10" width="4" height="10"/><rect x="16" y="4" width="4" height="16"/><circle cx="14" cy="10" r="5" fill="none"/><line x1="17.5" y1="13.5" x2="22" y2="18"/></svg>
+            <span class="label">报表</span>
+        </div>
+        <div class="primary-menu-item">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span class="label">客商</span>
+        </div>
+        <div class="primary-menu-item">
+            <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+            <span class="label">档案</span>
+        </div>
+        <div class="primary-menu-item">
+            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span class="label">用户</span>
+        </div>
+        <div class="primary-menu-item">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            <span class="label">系统</span>
+        </div>
+    </aside>
+
+    <aside class="secondary-sidebar" id="sidebar-quotation" style="display: none;">
+        <div class="sec-section" style="margin-top: 0;">
+            <div class="sec-title">
+                <svg viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M9 12h6M9 16h6"/></svg>
+                <span>报价单</span>
+            </div>
+            <div class="sec-menu-grid-1">
+                <div class="sec-menu-item">查询价格</div>
+            </div>
+        </div>
+
+        <div class="sec-section">
+            <div class="sec-title">
+                <svg viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/><path d="M8 7h6M8 11h8"/></svg>
+                <span>渠道价格库</span>
+            </div>
+            <div class="sec-menu-grid">
+                <div class="sec-menu-item">报价</div>
+                <div class="sec-menu-item">分区方案</div>
+            </div>
+        </div>
+
+        <div class="sec-section">
+            <div class="sec-title">
+                <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                <span>运输报价库</span>
+            </div>
+            <div class="sec-menu-grid">
+                <div class="sec-menu-item">海运整柜</div>
+                <div class="sec-menu-item">拖车(整柜)</div>
+                <div class="sec-menu-item" style="grid-column: 1 / -1;">其它价格</div>
+            </div>
+        </div>
+
+        <div class="sec-section">
+            <div class="sec-title">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="2.5"/><circle cx="6" cy="17" r="2.5"/><circle cx="18" cy="17" r="2.5"/><line x1="10.5" y1="9" x2="7.5" y2="15"/><line x1="13.5" y1="9" x2="16.5" y2="15"/><line x1="12" y1="9.5" x2="12" y2="12"/><line x1="12" y1="12" x2="6" y2="12"/><line x1="12" y1="12" x2="18" y2="12"/></svg>
+                <span>渠道</span>
+            </div>
+            <div class="sec-menu-grid">
+                <div class="sec-menu-item">收货渠道</div>
+                <div class="sec-menu-item">供应渠道</div>
+                <div class="sec-menu-item" id="menu-bulk-surcharge">散货附加费</div>
+            </div>
+        </div>
     </aside>
 
     <main class="content">
@@ -1441,6 +1671,268 @@
                 <div style="font-size: 48px; margin-bottom: 16px;">🏢</div>
                 <h3>欢迎使用管理系统</h3>
                 <p>请从左侧菜单选择功能</p>
+            </div>
+        </div>
+
+        <!-- Bulk Surcharge View -->
+        <div id="view-bulk-surcharge" class="view-container" style="display: none; background: #FAFAFA; padding: 20px; flex-direction: column;">
+            <!-- Search Toolbar -->
+            <div style="margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; border-radius: 4px; padding: 15px; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.05); width: 100%;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <div class="input-group" style="margin-right: 0px;">
+                        <div class="input-group-addon">关键字</div>
+                        <input type="text" placeholder="附加费代码/附加费名称" style="width: 200px;">
+                    </div>
+                    <button class="btn-query">查询</button>
+                    <button class="btn-reset">重置</button>
+                </div>
+                <button class="btn-primary" id="btn-create-ebs">新增</button>
+            </div>
+            
+            <!-- Table View -->
+            <div style="border-radius: 4px; background: #fff; flex: 1; padding: 0; box-shadow: 0 1px 3px rgba(0,0,0,0.05); width: 100%; overflow: auto;">
+                <table class="table" style="width: 100%; border-collapse: collapse; text-align: left; font-size: 13px;">
+                    <thead style="background-color: #f8f9fb; border-bottom: 1px solid #ebeef5;">
+                        <tr>
+                            <th style="padding: 12px; width: 40px; text-align: center;"><input type="checkbox" id="selectAllSurcharge"></th>
+                            <th style="padding: 12px; font-weight: 500; color: #909399; width: 60px;">序号</th>
+                            <th style="padding: 12px; font-weight: 500; color: #909399; width: 120px;">附加费代码</th>
+                            <th style="padding: 12px; font-weight: 500; color: #909399; width: 140px;">附加费名称</th>
+                            <th style="padding: 12px; font-weight: 500; color: #909399;">附加费条款</th>
+                            <th style="padding: 12px; font-weight: 500; color: #909399; width: 100px;">创建日期</th>
+                            <th style="padding: 12px; font-weight: 500; color: #909399; width: 100px;">修改日期</th>
+                            <th style="padding: 12px; font-weight: 500; color: #909399; width: 80px;">状态</th>
+                            <th style="padding: 12px; font-weight: 500; color: #909399; width: 100px;">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Mock Data -->
+                        <tr style="border-bottom: 1px solid #ebeef5;">
+                            <td style="padding: 12px; text-align: center;"><input type="checkbox" class="surcharge-cb"></td>
+                            <td style="padding: 12px; color: #606266;">1</td>
+                            <td style="padding: 12px; color: #409eff;"></td>
+                            <td style="padding: 12px; color: #606266;">报关费</td>
+                            <td style="padding: 12px; color: #606266;"></td>
+                            <td style="padding: 12px; color: #606266;">2023-10-01</td>
+                            <td style="padding: 12px; color: #606266;">2023-10-05</td>
+                            <td style="padding: 12px;"><span style="color: #67c23a; font-size: 12px;">已启用</span></td>
+                            <td style="padding: 12px; color: #409eff; cursor: pointer;"><span class="edit-surcharge-btn">编辑</span> &nbsp; <span class="delete-surcharge-btn">删除</span></td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #ebeef5;">
+                            <td style="padding: 12px; text-align: center;"><input type="checkbox" class="surcharge-cb"></td>
+                            <td style="padding: 12px; color: #606266;">2</td>
+                            <td style="padding: 12px; color: #409eff;"></td>
+                            <td style="padding: 12px; color: #303133; font-weight: 500;">报关续页费</td>
+                            <td style="padding: 12px; color: #909399;"></td>
+                            <td style="padding: 12px; color: #909399;">2023-10-02</td>
+                            <td style="padding: 12px; color: #909399;">2023-10-06</td>
+                            <td style="padding: 12px;"><span style="color: #67c23a; font-size: 12px;">已启用</span></td>
+                            <td style="padding: 12px;">
+                                <a href="javascript:void(0)" class="ebs-edit-btn" style="color: #1677ff; text-decoration: none; margin-right: 8px;">编辑</a>
+                                <a href="javascript:void(0)" class="ebs-del-btn" style="color: #ff4d4f; text-decoration: none;">删除</a>
+                            </td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #ebeef5;">
+                            <td style="padding: 12px; text-align: center;"><input type="checkbox" class="surcharge-cb"></td>
+                            <td style="padding: 12px; color: #606266;">3</td>
+                            <td style="padding: 12px; color: #409eff;"></td>
+                            <td style="padding: 12px; color: #303133; font-weight: 500;">超品名费</td>
+                            <td style="padding: 12px; color: #909399;"></td>
+                            <td style="padding: 12px; color: #909399;">2023-11-15</td>
+                            <td style="padding: 12px; color: #909399;">2023-11-20</td>
+                            <td style="padding: 12px;"><span style="color: #67c23a; font-size: 12px;">已启用</span></td>
+                            <td style="padding: 12px;">
+                                <a href="javascript:void(0)" class="ebs-edit-btn" style="color: #1677ff; text-decoration: none; margin-right: 8px;">编辑</a>
+                                <a href="javascript:void(0)" class="ebs-del-btn" style="color: #ff4d4f; text-decoration: none;">删除</a>
+                            </td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #ebeef5;">
+                            <td style="padding: 12px; text-align: center;"><input type="checkbox" class="surcharge-cb"></td>
+                            <td style="padding: 12px; color: #606266;">4</td>
+                            <td style="padding: 12px; color: #409eff;"></td>
+                            <td style="padding: 12px; color: #303133; font-weight: 500;">偏远附加费</td>
+                            <td style="padding: 12px; color: #909399;"></td>
+                            <td style="padding: 12px; color: #909399;">2023-12-01</td>
+                            <td style="padding: 12px; color: #909399;">2023-12-05</td>
+                            <td style="padding: 12px;"><span style="color: #67c23a; font-size: 12px;">已启用</span></td>
+                            <td style="padding: 12px;">
+                                <a href="javascript:void(0)" class="ebs-edit-btn" style="color: #1677ff; text-decoration: none; margin-right: 8px;">编辑</a>
+                                <a href="javascript:void(0)" class="ebs-del-btn" style="color: #ff4d4f; text-decoration: none;">删除</a>
+                            </td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #ebeef5;">
+                            <td style="padding: 12px; text-align: center;"><input type="checkbox" class="surcharge-cb"></td>
+                            <td style="padding: 12px; color: #606266;">5</td>
+                            <td style="padding: 12px; color: #409eff;"></td>
+                            <td style="padding: 12px; color: #303133; font-weight: 500;">指定打单服务商费</td>
+                            <td style="padding: 12px; color: #909399;"></td>
+                            <td style="padding: 12px; color: #909399;">2024-01-10</td>
+                            <td style="padding: 12px; color: #909399;">2024-01-15</td>
+                            <td style="padding: 12px;"><span style="color: #67c23a; font-size: 12px;">已启用</span></td>
+                            <td style="padding: 12px;">
+                                <a href="javascript:void(0)" class="ebs-edit-btn" style="color: #1677ff; text-decoration: none; margin-right: 8px;">编辑</a>
+                                <a href="javascript:void(0)" class="ebs-del-btn" style="color: #ff4d4f; text-decoration: none;">删除</a>
+                            </td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #ebeef5;">
+                            <td style="padding: 12px; text-align: center;"><input type="checkbox" class="surcharge-cb"></td>
+                            <td style="padding: 12px; color: #606266;">6</td>
+                            <td style="padding: 12px; color: #409eff;"></td>
+                            <td style="padding: 12px; color: #303133; font-weight: 500;">派送范围</td>
+                            <td style="padding: 12px; color: #909399;"></td>
+                            <td style="padding: 12px; color: #909399;">2024-02-15</td>
+                            <td style="padding: 12px; color: #909399;">2024-02-20</td>
+                            <td style="padding: 12px;"><span style="color: #67c23a; font-size: 12px;">已启用</span></td>
+                            <td style="padding: 12px;">
+                                <a href="javascript:void(0)" class="ebs-edit-btn" style="color: #1677ff; text-decoration: none; margin-right: 8px;">编辑</a>
+                                <a href="javascript:void(0)" class="ebs-del-btn" style="color: #ff4d4f; text-decoration: none;">删除</a>
+                            </td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #ebeef5;">
+                            <td style="padding: 12px; text-align: center;"><input type="checkbox" class="surcharge-cb"></td>
+                            <td style="padding: 12px; color: #606266;">7</td>
+                            <td style="padding: 12px; color: #409eff;"></td>
+                            <td style="padding: 12px; color: #303133; font-weight: 500;">海派超长附加费</td>
+                            <td style="padding: 12px; color: #909399;"></td>
+                            <td style="padding: 12px; color: #909399;">2024-03-01</td>
+                            <td style="padding: 12px; color: #909399;">2024-03-05</td>
+                            <td style="padding: 12px;"><span style="color: #67c23a; font-size: 12px;">已启用</span></td>
+                            <td style="padding: 12px;">
+                                <a href="javascript:void(0)" class="ebs-edit-btn" style="color: #1677ff; text-decoration: none; margin-right: 8px;">编辑</a>
+                                <a href="javascript:void(0)" class="ebs-del-btn" style="color: #ff4d4f; text-decoration: none;">删除</a>
+                            </td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #ebeef5;">
+                            <td style="padding: 12px; text-align: center;"><input type="checkbox" class="surcharge-cb"></td>
+                            <td style="padding: 12px; color: #606266;">8</td>
+                            <td style="padding: 12px; color: #409eff;"></td>
+                            <td style="padding: 12px; color: #303133; font-weight: 500;">海派超重附加费</td>
+                            <td style="padding: 12px; color: #909399;"></td>
+                            <td style="padding: 12px; color: #909399;">2024-03-05</td>
+                            <td style="padding: 12px; color: #909399;">2024-03-08</td>
+                            <td style="padding: 12px;"><span style="color: #67c23a; font-size: 12px;">已启用</span></td>
+                            <td style="padding: 12px;">
+                                <a href="javascript:void(0)" class="ebs-edit-btn" style="color: #1677ff; text-decoration: none; margin-right: 8px;">编辑</a>
+                                <a href="javascript:void(0)" class="ebs-del-btn" style="color: #ff4d4f; text-decoration: none;">删除</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Edit Bulk Surcharge View -->
+        <div id="view-edit-bulk-surcharge" class="view-container" style="display: none; flex-direction: column; width: 100%; overflow-y: auto; background: #f0f2f5;">
+            <style>
+                .ebs-header-bar { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; background: #fff; border-bottom: 1px solid #e8e8e8; }
+                .ebs-page-title { font-size: 18px; font-weight: 600; color: #333; margin: 0; }
+                .ebs-content-wrapper { padding: 24px; max-width: 1200px; margin: 0 auto; width: 100%; }
+                .ebs-card { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
+                .ebs-section-title { font-size: 16px; font-weight: 600; color: #1677ff; display: block; margin-bottom: 24px; }
+                
+                .ebs-row { display: flex; align-items: center; gap: 24px; margin-bottom: 24px; }
+                .ebs-label { font-size: 14px; color: #333; margin-right: 8px; font-weight: 500; white-space: nowrap; }
+                .ebs-input { height: 32px; padding: 4px 11px; border: 1px solid #d9d9d9; border-radius: 4px; font-size: 14px; outline: none; flex: 1; background-color: #ffffff; color: #333; transition: all 0.3s; }
+                .ebs-input:focus { border-color: #1677ff; box-shadow: 0 0 0 2px rgba(22, 119, 255, 0.2); }
+                .ebs-input:disabled { background-color: #f5f5f5; color: #a8a8a8; cursor: not-allowed; border-color: #d9d9d9; }
+                .ebs-select { height: 32px; padding: 4px 11px; border: 1px solid #d9d9d9; border-radius: 4px; font-size: 14px; outline: none; flex: 1; background-color: #ffffff; color: #333; transition: all 0.3s; }
+                .ebs-select:focus { border-color: #1677ff; box-shadow: 0 0 0 2px rgba(22, 119, 255, 0.2); }
+                .ebs-form-item { display: flex; align-items: center; width: 33%; }
+                
+                .ebs-plan-container { background: #fafafa; border: 1px solid #f0f0f0; margin-bottom: 24px; padding: 20px; border-radius: 8px; }
+                .ebs-plan-title { font-size: 15px; font-weight: 600; color: #333; }
+                .ebs-condition-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+                .ebs-condition-row .ebs-select { flex: none; width: 140px; }
+                .ebs-btn { cursor: pointer; display: inline-flex; justify-content: center; align-items: center; height: 32px; background: transparent; border: 1px solid transparent; border-radius: 4px; font-size: 14px; padding: 0 16px; transition: all 0.2s; white-space: nowrap; }
+                .ebs-btn-primary { background: #1677ff; color: #fff; border-color: #1677ff; }
+                .ebs-btn-primary:hover { background: #4096ff; border-color: #4096ff; }
+                .ebs-btn-default { border-color: #d9d9d9; background: #fff; color: #333; }
+                .ebs-btn-default:hover { border-color: #1677ff; color: #1677ff; }
+                .ebs-btn-icon { width: 32px; height: 32px; padding: 0; font-size: 18px; border: 1px solid #d9d9d9; background: #fff; border-radius: 4px; color: #666; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+                .ebs-btn-icon:hover { border-color: #1677ff; color: #1677ff; }
+                .ebs-calc-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+            </style>
+            
+            <div class="ebs-content-wrapper">
+                <div class="ebs-card">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px;">
+                        <span class="ebs-section-title" style="margin-bottom: 0;">基本信息</span>
+                        <div style="display: flex; gap: 12px;">
+                            <button class="ebs-btn ebs-btn-default" id="btn-cancel-ebs">取消</button>
+                            <button class="ebs-btn ebs-btn-primary" id="btn-save-ebs">保存</button>
+                        </div>
+                    </div>
+                    <div class="ebs-row">
+                        <div class="ebs-form-item">
+                            <span class="ebs-label">附加费名称</span>
+                            <input type="text" class="ebs-input" id="ebs-name" value="" disabled>
+                        </div>
+                        <div class="ebs-form-item">
+                            <span class="ebs-label">附加费代码</span>
+                            <select class="ebs-select" id="ebs-code">
+                                <option value="">请选择</option>
+                                <option value="SUR001">SUR001</option>
+                                <option value="SUR002">SUR002</option>
+                                <option value="SUR003">SUR003</option>
+                                <option value="SUR004">SUR004</option>
+                                <option value="SUR005">SUR005</option>
+                            </select>
+                        </div>
+                        <div class="ebs-form-item">
+                            <span class="ebs-label">附加费状态</span>
+                            <select class="ebs-select" id="ebs-status">
+                                <option value="">请选择</option>
+                                <option value="1">启用</option>
+                                <option value="0">禁用</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="ebs-row" style="width: 100%;">
+                        <div class="ebs-form-item" style="width: 100%;">
+                            <span class="ebs-label">附加费条款</span>
+                            <input type="text" class="ebs-input" id="ebs-terms" placeholder="请输入限制条款" style="max-width: none; width: 100%;">
+                        </div>
+                    </div>
+                    <div class="ebs-row" style="width: 100%; margin-top: 16px;">
+                        <div class="ebs-form-item" style="width: 100%;">
+                            <span class="ebs-label">关联收货渠道</span>
+                            <div class="ebs-multi-select-container" id="ebs-channel-wrapper" style="position: relative; width: 100%; border: 1px solid #dcdfe6; border-radius: 4px; background: #fff;" data-value="[]">
+                                <div class="ebs-select ebs-cond-value-display" id="ebs-channel-display" style="min-height: 32px; padding: 4px 12px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; border: none;">
+                                    <span class="ebs-ms-text" id="ebs-channel-text" style="color: #c0c4cc; font-size: 13px;">请选择关联渠道</span>
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" style="flex-shrink: 0;"><path d="M6 9l6 6 6-6"></path></svg>
+                                </div>
+                                <div class="ebs-ms-dropdown" id="ebs-channel-dropdown" style="display: none; position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: #fff; border: 1px solid #e4e7ed; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 100; max-height: 250px; overflow-y: auto; padding: 6px 0;">
+                                    <div class="ebs-ms-item ebs-channel-select-all" style="padding: 8px 12px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 13px; color: #333; border-bottom: 1px solid #ebeef5; font-weight: 500;">
+                                        <input type="checkbox" id="ebs-channel-cb-all" style="cursor: pointer; margin: 0;">
+                                        <span style="flex: 1;">全选</span>
+                                    </div>
+                                    <div class="ebs-ms-item ebs-channel-opt" data-val="美西海派" style="padding: 8px 12px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 13px; color: #333;">
+                                        <input type="checkbox" value="美西海派" class="ebs-channel-cb" style="cursor: pointer; margin: 0;">
+                                        <span style="flex: 1;">美西海派</span>
+                                    </div>
+                                    <div class="ebs-ms-item ebs-channel-opt" data-val="美东海派" style="padding: 8px 12px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 13px; color: #333;">
+                                        <input type="checkbox" value="美东海派" class="ebs-channel-cb" style="cursor: pointer; margin: 0;">
+                                        <span style="flex: 1;">美东海派</span>
+                                    </div>
+                                    <div class="ebs-ms-item ebs-channel-opt" data-val="欧洲空派" style="padding: 8px 12px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 13px; color: #333;">
+                                        <input type="checkbox" value="欧洲空派" class="ebs-channel-cb" style="cursor: pointer; margin: 0;">
+                                        <span style="flex: 1;">欧洲空派</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ebs-card">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px;">
+                        <span class="ebs-section-title" style="margin-bottom: 0;">条件及计费</span>
+                        <button class="ebs-btn ebs-btn-primary" id="btn-add-ebs-plan">新增</button>
+                    </div>
+
+                    <div id="ebs-plans-wrapper">
+                        <!-- Data will be populated here by JS -->
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -3491,32 +3983,676 @@
         const navRoleMgmt = document.getElementById('nav-role-mgmt');
         const navOrgMgmt = document.getElementById('nav-org-mgmt');
         const navEmployeeMgmt = document.getElementById('nav-employee-mgmt');
+        const menuBulkSurcharge = document.getElementById('menu-bulk-surcharge');
         const viewDefault = document.getElementById('view-default');
         const viewRoleMgmt = document.getElementById('view-role-mgmt');
         const viewOrgMgmt = document.getElementById('view-org-mgmt');
         const viewEmployeeMgmt = document.getElementById('view-employee-mgmt');
+        const viewBulkSurcharge = document.getElementById('view-bulk-surcharge');
+        const viewEditBulkSurcharge = document.getElementById('view-edit-bulk-surcharge');
 
         const switchView = (targetView, navId) => {
-            [viewDefault, viewRoleMgmt, viewOrgMgmt, viewEmployeeMgmt].forEach(v => v.style.display = 'none');
-            targetView.style.display = 'flex';
-            document.querySelectorAll('.sidebar .link').forEach(link => link.classList.remove('active'));
-            if (navId) document.getElementById(navId).classList.add('active');
+            [viewDefault, viewRoleMgmt, viewOrgMgmt, viewEmployeeMgmt, viewBulkSurcharge, viewEditBulkSurcharge].forEach(v => {
+                if (v) v.style.display = 'none';
+            });
+            targetView.style.display = (targetView.id === 'view-bulk-surcharge' || targetView.id === 'view-edit-bulk-surcharge') ? 'flex' : 'flex';
+            document.querySelectorAll('.sidebar .link, .sec-menu-item').forEach(link => link.classList.remove('active'));
+            if (navId) {
+                 const navEl = document.getElementById(navId);
+                 if (navEl) navEl.classList.add('active');
+            }
         };
 
-        navRoleMgmt.addEventListener('click', (e) => {
-            e.preventDefault();
-            switchView(viewRoleMgmt, 'nav-role-mgmt');
+        if (menuBulkSurcharge) {
+            menuBulkSurcharge.addEventListener('click', (e) => {
+                e.preventDefault();
+                switchView(viewBulkSurcharge, 'menu-bulk-surcharge');
+                const sidebarQuotation = document.getElementById('sidebar-quotation');
+                if (sidebarQuotation) sidebarQuotation.style.display = 'none';
+            });
+        }
+
+        const selectAllSurcharge = document.getElementById('selectAllSurcharge');
+        if (selectAllSurcharge) {
+            selectAllSurcharge.addEventListener('change', (e) => {
+                const checkboxes = document.querySelectorAll('#view-bulk-surcharge .surcharge-cb');
+                checkboxes.forEach(cb => {
+                    cb.checked = e.target.checked;
+                });
+            });
+        }
+
+        const viewBulkSurchargeTable = document.querySelector('#view-bulk-surcharge tbody');
+        let ebsPlanCount = 0;
+        
+        const COUNTRY_STATE_MAPPING = {
+            '美国': ['加利福尼亚州', '纽约州', '得克萨斯州', '华盛顿州', '佛罗里达州', '波多黎各', '维尔京群岛', '夏威夷', '关岛', '阿拉斯加'],
+            '加拿大': ['安大略省', '魁北克省', '不列颠哥伦比亚省', '阿尔伯塔省'],
+            '英国': ['英格兰', '苏格兰', '威尔士', '北爱尔兰'],
+            '澳大利亚': ['新南威尔士州', '维多利亚州', '昆士兰州', '西澳大利亚州', '南澳大利亚州', '塔斯马尼亚州'],
+            '中国': ['广东省', '浙江省', '江苏省', '上海市', '北京市']
+        };
+
+        const CONDITION_MAPPING = {
+            '订单·报关方式': ['客户自报关', '我司自报关', '出口报关', '单证报关', '买单报关'],
+            '订单·货物性质': ['普货', '危险品'],
+            '订单·交税方式': ['不包税', '包税', '自主税号'],
+            '订单·其他服务': ['保险', '熏蒸', '产地证', '商检'],
+            '收件人·偏远类型': ['非偏远地区', '偏远地区', '超偏远地区', '极偏远地区', '岛屿'],
+            '收件人·平台类型': ['亚马逊', '沃尔玛', 'temu'],
+            '指定打单服务商': ['勾选', '未勾选'],
+            '收件人·国家': Object.keys(COUNTRY_STATE_MAPPING),
+            '收件人·省/州': []
+        };
+
+        const createConditionRow = (cond = null) => {
+            const field = cond ? cond.field : '';
+            const operator = cond ? cond.operator : '';
+            let value = cond ? cond.value : [];
+            if (!Array.isArray(value)) value = value ? [value] : [];
+            
+            const row = document.createElement('div');
+            row.className = 'ebs-condition-row';
+            row.innerHTML = `
+                <select class="ebs-select ebs-cond-field" style="width: 160px; flex: none;">
+                    <option value="" ${field===''?'selected':''}>请选择</option>
+                    <option value="订单·报关方式" ${field==='订单·报关方式'?'selected':''}>订单·报关方式</option>
+                    <option value="订单·货物性质" ${field==='订单·货物性质'?'selected':''}>订单·货物性质</option>
+                    <option value="订单·交税方式" ${field==='订单·交税方式'?'selected':''}>订单·交税方式</option>
+                    <option value="订单·其他服务" ${field==='订单·其他服务'?'selected':''}>订单·其他服务</option>
+                    <option value="订单·总件数" ${field==='订单·总件数'?'selected':''}>订单·总件数</option>
+                    <option value="订单·总重量" ${field==='订单·总重量'?'selected':''}>订单·总重量</option>
+                    <option value="订单·总体积" ${field==='订单·总体积'?'selected':''}>订单·总体积</option>
+                    <option value="收件人·国家" ${field==='收件人·国家'?'selected':''}>收件人·国家</option>
+                    <option value="收件人·省/州" ${field==='收件人·省/州'?'selected':''}>收件人·省/州</option>
+                    <option value="收件人·平台类型" ${field==='收件人·平台类型'?'selected':''}>收件人·平台类型</option>
+                    <option value="收件人·偏远类型" ${field==='收件人·偏远类型'?'selected':''}>收件人·偏远类型</option>
+                    <option value="货箱·单箱重量" ${field==='货箱·单箱重量'?'selected':''}>货箱·单箱重量</option>
+                    <option value="货箱·单箱体积" ${field==='货箱·单箱体积'?'selected':''}>货箱·单箱体积</option>
+                    <option value="货箱·围长(cm)" ${field==='货箱·围长(cm)'?'selected':''}>货箱·围长(cm)</option>
+                    <option value="货箱·第一边长(cm)" ${field==='货箱·第一边长(cm)'?'selected':''}>货箱·第一边长(cm)</option>
+                    <option value="货箱·第二边长(cm)" ${field==='货箱·第二边长(cm)'?'selected':''}>货箱·第二边长(cm)</option>
+                    <option value="货箱·品名" ${field==='货箱·品名'?'selected':''}>货箱·品名</option>
+                    <option value="指定打单服务商" ${field==='指定打单服务商'?'selected':''}>指定打单服务商</option>
+                </select>
+                <select class="ebs-select ebs-cond-operator" style="width: 100px;">
+                    <option value="" ${operator===''?'selected':''}>请选择</option>
+                    <option value="=" ${operator==='='?'selected':''}>=</option>
+                    <option value="≠" ${operator==='≠'?'selected':''}>neq</option>
+                    <option value="＞" ${operator==='＞'?'selected':''}>＞</option>
+                    <option value="≥" ${operator==='≥'?'selected':''}>≥</option>
+                    <option value="＜" ${operator==='＜'?'selected':''}>＜</option>
+                    <option value="≤" ${operator==='≤'?'selected':''}>≤</option>
+                </select>
+                <div class="ebs-multi-select-container" style="position: relative; flex: none; width: 180px;" data-value='${JSON.stringify(value)}'>
+                    <div class="ebs-select ebs-cond-value-display" style="cursor: pointer; display: flex; align-items: center; justify-content: space-between;">
+                        <span class="ebs-ms-text" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">${value.length > 0 ? value.join(', ') : '请选择'}</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" style="flex-shrink: 0;"><path d="M6 9l6 6 6-6"></path></svg>
+                    </div>
+                    <div class="ebs-ms-dropdown" style="display: none; position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: #fff; border: 1px solid #d9d9d9; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); z-index: 100; max-height: 200px; overflow-y: auto; padding: 4px 0;">
+                    </div>
+                </div>
+                <input type="text" class="ebs-input ebs-cond-value-input" style="width: 180px; flex: none; display: none;" placeholder="请输入" value="${Array.isArray(value) ? value.join(',') : (value || '')}">
+                <button class="ebs-btn-icon ebs-btn-add-cond">+</button>
+                <button class="ebs-btn-icon ebs-btn-rm-cond">-</button>
+            `;
+            
+            if (operator === '≠' || cond === null) {
+                row.querySelector('option[value="≠"]').textContent = '≠';
+            }
+            
+            const fieldSelect = row.querySelector('.ebs-cond-field');
+            const msContainer = row.querySelector('.ebs-multi-select-container');
+            const msDisplay = row.querySelector('.ebs-cond-value-display');
+            const msText = row.querySelector('.ebs-ms-text');
+            const msDropdown = row.querySelector('.ebs-ms-dropdown');
+            const valInput = row.querySelector('.ebs-cond-value-input');
+            
+            const updateDropdown = (fld, initialVals = []) => {
+                msDropdown.innerHTML = '';
+                
+                if (['货箱·品名', '订单·总件数', '订单·总重量', '订单·总体积', '货箱·围长(cm)', '货箱·第一边长(cm)', '货箱·第二边长(cm)', '货箱·单箱重量', '货箱·单箱体积'].includes(fld)) {
+                    msContainer.style.display = 'none';
+                    valInput.style.display = 'block';
+                    valInput.value = Array.isArray(initialVals) ? initialVals.join(',') : (initialVals || '');
+                    return;
+                } else {
+                    msContainer.style.display = 'block';
+                    valInput.style.display = 'none';
+                }
+                
+                let options = CONDITION_MAPPING[fld] || [];
+                
+                if (fld === '收件人·省/州') {
+                    const planNode = row.closest('.ebs-plan-container');
+                    let selectedCountries = [];
+                    if (planNode) {
+                        const countryRows = Array.from(planNode.querySelectorAll('.ebs-condition-row')).filter(r => r.querySelector('.ebs-cond-field').value === '收件人·国家');
+                        countryRows.forEach(cr => {
+                            try {
+                                const msData = JSON.parse(cr.querySelector('.ebs-multi-select-container').dataset.value || '[]');
+                                selectedCountries.push(...msData);
+                            } catch(e){}
+                        });
+                    }
+                    if (selectedCountries.length > 0) {
+                        options = [...new Set(selectedCountries.flatMap(c => COUNTRY_STATE_MAPPING[c] || []))];
+                    } else {
+                        options = [];
+                    }
+                }
+                
+                const validVals = initialVals.filter(v => options.includes(v));
+                msContainer.dataset.value = JSON.stringify(validVals);
+                msText.textContent = validVals.length > 0 ? validVals.join(', ') : '请选择';
+                msText.title = msText.textContent;
+                
+                if (options.length === 0) {
+                    msDropdown.innerHTML = '<div style="padding: 5px 12px; color: #999; font-size: 13px;">' + (fld === '收件人·省/州' ? '请先选择收件人·国家' : '请先选择左侧条件') + '</div>';
+                    return;
+                }
+                
+                options.forEach(opt => {
+                    const item = document.createElement('div');
+                    item.style.cssText = 'padding: 6px 12px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 13px; color: #333;';
+                    item.className = 'ebs-ms-item';
+                    const isChecked = validVals.includes(opt);
+                    item.innerHTML = `<input type="checkbox" value="${opt}" ${isChecked ? 'checked' : ''} style="cursor: pointer; margin: 0;"><span style="flex: 1;">${opt}</span>`;
+                    
+                    item.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        if (e.target.tagName !== 'INPUT') {
+                            const cb = item.querySelector('input');
+                            cb.checked = !cb.checked;
+                        }
+                        const cbs = msDropdown.querySelectorAll('input:checked');
+                        const selected = Array.from(cbs).map(cb => cb.value);
+                        msContainer.dataset.value = JSON.stringify(selected);
+                        msText.textContent = selected.length > 0 ? selected.join(', ') : '请选择';
+                        msText.title = msText.textContent;
+                        
+                        if (fld === '收件人·国家') {
+                            const planNode = row.closest('.ebs-plan-container');
+                            if (planNode && planNode.refreshStates) planNode.refreshStates();
+                        }
+                    });
+                    
+                    item.addEventListener('mouseenter', () => item.style.backgroundColor = '#f5f5f5');
+                    item.addEventListener('mouseleave', () => item.style.backgroundColor = 'transparent');
+                    
+                    msDropdown.appendChild(item);
+                });
+            };
+            
+            row.updateDropdownFn = updateDropdown;
+            updateDropdown(field, value);
+            
+            fieldSelect.addEventListener('change', (e) => {
+                updateDropdown(e.target.value, []);
+            });
+            
+            msDisplay.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isVisible = msDropdown.style.display === 'block';
+                document.querySelectorAll('.ebs-ms-dropdown').forEach(dd => dd.style.display = 'none');
+                msDropdown.style.display = isVisible ? 'none' : 'block';
+            });
+            
+            return row;
+        };
+        
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.ebs-ms-dropdown').forEach(dd => dd.style.display = 'none');
         });
 
-        navOrgMgmt.addEventListener('click', (e) => {
-            e.preventDefault();
-            switchView(viewOrgMgmt, 'nav-org-mgmt');
+        const ebsChannelDisplay = document.getElementById('ebs-channel-display');
+        const ebsChannelDropdown = document.getElementById('ebs-channel-dropdown');
+        const ebsChannelText = document.getElementById('ebs-channel-text');
+        const ebsChannelCbAll = document.getElementById('ebs-channel-cb-all');
+        const ebsChannelCbs = document.querySelectorAll('.ebs-channel-cb');
+
+        if (ebsChannelDisplay) {
+            ebsChannelDisplay.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isVisible = ebsChannelDropdown.style.display === 'block';
+                document.querySelectorAll('.ebs-ms-dropdown').forEach(dd => dd.style.display = 'none');
+                ebsChannelDropdown.style.display = isVisible ? 'none' : 'block';
+            });
+            
+            const updateChannelText = () => {
+                const selected = Array.from(ebsChannelCbs).filter(cb => cb.checked).map(cb => cb.value);
+                if (selected.length > 0) {
+                    ebsChannelText.textContent = selected.join(', ');
+                    ebsChannelText.style.color = '#333';
+                } else {
+                    ebsChannelText.textContent = '请选择关联渠道';
+                    ebsChannelText.style.color = '#c0c4cc';
+                }
+                document.getElementById('ebs-channel-wrapper').dataset.value = JSON.stringify(selected);
+                ebsChannelCbAll.checked = selected.length === ebsChannelCbs.length && ebsChannelCbs.length > 0;
+            };
+
+            const cbAllParent = ebsChannelCbAll.closest('.ebs-ms-item');
+            cbAllParent.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (e.target.tagName !== 'INPUT') {
+                    ebsChannelCbAll.checked = !ebsChannelCbAll.checked;
+                }
+                ebsChannelCbs.forEach(cb => cb.checked = ebsChannelCbAll.checked);
+                updateChannelText();
+            });
+            cbAllParent.addEventListener('mouseenter', () => cbAllParent.style.backgroundColor = '#f5f5f5');
+            cbAllParent.addEventListener('mouseleave', () => cbAllParent.style.backgroundColor = 'transparent');
+
+            document.querySelectorAll('.ebs-channel-opt').forEach(opt => {
+                opt.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (e.target.tagName !== 'INPUT') {
+                        const cb = opt.querySelector('input');
+                        cb.checked = !cb.checked;
+                    }
+                    updateChannelText();
+                });
+                opt.addEventListener('mouseenter', () => opt.style.backgroundColor = '#f5f5f5');
+                opt.addEventListener('mouseleave', () => opt.style.backgroundColor = 'transparent');
+            });
+        }
+
+        const addEbsPlan = (pData = null) => {
+            ebsPlanCount++;
+            const numberMap = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十'];
+            const titleIndex = ebsPlanCount <= 10 ? numberMap[ebsPlanCount - 1] : ebsPlanCount;
+            
+            const matchType = pData ? pData.matchType : 'all';
+            const billingType = pData ? (pData.billingType || 'fixed') : 'fixed';
+            const currency = pData ? pData.currency : 'CNY';
+            const amount = pData ? pData.amount : '';
+            const priorityRule = pData ? (pData.priorityRule || '不变') : '不变';
+            
+            const planDiv = document.createElement('div');
+            planDiv.className = 'ebs-plan-container';
+            planDiv.innerHTML = `
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+                    <div class="ebs-plan-title" style="margin-bottom: 0;">方案${titleIndex}</div>
+                    <button class="ebs-btn-icon ebs-btn-rm-plan" style="color: #ff4d4f; border-color: transparent;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"></path></svg></button>
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                    <span class="ebs-label">条件：</span>
+                    <select class="ebs-select ebs-match-type" style="width: 200px; flex: none;">
+                        <option value="all" ${matchType==='all'?'selected':''}>满足所有条件</option>
+                        <option value="any" ${matchType==='any'?'selected':''}>满足任意条件</option>
+                    </select>
+                </div>
+                <div class="ebs-conditions-list" style="padding-left: 54px;">
+                </div>
+                <div class="ebs-calc-row" style="margin-top: 24px; display: flex; align-items: center;">
+                    <span class="ebs-label" style="font-weight: 500;">计费：</span>
+                    <label style="margin-right: 16px; cursor: pointer; display: flex; align-items: center;"><input type="radio" name="ebs-billing-type-${ebsPlanCount}" value="fixed" ${billingType==='fixed'?'checked':''} class="ebs-billing-radio" style="margin-right: 4px;">固定费用</label>
+                    <label style="margin-right: 16px; cursor: pointer; display: flex; align-items: center;"><input type="radio" name="ebs-billing-type-${ebsPlanCount}" value="formula" ${billingType==='formula'?'checked':''} class="ebs-billing-radio" style="margin-right: 4px;">公式</label>
+                    <label style="cursor: pointer; display: flex; align-items: center;"><input type="radio" name="ebs-billing-type-${ebsPlanCount}" value="reject" ${billingType==='reject'?'checked':''} class="ebs-billing-radio" style="margin-right: 4px;">拒单</label>
+                </div>
+                <div class="ebs-calc-row ebs-currency-row" style="padding-left: 54px; margin-top: 0; display: ${billingType==='reject'?'none':'flex'}; align-items: center;">
+                    <span class="ebs-label">币制</span>
+                    <select class="ebs-select ebs-currency" style="width: 120px; flex: none;">
+                        <option value="CNY" ${currency==='CNY'?'selected':''}>CNY</option>
+                        <option value="USD" ${currency==='USD'?'selected':''}>USD</option>
+                    </select>
+                </div>
+                <div class="ebs-calc-row ebs-amount-row" style="padding-left: 54px; margin-top: 16px; display: ${billingType==='reject'?'none':'flex'}; align-items: center;">
+                    <span class="ebs-label ebs-amount-label">${billingType==='formula'?'金额表达式':'金额'}</span>
+                    <input type="text" class="ebs-input ebs-amount" style="width: ${billingType==='formula'?'400px':'120px'}; flex: none;" value="${amount}">
+                    <div class="ebs-priority-rule-container" style="display: ${billingType==='formula' && amount.includes('(') ? 'flex' : 'none'}; margin-left: 16px; align-items: center;">
+                        <span class="ebs-label" style="width: auto; margin-right: 8px;">优先计算规则</span>
+                        <select class="ebs-select ebs-priority-rule" style="width: 120px;">
+                            <option value="不变" ${priorityRule==='不变'?'selected':''}>不变</option>
+                            <option value="向上取整" ${priorityRule==='向上取整'?'selected':''}>向上取整</option>
+                            <option value="向下取整" ${priorityRule==='向下取整'?'selected':''}>向下取整</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="ebs-formula-ref-container" style="display: ${billingType==='formula'?'flex':'none'}; padding-left: 54px; margin-top: 16px; align-items: flex-start; gap: 16px;">
+                    <span class="ebs-label" style="margin-top: 8px;">参考字段</span>
+                    <div style="display: flex; gap: 16px; flex: 1;">
+                        <div style="border: 1px solid #d9d9d9; border-radius: 4px; padding: 8px 0; width: 220px; height: 140px; overflow-y: auto; background: #fff;">
+                            ${['订单·总件数', '订单·总重量', '订单·总体积', '货箱·品名', '货箱·围长(cm)', '货箱·第一边长(cm)', '货箱·第二边长(cm)', '货箱·单箱重量', '货箱·单箱体积'].map(f => `
+                            <div class="ebs-ref-item" data-val="[${f}]" style="padding: 6px 16px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-size: 13px; color: #333;">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2"><path d="M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" /><path d="M7 9l5-5 5 5" /><path d="M12 4v12" /></svg>
+                                <span>${f}</span>
+                            </div>
+                            `).join('')}
+                        </div>
+                        <div style="border: 1px solid #d9d9d9; border-radius: 4px; padding: 8px 0; width: 160px; height: 140px; overflow-y: auto; background: #fff;">
+                            ${['+', '-', '*', '/', '=', '＞', '≥', '＜', '≤', '()'].map(op => `
+                            <div class="ebs-ref-item" data-val="${op}" style="padding: 6px 16px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-size: 13px; color: #333;">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2"><path d="M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" /><path d="M7 9l5-5 5 5" /><path d="M12 4v12" /></svg>
+                                <span>${op}</span>
+                            </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            const currencyRow = planDiv.querySelector('.ebs-currency-row');
+            const amountRow = planDiv.querySelector('.ebs-amount-row');
+            const amountLabel = planDiv.querySelector('.ebs-amount-label');
+            const amountInput = planDiv.querySelector('.ebs-amount');
+            const formulaRefContainer = planDiv.querySelector('.ebs-formula-ref-container');
+            const priorityRuleContainer = planDiv.querySelector('.ebs-priority-rule-container');
+            
+            const checkPriorityVisibility = () => {
+                const isFormula = planDiv.querySelector('.ebs-billing-radio:checked').value === 'formula';
+                if (isFormula && amountInput.value.includes('(')) {
+                    priorityRuleContainer.style.display = 'flex';
+                } else {
+                    priorityRuleContainer.style.display = 'none';
+                }
+            };
+            
+            amountInput.addEventListener('keypress', (e) => {
+                if (!/[0-9.]/.test(e.key) && e.key !== 'Enter') {
+                    e.preventDefault();
+                }
+            });
+            amountInput.addEventListener('paste', (e) => {
+                const text = (e.clipboardData || window.clipboardData).getData('text');
+                if (!/^[0-9.]+$/.test(text)) {
+                    e.preventDefault();
+                }
+            });
+            amountInput.addEventListener('input', checkPriorityVisibility);
+            
+            const radios = planDiv.querySelectorAll('.ebs-billing-radio');
+            radios.forEach(r => r.addEventListener('change', (e) => {
+                if (e.target.value === 'reject') {
+                    amountInput.value = '';
+                    currencyRow.style.display = 'none';
+                    amountRow.style.display = 'none';
+                    formulaRefContainer.style.display = 'none';
+                    priorityRuleContainer.style.display = 'none';
+                } else if (e.target.value === 'formula') {
+                    amountInput.value = '';
+                    currencyRow.style.display = 'flex';
+                    amountRow.style.display = 'flex';
+                    amountLabel.textContent = '金额表达式';
+                    amountInput.style.width = '400px';
+                    formulaRefContainer.style.display = 'flex';
+                    checkPriorityVisibility();
+                } else {
+                    amountInput.value = '';
+                    currencyRow.style.display = 'flex';
+                    amountRow.style.display = 'flex';
+                    amountLabel.textContent = '金额';
+                    amountInput.style.width = '120px';
+                    formulaRefContainer.style.display = 'none';
+                    priorityRuleContainer.style.display = 'none';
+                }
+            }));
+            
+            const refItems = planDiv.querySelectorAll('.ebs-ref-item');
+            refItems.forEach(item => {
+                item.addEventListener('mouseenter', () => item.style.backgroundColor = '#f0f5ff');
+                item.addEventListener('mouseleave', () => item.style.backgroundColor = 'transparent');
+                item.addEventListener('click', () => {
+                    const val = item.dataset.val;
+                    const pos = amountInput.selectionStart || amountInput.value.length;
+                    amountInput.value = amountInput.value.substring(0, pos) + val + amountInput.value.substring(pos);
+                    const newPos = pos + val.length - (val === '()' ? 1 : 0);
+                    amountInput.focus();
+                    amountInput.setSelectionRange(newPos, newPos);
+                    checkPriorityVisibility();
+                });
+            });
+            
+            const conditionsList = planDiv.querySelector('.ebs-conditions-list');
+            
+            if (pData && pData.conditions && pData.conditions.length > 0) {
+                pData.conditions.forEach(cond => {
+                    conditionsList.appendChild(createConditionRow(cond));
+                });
+            } else {
+                conditionsList.appendChild(createConditionRow());
+            }
+            
+            conditionsList.addEventListener('click', (e) => {
+                if (e.target.classList.contains('ebs-btn-add-cond')) {
+                    conditionsList.appendChild(createConditionRow());
+                } else if (e.target.classList.contains('ebs-btn-rm-cond')) {
+                    if (conditionsList.children.length > 1) {
+                        const targetRow = e.target.closest('.ebs-condition-row');
+                        const wasCountry = targetRow.querySelector('.ebs-cond-field').value === '收件人·国家';
+                        targetRow.remove();
+                        if (wasCountry && planDiv.refreshStates) planDiv.refreshStates();
+                    } else {
+                        alert('至少保留一行条件');
+                    }
+                }
+            });
+            
+            planDiv.refreshStates = () => {
+                const stateRows = Array.from(planDiv.querySelectorAll('.ebs-condition-row')).filter(r => r.querySelector('.ebs-cond-field').value === '收件人·省/州');
+                stateRows.forEach(sr => {
+                    if (sr.updateDropdownFn) {
+                        const currentVals = JSON.parse(sr.querySelector('.ebs-multi-select-container').dataset.value || '[]');
+                        sr.updateDropdownFn('收件人·省/州', currentVals);
+                    }
+                });
+            };
+            
+            planDiv.refreshStates();
+            
+            const btnRmPlan = planDiv.querySelector('.ebs-btn-rm-plan');
+            if (btnRmPlan) {
+                btnRmPlan.addEventListener('click', () => {
+                    planDiv.remove();
+                });
+            }
+            
+            document.getElementById('ebs-plans-wrapper').appendChild(planDiv);
+        };
+
+        const btnAddEbsPlan = document.getElementById('btn-add-ebs-plan');
+        if (btnAddEbsPlan) {
+            btnAddEbsPlan.addEventListener('click', () => {
+                addEbsPlan();
+            });
+        }
+
+        let currEditingEbsRow = null;
+
+        const openEditSurcharge = (name, row) => {
+            currEditingEbsRow = row;
+            const ebsNameEl = document.getElementById('ebs-name');
+            if (ebsNameEl) {
+                ebsNameEl.value = name;
+                ebsNameEl.disabled = !!row; // Disable if editing existing row, enable if new row
+            }
+            
+            if (row) {
+                document.getElementById('ebs-code').value = row.cells[2].textContent.trim();
+                document.getElementById('ebs-terms').value = row.cells[4].textContent.trim() || '';
+                const statusText = row.cells[6].textContent.trim();
+                document.getElementById('ebs-status').value = statusText === '已启用' ? '1' : (statusText === '已禁用' ? '0' : '');
+            } else {
+                document.getElementById('ebs-code').value = '';
+                document.getElementById('ebs-terms').value = '';
+                document.getElementById('ebs-status').value = '1';
+            }
+
+            const plansWrapper = document.getElementById('ebs-plans-wrapper');
+            if (plansWrapper) plansWrapper.innerHTML = '';
+            
+            ebsPlanCount = 0;
+            
+            if (row && row.dataset.savedPlans) {
+                try {
+                    const plansData = JSON.parse(row.dataset.savedPlans);
+                    if (plansData && plansData.length > 0) {
+                        plansData.forEach(pData => {
+                            addEbsPlan(pData);
+                        });
+                    } else {
+                        addEbsPlan();
+                    }
+                } catch(e) {
+                    addEbsPlan();
+                }
+            } else {
+                addEbsPlan();
+            }
+            
+            switchView(viewEditBulkSurcharge, null);
+            const sidebarQuotation = document.getElementById('sidebar-quotation');
+            if (sidebarQuotation) sidebarQuotation.style.display = 'none';
+        };
+
+        document.getElementById('btn-create-ebs')?.addEventListener('click', () => {
+            openEditSurcharge('', null);
         });
 
-        navEmployeeMgmt.addEventListener('click', (e) => {
-            e.preventDefault();
-            switchView(viewEmployeeMgmt, 'nav-employee-mgmt');
+        const closeEditSurcharge = () => {
+             switchView(viewBulkSurcharge, 'menu-bulk-surcharge');
+        };
+
+        document.getElementById('btn-cancel-ebs')?.addEventListener('click', () => {
+            closeEditSurcharge();
         });
+
+        document.getElementById('btn-save-ebs')?.addEventListener('click', () => {
+            const code = document.getElementById('ebs-code').value;
+            const name = document.getElementById('ebs-name').value;
+            const terms = document.getElementById('ebs-terms').value;
+            const status = document.getElementById('ebs-status').value;
+            
+            if (code) {
+                const trs = viewBulkSurchargeTable.querySelectorAll('tr');
+                let conflictName = null;
+                for (let i = 0; i < trs.length; i++) {
+                    const row = trs[i];
+                    if (row !== currEditingEbsRow) {
+                        const rowCode = row.cells[2] ? row.cells[2].textContent.trim() : '';
+                        if (rowCode === code) {
+                            conflictName = row.cells[3] ? row.cells[3].textContent.trim() : '未知附加费';
+                            break;
+                        }
+                    }
+                }
+                
+                if (conflictName) {
+                    alert('此附加费代码已被(' + conflictName + ')所选择。');
+                    return;
+                }
+            }
+            
+            let targetRow = currEditingEbsRow;
+            
+            if (!targetRow) {
+                // Determine sequence number
+                const trs = viewBulkSurchargeTable.querySelectorAll('tr');
+                const rowCount = trs.length + 1;
+                const today = new Date().toISOString().split('T')[0];
+                
+                targetRow = document.createElement('tr');
+                targetRow.style.borderBottom = '1px solid #ebeef5';
+                targetRow.innerHTML = `
+                    <td style="padding: 12px; text-align: center;"><input type="checkbox" class="surcharge-cb"></td>
+                    <td style="padding: 12px; font-weight: 500; color: #606266;">${rowCount}</td>
+                    <td style="padding: 12px; color: #606266;"></td>
+                    <td style="padding: 12px; font-weight: 500; color: #303133;"></td>
+                    <td style="padding: 12px; color: #909399;"></td>
+                    <td style="padding: 12px; color: #909399;">${today}</td>
+                    <td style="padding: 12px;"></td>
+                    <td style="padding: 12px;">
+                        <a href="javascript:void(0)" class="ebs-edit-btn" style="color: #1677ff; text-decoration: none; margin-right: 8px;">编辑</a>
+                        <a href="javascript:void(0)" class="ebs-del-btn" style="color: #ff4d4f; text-decoration: none;">删除</a>
+                    </td>
+                `;
+                viewBulkSurchargeTable.appendChild(targetRow);
+            }
+            
+            targetRow.cells[2].textContent = code;
+            targetRow.cells[3].textContent = name;
+            targetRow.cells[4].textContent = terms;
+            
+            if (status === '1') {
+                targetRow.cells[6].innerHTML = '<span style="color: #67c23a; font-size: 12px;">已启用</span>';
+            } else if (status === '0') {
+                targetRow.cells[6].innerHTML = '<span style="color: #f56c6c; font-size: 12px;">已禁用</span>';
+            }
+            
+            const planNodes = document.querySelectorAll('.ebs-plan-container');
+                const plansData = [];
+                planNodes.forEach(plan => {
+                    const matchType = plan.querySelector('.ebs-match-type').value;
+                    const conditionRows = plan.querySelectorAll('.ebs-condition-row');
+                    const conditions = [];
+                    conditionRows.forEach(row => {
+                        const fieldVal = row.querySelector('.ebs-cond-field').value;
+                        conditions.push({
+                            field: fieldVal,
+                            operator: row.querySelector('.ebs-cond-operator').value,
+                            value: ['货箱·品名', '订单·总件数', '订单·总重量', '订单·总体积'].includes(fieldVal) ? [row.querySelector('.ebs-cond-value-input').value] : JSON.parse(row.querySelector('.ebs-multi-select-container').dataset.value || '[]')
+                        });
+                    });
+                    
+                    const checkedRadio = plan.querySelector('.ebs-billing-radio:checked');
+                    const billingType = checkedRadio ? checkedRadio.value : 'fixed';
+                    const currency = plan.querySelector('.ebs-currency') ? plan.querySelector('.ebs-currency').value : 'CNY';
+                    const amount = plan.querySelector('.ebs-amount') ? plan.querySelector('.ebs-amount').value : '';
+                    
+                    const priorityRuleContainer = plan.querySelector('.ebs-priority-rule-container');
+                    const priorityRule = priorityRuleContainer.style.display !== 'none' ? plan.querySelector('.ebs-priority-rule').value : '不变';
+                    
+                    plansData.push({
+                        matchType,
+                        conditions,
+                        billingType,
+                        currency,
+                        amount,
+                        priorityRule
+                    });
+                });
+                targetRow.dataset.savedPlans = JSON.stringify(plansData);
+            
+            closeEditSurcharge();
+        });
+
+        if (viewBulkSurchargeTable) {
+            viewBulkSurchargeTable.addEventListener('click', (e) => {
+                if (e.target.classList.contains('edit-surcharge-btn') || e.target.classList.contains('ebs-edit-btn') || e.target.closest('.edit-surcharge-btn') || e.target.closest('.ebs-edit-btn')) {
+                    const targetBtn = e.target.classList.contains('edit-surcharge-btn') || e.target.classList.contains('ebs-edit-btn') ? e.target : (e.target.closest('.edit-surcharge-btn') || e.target.closest('.ebs-edit-btn'));
+                    const row = targetBtn.closest('tr');
+                    const nameCell = row.cells[3].textContent.trim();
+                    openEditSurcharge(nameCell, row);
+                } else if (e.target.classList.contains('delete-surcharge-btn') || e.target.classList.contains('ebs-del-btn')) {
+                    const row = e.target.closest('tr');
+                    if (confirm('确定要删除该项吗？')) {
+                        row.remove();
+                    }
+                }
+            });
+        }
+
+        if (navRoleMgmt) {
+            navRoleMgmt.addEventListener('click', (e) => {
+                e.preventDefault();
+                switchView(viewRoleMgmt, 'nav-role-mgmt');
+            });
+        }
+
+        if (navOrgMgmt) {
+            navOrgMgmt.addEventListener('click', (e) => {
+                e.preventDefault();
+                switchView(viewOrgMgmt, 'nav-org-mgmt');
+            });
+        }
+
+        if (navEmployeeMgmt) {
+            navEmployeeMgmt.addEventListener('click', (e) => {
+                e.preventDefault();
+                switchView(viewEmployeeMgmt, 'nav-employee-mgmt');
+            });
+        }
 
         // Hide special views when clicking other main links
         document.querySelectorAll('.sidebar .menu-item:not(.has-submenu) .menu-title, .sidebar .link:not(#nav-role-mgmt):not(#nav-org-mgmt):not(#nav-employee-mgmt)').forEach(link => {
@@ -4081,6 +5217,29 @@
             btnOpenAddEmployee.addEventListener('click', () => {
                 resetForm();
                 addEmployeeModal.style.display = 'flex';
+            });
+        }
+        
+        // Quotation Sidebar Toggle Logic
+        const primaryMenuItems = Array.from(document.querySelectorAll('.primary-menu-item'));
+        const quotationBtn = primaryMenuItems.find(el => el.querySelector('.label') && el.querySelector('.label').textContent === '报价');
+        const secondarySidebar = document.getElementById('sidebar-quotation');
+        
+        if (quotationBtn && secondarySidebar) {
+            quotationBtn.addEventListener('click', () => {
+                const isHidden = secondarySidebar.style.display === 'none';
+                
+                // Clear active states
+                primaryMenuItems.forEach(item => item.classList.remove('active'));
+
+                if (isHidden) {
+                    secondarySidebar.style.display = 'flex';
+                    quotationBtn.classList.add('active');
+                } else {
+                    secondarySidebar.style.display = 'none';
+                    // Revert to first tab active
+                    primaryMenuItems[0].classList.add('active');
+                }
             });
         }
     </script>
