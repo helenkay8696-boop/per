@@ -2322,6 +2322,956 @@
             background: #f0f7ff;
             font-weight: 500;
         }
+
+        /* Create Workflow View Styles */
+        .flow-create-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 24px;
+            background: #fff;
+            border-bottom: 1px solid #e8e8e8;
+            height: 56px;
+        }
+
+        .flow-header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .flow-header-left .back-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 1px solid #d9d9d9;
+            color: #595959;
+            font-size: 12px;
+        }
+
+        .flow-step-bar {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            font-size: 13px;
+        }
+
+        .flow-step {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #8c8c8c;
+        }
+
+        .flow-step.active {
+            color: #1890ff;
+            font-weight: 500;
+        }
+
+        .flow-step-num {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 1px solid currentColor;
+            font-size: 10px;
+        }
+
+        .flow-header-right {
+            display: flex;
+            gap: 12px;
+        }
+
+        .flow-form-container {
+            flex: 1;
+            padding: 0;
+            overflow: hidden;
+            background: #f5f7fa;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .flow-step-panel {
+            flex: 1;
+            display: none;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .flow-step-panel.active {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Flowchart Canvas Styles - Step 2 */
+        .wf-canvas {
+            width: 100%;
+            height: 100%;
+            background: #f5f7fa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 50px;
+            overflow: auto;
+        }
+
+        .wf-node {
+            width: 220px;
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            border: 1px solid #d9d9d9;
+            margin-bottom: 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .wf-node.active {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+
+        .wf-node-header {
+            padding: 8px 12px;
+            background: #879eb2;
+            color: #fff;
+            font-size: 12px;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .wf-node-body {
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .wf-node-body:hover {
+            background: #f0f7ff;
+        }
+
+        .wf-connector {
+            width: 2px;
+            height: 50px;
+            background: #ccc;
+            position: relative;
+            margin: 0;
+        }
+
+        .wf-add-btn {
+            width: 24px;
+            height: 24px;
+            background: #3b82f6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(59, 130, 246, 0.3);
+            transition: transform 0.2s;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 3;
+        }
+
+        .wf-add-btn:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .wf-end-node {
+            background: #e8e8e8;
+            color: #8c8c8c;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-top: 0;
+            z-index: 2;
+        }
+
+        /* Zoom Controls */
+        .wf-zoom-controls {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #fff;
+            padding: 6px 12px;
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            font-size: 13px;
+            color: #595959;
+            z-index: 10;
+        }
+
+        .wf-zoom-btn {
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            user-select: none;
+        }
+
+        .wf-zoom-btn:hover {
+            background: #f0f0f0;
+        }
+
+        /* Workflow Config Drawer */
+        .wf-drawer {
+            position: absolute;
+            top: 0;
+            right: -320px;
+            width: 320px;
+            height: 100%;
+            background: #fff;
+            box-shadow: -2px 0 8px rgba(0, 0, 0, 0.05);
+            transition: right 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+            border-left: 1px solid #e8e8e8;
+        }
+
+        .wf-drawer.open {
+            right: 0;
+        }
+
+        .wf-drawer-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 15px;
+            font-weight: 500;
+            color: #262626;
+        }
+
+        .wf-drawer-body {
+            padding: 20px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .wf-config-section {
+            margin-bottom: 24px;
+        }
+
+        .wf-config-label {
+            font-size: 12px;
+            color: #8c8c8c;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .wf-radio-group {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 16px;
+        }
+
+        .wf-radio-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: #595959;
+            cursor: pointer;
+        }
+
+        .wf-config-add-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #3b82f6;
+            background: #f0f7ff;
+            border: 1px dashed #3b82f6;
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 13px;
+            cursor: pointer;
+            width: fit-content;
+        }
+
+        .wf-config-add-btn:hover {
+            background: #e6f4ff;
+        }
+
+        .wf-config-tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .wf-config-tag {
+            background: #f5f5f5;
+            border: 1px solid #d9d9d9;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #595959;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .wf-tag-remove {
+            cursor: pointer;
+            color: #bfbfbf;
+            font-size: 14px;
+            line-height: 1;
+        }
+
+        .wf-tag-remove:hover {
+            color: #ff4d4f;
+        }
+
+        /* Approver Node Style */
+        .wf-node.approver .wf-node-header {
+            background: #eb8d6a;
+        }
+
+        /* Collaborator Node Style */
+        .wf-node.collaborator .wf-node-header {
+            background: #ed6f6f;
+        }
+
+        /* CC Node Style */
+        .wf-node.cc .wf-node-header {
+            background: #3b82f6;
+        }
+
+        /* Condition Node Style */
+        .wf-node.condition {
+            border-color: #f0f0f0;
+            padding: 14px;
+        }
+        .wf-node.condition .condition-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+        .wf-node.condition .condition-title {
+            color: #10b981;
+            font-weight: 500;
+        }
+        .wf-node.condition .condition-priority {
+            color: #8c8c8c;
+        }
+
+        /* Branching Layout */
+        .wf-branch-wrap {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            position: relative;
+        }
+
+        .wf-branch-box {
+            display: flex;
+            justify-content: center;
+            position: relative;
+            width: 100%;
+            padding: 30px 0;
+            margin-bottom: -1px;
+        }
+
+        .wf-branch-box::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 30px;
+            background: #ccc;
+        }
+
+        .wf-branch-box::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 30px;
+            background: #ccc;
+        }
+
+        .wf-branch-list {
+            display: flex;
+            position: relative;
+            background-color: transparent;
+        }
+
+        .wf-branch-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            padding: 30px 40px;
+            min-width: 280px;
+        }
+
+        /* Horizontal lines for branching */
+        .wf-branch-item::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #ccc;
+        }
+
+        .wf-branch-item::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #ccc;
+        }
+
+        /* Border removal for first and last items */
+        .wf-branch-item:first-child::before {
+            left: 50%;
+        }
+        .wf-branch-item:last-child::before {
+            right: 50%;
+        }
+        .wf-branch-item:first-child::after {
+            left: 50%;
+        }
+        .wf-branch-item:last-child::after {
+            right: 50%;
+        }
+
+        /* Vertical entry lines from horizontal bars */
+        .wf-branch-node-line {
+            width: 2px;
+            height: 30px;
+            background: #ccc;
+            margin: 0 auto;
+        }
+
+        .wf-add-condition-btn {
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            padding: 4px 16px;
+            background: #fff;
+            border: 1px solid #e8e8e8;
+            border-radius: 16px;
+            font-size: 13px;
+            color: #595959;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: all 0.2s;
+        }
+
+        .wf-add-condition-btn:hover {
+            color: #3b82f6;
+            border-color: #3b82f6;
+            box-shadow: 0 4px 8px rgba(59,130,246,0.1);
+        }
+
+        /* Other Settings Switch Component */
+        .wf-switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 22px;
+        }
+
+        .wf-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .wf-switch-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .3s;
+            border-radius: 34px;
+        }
+
+        .wf-switch-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+        }
+
+        input:checked + .wf-switch-slider {
+            background-color: #3b82f6;
+        }
+
+        input:focus + .wf-switch-slider {
+            box-shadow: 0 0 1px #3b82f6;
+        }
+
+        input:checked + .wf-switch-slider:before {
+            transform: translateX(22px);
+        }
+
+        .other-setting-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid #f0f2f5;
+        }
+
+        .other-setting-row:last-child {
+            border-bottom: none;
+        }
+
+        .other-setting-info {
+            flex: 1;
+        }
+
+        .other-setting-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .other-setting-desc {
+            font-size: 12px;
+            color: #8c8c8c;
+        }
+
+        /* Workflow List Row Styles (Img 3) */
+        .workflow-list-body {
+            display: none; /* Shown when items exist */
+            flex-direction: column;
+        }
+
+        .workflow-item {
+            display: flex;
+            align-items: center;
+            padding: 16px 20px;
+            border-bottom: 1px solid #f0f2f5;
+            transition: background 0.2s;
+            cursor: pointer;
+        }
+
+        .workflow-item:last-child {
+            border-bottom: none;
+        }
+
+        .workflow-item:hover {
+            background: #f9fbff;
+        }
+
+        .wf-item-drag {
+            color: #d9d9d9;
+            margin-right: 16px;
+            cursor: move;
+        }
+
+        .wf-item-icon {
+            width: 36px;
+            height: 36px;
+            background: #3b82f6;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 16px;
+            box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+        }
+
+        .wf-item-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .wf-item-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .wf-item-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .wf-status-tag {
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            background: #e6f1fe;
+            color: #3b82f6;
+        }
+
+        .wf-version-tag {
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            background: #f0f9eb;
+            color: #67c23a;
+            border: 1px solid #e1f3d8;
+        }
+
+        .wf-item-details {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            font-size: 12px;
+            color: #8c8c8c;
+        }
+
+        .wf-detail-label {
+            color: #bfbfbf;
+            margin-right: 4px;
+        }
+
+        .wf-item-right {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .wf-item-time {
+            font-size: 12px;
+            color: #8c8c8c;
+            min-width: 140px;
+            text-align: right;
+        }
+
+        .wf-item-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .wf-edit-link {
+            color: #3b82f6;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .wf-edit-link:hover {
+            text-decoration: underline;
+        }
+
+
+        /* Drawer Tabs */
+        .wf-drawer-tabs {
+            display: flex;
+            padding: 0 20px;
+            border-bottom: 1px solid #f0f2f5;
+            background: #fff;
+        }
+
+        .wf-drawer-tab {
+            padding: 12px 0;
+            margin-right: 32px;
+            font-size: 14px;
+            color: #606266;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s;
+        }
+
+        .wf-drawer-tab.active {
+            color: #3b82f6;
+            font-weight: 500;
+        }
+
+        .wf-drawer-tab.active::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #3b82f6;
+        }
+
+        /* Drawer Content Sections */
+        .wf-drawer-section {
+            padding: 24px 20px;
+            border-bottom: 1px solid #f0f2f5;
+        }
+
+        .wf-drawer-section:last-child {
+            border-bottom: none;
+        }
+
+        .wf-section-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .wf-section-header svg {
+            color: #909399;
+        }
+
+        .wf-drawer-radio-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .wf-drawer-radio-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #606266;
+            cursor: pointer;
+        }
+
+        .wf-drawer-radio-item input[type="radio"] {
+            margin: 0;
+            accent-color: #3b82f6;
+        }
+
+        /* Advanced Settings Divider */
+        .wf-divider-text {
+            display: flex;
+            align-items: center;
+            margin: 32px 0 24px;
+            color: #8c8c8c;
+            font-size: 12px;
+        }
+
+        .wf-divider-text::before,
+        .wf-divider-text::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #f0f2f5;
+        }
+
+        .wf-divider-text span {
+            padding: 0 12px;
+        }
+
+        .wf-config-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        /* Node Selection Popover */
+        .wf-popover {
+            position: absolute;
+            background: #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border-radius: 4px;
+            width: 380px;
+            z-index: 200;
+            display: none;
+            padding: 16px;
+            border: 1px solid #f0f0f0;
+        }
+
+        .wf-popover-header {
+            font-size: 13px;
+            color: #595959;
+            margin-bottom: 12px;
+        }
+
+        .wf-popover-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .wf-popover-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: #f7f9fa;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .wf-popover-item:hover {
+            background: #f0f2f5;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .wf-popover-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            font-size: 16px;
+        }
+
+        .wf-popover-text {
+            font-size: 13px;
+            color: #262626;
+        }
+
+        /* Node Active State mapping */
+        .wf-node.active {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+
+        .wf-node-close {
+            position: absolute;
+            top: 50%;
+            right: 12px;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 16px;
+            cursor: pointer;
+            display: none;
+            line-height: 1;
+        }
+
+        .wf-node:hover .wf-node-close {
+            display: block;
+        }
+
+        .wf-node-close:hover {
+            color: #fff;
+        }
+
+        .flow-form-card {
+            width: 100%;
+            max-width: 600px;
+            background: #fff;
+            border-radius: 4px;
+            padding: 24px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+
+        .flow-section-title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .flow-form-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .flow-form-label {
+            width: 100px;
+            text-align: right;
+            padding-right: 12px;
+            font-size: 13px;
+            color: #333;
+        }
+
+        .flow-form-label.required::before {
+            content: '*';
+            color: #ff4d4f;
+            margin-right: 4px;
+        }
+
+        .flow-form-control {
+            flex: 1;
+        }
+
+        .flow-form-input, .flow-form-select {
+            width: 100%;
+            height: 32px;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            padding: 0 12px;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .flow-form-input[disabled] {
+            background: #f5f5f5;
+            color: #bfbfbf;
+        }
+
+        .flow-admin-avatar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            width: 48px;
+        }
+
+        .avatar-circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #f0f2f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #bfbfbf;
+        }
     </style>
 </head>
 
@@ -3113,7 +4063,7 @@
                 </button>
             </div>
 
-            <div class="workflow-card">
+            <div class="workflow-card" id="card-ocean">
                 <div class="workflow-card-header">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
@@ -3121,51 +4071,342 @@
                             points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
                         </polygon>
                     </svg>
-                    <span>海运 (0)</span>
+                    <span class="card-title-text">海运 (0)</span>
                 </div>
                 <div class="workflow-empty-body">
                     <button class="btn-create-flow">创建新流程</button>
                 </div>
+                <div class="workflow-list-body" id="list-body-ocean"></div>
             </div>
 
-            <div class="workflow-card">
+            <div class="workflow-card" id="card-finance">
                 <div class="workflow-card-header">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                         <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
                         <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
                     </svg>
-                    <span>财务 (0)</span>
+                    <span class="card-title-text">财务 (0)</span>
                 </div>
                 <div class="workflow-empty-body">
                     <button class="btn-create-flow">创建新流程</button>
                 </div>
+                <div class="workflow-list-body" id="list-body-finance"></div>
             </div>
 
-            <div class="workflow-card">
+            <div class="workflow-card" id="card-business">
                 <div class="workflow-card-header">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                         <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                     </svg>
-                    <span>业务 (0)</span>
+                    <span class="card-title-text">业务 (0)</span>
                 </div>
                 <div class="workflow-empty-body">
                     <button class="btn-create-flow">创建新流程</button>
                 </div>
+                <div class="workflow-list-body" id="list-body-business"></div>
             </div>
 
-            <div class="workflow-card" style="margin-bottom: 0;">
+            <div class="workflow-card" id="card-fbx" style="margin-bottom: 0;">
                 <div class="workflow-card-header">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                         <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
                         <polyline points="13 2 13 9 20 9"></polyline>
                     </svg>
-                    <span>FBX订单 (0)</span>
+                    <span class="card-title-text">FBX订单 (0)</span>
                 </div>
                 <div class="workflow-empty-body">
                     <button class="btn-create-flow">创建新流程</button>
+                </div>
+                <div class="workflow-list-body" id="list-body-fbx"></div>
+            </div>
+        </div>
+
+
+        <!-- Create Workflow View -->
+        <div id="view-create-workflow" class="view-container" style="display: none; flex-direction: column; padding: 0; align-items: stretch; background: #f5f7fa; flex: 1;">
+            <div class="flow-create-header">
+                <div class="flow-header-left" id="btn-back-workflow-settings">
+                    <div class="back-btn">&lt;</div>
+                    <span id="flow-display-name">附加费减免申请</span>
+                </div>
+                <div class="flow-step-bar">
+                    <div class="flow-step active" id="step-tab-1">
+                        <div class="flow-step-num">①</div>
+                        基础信息
+                    </div>
+                    <div class="flow-step" id="step-tab-2">
+                        <div class="flow-step-num">②</div>
+                        审批流程
+                    </div>
+                    <div class="flow-step" id="step-tab-3">
+                        <div class="flow-step-num">③</div>
+                        其它设置
+                    </div>
+                </div>
+                <div class="flow-header-right">
+                    <div id="flow-step-1-btns" style="display: flex; gap: 12px;">
+                        <button class="fbx-btn" id="btn-flow-save-1" style="height: 32px; padding: 0 16px;">💾 保存</button>
+                        <button class="fbx-btn fbx-btn-primary" id="btn-flow-next-to-2" style="height: 32px; padding: 0 16px;">下一步</button>
+                    </div>
+                    <div id="flow-step-2-btns" style="display: none; gap: 12px; align-items: center;">
+                        <button class="fbx-btn" id="btn-flow-prev-to-1" style="height: 32px; padding: 0 16px;">上一步</button>
+                        <button class="fbx-btn" style="height: 32px; padding: 0 16px;">恢复默认模板</button>
+                        <button class="fbx-btn" id="btn-flow-next-to-3" style="height: 32px; padding: 0 16px;">下一步</button>
+                    </div>
+                    <div id="flow-step-3-btns" style="display: none; gap: 12px; align-items: center;">
+                        <button class="fbx-btn" id="btn-flow-prev-to-2" style="height: 32px; padding: 0 16px;">上一步</button>
+                        <button class="fbx-btn fbx-btn-primary" id="btn-flow-publish" style="height: 32px; padding: 0 16px;">🔵 发布</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flow-form-container">
+                <!-- 第一步：基础信息 -->
+                <div class="flow-step-panel step-1 active" id="flow-panel-1">
+                    <div class="flow-form-card">
+                    <div class="flow-section-title">基本信息</div>
+                    <div class="flow-form-row">
+                        <div class="flow-form-label">标识</div>
+                        <div class="flow-form-control">
+                            <input type="text" class="flow-form-input" disabled placeholder="自动生成" />
+                        </div>
+                    </div>
+                    <div class="flow-form-row">
+                        <div class="flow-form-label required">名称</div>
+                        <div class="flow-form-control">
+                            <input type="text" class="flow-form-input" id="flow-name-input" value="附加费减免申请" />
+                        </div>
+                    </div>
+                    <div class="flow-form-row">
+                        <div class="flow-form-label required">所在分组</div>
+                        <div class="flow-form-control">
+                            <select class="flow-form-select" id="flow-group-select">
+                                <option value="海运">海运</option>
+                                <option value="财务">财务</option>
+                                <option value="业务">业务</option>
+                                <option value="FBX订单">FBX订单</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="flow-form-row">
+                        <div class="flow-form-label required">所属机构</div>
+                        <div class="flow-form-control">
+                            <select class="flow-form-select" id="flow-org-select">
+                                <option>所有机构</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="flow-form-row" style="align-items: flex-start;">
+                        <div class="flow-form-label required" style="padding-top: 8px;">流程管理员</div>
+                        <div class="flow-form-control">
+                            <div class="flow-admin-avatar">
+                                <div class="avatar-circle">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                                </div>
+                                <span style="font-size: 12px; color: #595959;">yangwu</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flow-section-title" style="margin-top: 32px;">关联表单</div>
+                    <div class="flow-form-row">
+                        <div class="flow-form-label required">选择表单</div>
+                        <div class="flow-form-control">
+                            <select class="flow-form-select">
+                                <option>FBX订单</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: flex-end; margin-top: 40px;">
+                        <button class="fbx-btn fbx-btn-primary" id="btn-flow-next-step" style="height: 32px; padding: 0 24px; border-radius: 16px;">下一步</button>
+                    </div>
+                </div>
+                </div>
+
+                <!-- 第二步：审批流程 -->
+                <div class="flow-step-panel step-2" id="flow-panel-2">
+                    <div class="wf-canvas">
+                        <div id="wf-node-list" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+                            <!-- 发起人节点 -->
+                            <div class="wf-node" id="wf-initiator-node">
+                                <div class="wf-node-header">
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                                    <span>发起人</span>
+                                </div>
+                                <div class="wf-node-body" id="btn-open-initiator-config">
+                                    <span id="wf-initiator-display-text">所有人</span>
+                                    <span style="color: #bfbfbf; font-size: 14px;">&gt;</span>
+                                </div>
+                            </div>
+
+                            <!-- 连线 + 增加按钮 -->
+                            <div class="wf-connector" id="wf-connector-plus">
+                                <div class="wf-add-btn" id="btn-add-wf-node">+</div>
+                            </div>
+
+                            <!-- 流程结束 -->
+                            <div class="wf-end-node">流程结束</div>
+                        </div>
+
+                        <!-- 缩放控件 -->
+                        <div class="wf-zoom-controls">
+                            <span class="wf-zoom-btn">+</span>
+                            <span>100%</span>
+                            <span class="wf-zoom-btn">-</span>
+                        </div>
+
+                        <!-- 节点选择弹出菜单 -->
+                        <div class="wf-popover" id="wf-node-popover">
+                            <div class="wf-popover-header">添加流程节点</div>
+                            <div class="wf-popover-grid">
+                                <div class="wf-popover-item" data-type="approver">
+                                    <div class="wf-popover-icon" style="color: #eb8d6a;">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                    </div>
+                                    <div class="wf-popover-text">审批人</div>
+                                </div>
+                                <div class="wf-popover-item" data-type="collaborator">
+                                    <div class="wf-popover-icon" style="color: #ed6f6f;">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                    </div>
+                                    <div class="wf-popover-text">协作人</div>
+                                </div>
+                                <div class="wf-popover-item" data-type="cc">
+                                    <div class="wf-popover-icon" style="color: #3b82f6;">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                                    </div>
+                                    <div class="wf-popover-text">抄送人</div>
+                                </div>
+                                <div class="wf-popover-item" data-type="condition">
+                                    <div class="wf-popover-icon" style="color: #10b981;">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21v-4a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v4"></path><path d="m9 9 3 3 3-3"></path><path d="m9 4 3 3 3-3"></path></svg>
+                                    </div>
+                                    <div class="wf-popover-text">条件分支</div>
+                                </div>
+                                <div class="wf-popover-item">
+                                    <div class="wf-popover-icon" style="color: #a855f7;">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"></circle><path d="M12 2v4"></path><path d="M12 18v4"></path><path d="M4.93 4.93l2.83 2.83"></path><path d="M16.24 16.24l2.83 2.83"></path><path d="M2 12h4"></path><path d="M18 12h4"></path><path d="M4.93 19.07l2.83-2.83"></path><path d="M16.24 7.76l2.83-2.83"></path></svg>
+                                    </div>
+                                    <div class="wf-popover-text">并行分支</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 配置侧边栏 -->
+                        <div class="wf-drawer" id="wf-config-drawer">
+                            <div class="wf-drawer-header">
+                                <span id="wf-drawer-title-icon" style="margin-right: 8px;">✎</span>
+                                <span id="wf-drawer-title">基础配置</span>
+                                <span style="flex: 1;"></span>
+                                <span style="cursor: pointer; color: #999; font-size: 20px;" id="btn-close-wf-drawer">&times;</span>
+                            </div>
+
+                            <!-- 发起人配置面板 -->
+                            <div id="panel-config-initiator" class="wf-drawer-panel" style="display: none;">
+                                <div class="wf-drawer-section">
+                                    <div class="wf-section-header">
+                                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                                        <span>设置发起人</span>
+                                    </div>
+                                    <div class="wf-config-label">选择能发起该审批的人员/部门，不选则默认开放给所有人</div>
+                                    
+                                    <div class="wf-radio-group" style="margin-top: 16px;">
+                                        <label class="wf-radio-item">
+                                            <input type="radio" name="initiator-type" value="user" checked> 指定人员
+                                        </label>
+                                        <label class="wf-radio-item">
+                                            <input type="radio" name="initiator-type" value="dept"> 部门
+                                        </label>
+                                    </div>
+
+                                    <div id="initiator-user-config" style="margin-top: 16px;">
+                                        <div class="wf-config-add-btn" id="btn-add-initiator-user" style="display: inline-block; padding: 6px 16px; border: 1px dashed #3b82f6; color: #3b82f6; border-radius: 4px; cursor: pointer; font-size: 13px;">+ 选择人员</div>
+                                        <div class="wf-config-tag-list" id="initiator-user-tags" style="margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px;"></div>
+                                    </div>
+
+                                    <div id="initiator-dept-config" style="display: none; margin-top: 16px;">
+                                        <div class="wf-config-add-btn" id="btn-add-initiator-dept" style="display: inline-block; padding: 6px 16px; border: 1px dashed #3b82f6; color: #3b82f6; border-radius: 4px; cursor: pointer; font-size: 13px;">+ 选择部门</div>
+                                        <div class="wf-config-tag-list" id="initiator-dept-tags" style="margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 审批人配置面板 -->
+                            <div id="panel-config-approver" class="wf-drawer-panel" style="display: none;">
+                                <div class="wf-drawer-tabs">
+                                    <div class="wf-drawer-tab active">设置审批人</div>
+                                    <div class="wf-drawer-tab">操作权限设置</div>
+                                </div>
+                                <div class="wf-drawer-body">
+                                    <!-- 选择审批对象 -->
+                                    <div class="wf-drawer-section">
+                                        <div class="wf-section-header">
+                                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                                            <span>选择审批对象</span>
+                                        </div>
+                                        <div class="wf-drawer-radio-grid">
+                                            <label class="wf-drawer-radio-item"><input type="radio" name="appr-target" checked> 指定人员</label>
+                                            <label class="wf-drawer-radio-item"><input type="radio" name="appr-target"> 发起人自己</label>
+                                            <label class="wf-drawer-radio-item"><input type="radio" name="appr-target"> 发起人自选</label>
+                                            <label class="wf-drawer-radio-item"><input type="radio" name="appr-target"> 角色</label>
+                                            <label class="wf-drawer-radio-item"><input type="radio" name="appr-target"> 发起人的部门负责人</label>
+                                            <label class="wf-drawer-radio-item"><input type="radio" name="appr-target"> 部门负责人</label>
+                                        </div>
+                                        <button class="btn-primary" style="margin-top: 20px; padding: 4px 16px; font-size: 13px; border-radius: 16px;">+ 选择人员</button>
+                                    </div>
+
+                                    <!-- 审批人为空时 -->
+                                    <div class="wf-drawer-section">
+                                        <div class="wf-section-header">
+                                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                            <span>审批人为空时</span>
+                                        </div>
+                                        <label class="wf-drawer-radio-item"><input type="radio" name="empty-handle" checked> 转交流程管理员</label>
+                                    </div>
+
+                                    <!-- 任务通知 -->
+                                    <div class="wf-drawer-section">
+                                        <div class="wf-section-header">
+                                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                            <span>任务通知</span>
+                                        </div>
+                                        <div style="display: flex; gap: 16px;">
+                                            <label class="wf-drawer-radio-item"><input type="checkbox"> 消息</label>
+                                            <label class="wf-drawer-radio-item"><input type="checkbox"> 邮件</label>
+                                            <label class="wf-drawer-radio-item"><input type="checkbox"> 短信</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="wf-divider-text"><span>高级设置</span></div>
+
+                                    <!-- 审批期限 -->
+                                    <div class="wf-drawer-section">
+                                        <div class="wf-section-header">
+                                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                            <span>审批期限（为 0 则不生效）</span>
+                                        </div>
+                                        <div class="wf-config-row">
+                                            <input type="number" class="flow-form-input" style="width: 80px;" value="0">
+                                            <select class="flow-form-select" style="width: 100px;">
+                                                <option>小时</option>
+                                                <option>天</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="wf-section-header" style="margin-top: 32px;">
+                                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                                            <span>如果审批被驳回 👇</span>
+                                        </div>
+                                        <label class="wf-drawer-radio-item"><input type="radio" name="reject-handle" checked> 直接结束流程</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -6791,6 +8032,8 @@
         const viewFBAOrderDetail = document.getElementById('view-fba-order-detail');
         const btnOpenFBADetail = document.getElementById('btn-open-fba-detail');
         const btnBackToFBX = document.getElementById('btn-back-to-fbx');
+        const viewCreateWorkflow = document.getElementById('view-create-workflow');
+        const btnBackWorkflowSettings = document.getElementById('btn-back-workflow-settings');
 
         // --- Cross-Module Data Store ---
         let waiverApplications = [];
@@ -6800,7 +8043,7 @@
                 console.error('switchView Error: targetView is null');
                 return;
             }
-            const allViews = [viewDefault, viewRoleMgmt, viewOrgMgmt, viewEmployeeMgmt, viewBulkSurcharge, viewEditBulkSurcharge, viewSurchargeConfirm, viewWorkflowSettings, viewSurchargeWaiver, viewTaskCenter, viewFBXOrders, viewFBAOrderDetail, viewInsurance];
+            const allViews = [viewDefault, viewRoleMgmt, viewOrgMgmt, viewEmployeeMgmt, viewBulkSurcharge, viewEditBulkSurcharge, viewSurchargeConfirm, viewWorkflowSettings, viewSurchargeWaiver, viewTaskCenter, viewFBXOrders, viewFBAOrderDetail, viewInsurance, viewCreateWorkflow];
             allViews.forEach(v => {
                 if (v && v.style) v.style.display = 'none';
             });
@@ -6838,6 +8081,416 @@
                 switchView(viewWorkflowSettings, 'menu-workflow-settings');
             });
         }
+
+        // --- Workflow Settings Navigation ---
+        document.querySelectorAll('.btn-create-flow').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const card = btn.closest('.workflow-card');
+                const title = card ? card.querySelector('.workflow-card-header span')?.textContent || '' : '';
+                const groupName = title.split('(')[0].trim();
+                
+                // Set the group dropdown based on the card title
+                const groupSelect = document.getElementById('flow-group-select');
+                if (groupSelect && groupName) {
+                    groupSelect.value = groupName;
+                }
+                
+                switchView(viewCreateWorkflow);
+            });
+        });
+
+        if (btnBackWorkflowSettings) {
+            btnBackWorkflowSettings.addEventListener('click', () => {
+                switchView(viewWorkflowSettings, 'menu-workflow-settings');
+            });
+        }
+
+        // --- Multi-Step Workflow Creation ---
+        const showWorkflowStep = (step) => {
+            // Panels
+            document.querySelectorAll('.flow-step-panel').forEach(p => p.classList.remove('active'));
+            document.getElementById(`flow-panel-${step}`)?.classList.add('active');
+
+            // Tabs
+            document.querySelectorAll('.flow-step').forEach(s => s.classList.remove('active'));
+            document.getElementById(`step-tab-${step}`)?.classList.add('active');
+
+            // Header Buttons
+            const step1Btns = document.getElementById('flow-step-1-btns');
+            const step2Btns = document.getElementById('flow-step-2-btns');
+            const step3Btns = document.getElementById('flow-step-3-btns');
+            if (step1Btns) step1Btns.style.display = step === 1 ? 'flex' : 'none';
+            if (step2Btns) step2Btns.style.display = step === 2 ? 'flex' : 'none';
+            if (step3Btns) step3Btns.style.display = step === 3 ? 'flex' : 'none';
+        };
+
+        document.getElementById('btn-flow-next-to-2')?.addEventListener('click', () => showWorkflowStep(2));
+        document.getElementById('btn-flow-prev-to-1')?.addEventListener('click', () => showWorkflowStep(1));
+        document.getElementById('btn-flow-next-to-3')?.addEventListener('click', () => showWorkflowStep(3));
+        document.getElementById('btn-flow-prev-to-2')?.addEventListener('click', () => showWorkflowStep(2));
+        document.getElementById('btn-flow-next-step')?.addEventListener('click', () => showWorkflowStep(2));
+
+        // Save Workflow Logic (Img 3)
+        const saveWorkflow = (isPublish = false) => {
+            const name = document.getElementById('flow-name-input')?.value || '未命名流程';
+            const group = document.getElementById('flow-group-select')?.value || '海运';
+            const org = document.getElementById('flow-org-select')?.value || '所有机构';
+            const now = new Date();
+            const timeStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+
+            // Map group to container ID
+            const groupMap = {
+                '海运': 'ocean',
+                '财务': 'finance',
+                '业务': 'business',
+                'FBX订单': 'fbx'
+            };
+            const mode = groupMap[group] || 'ocean';
+            const listBody = document.getElementById(`list-body-${mode}`);
+            const card = document.getElementById(`card-${mode}`);
+            const emptyBody = card?.querySelector('.workflow-empty-body');
+
+            if (!listBody) return;
+
+            // Simple ID for demo
+            const flowId = 'WF' + Math.random().toString(36).substr(2, 6).toUpperCase();
+
+            const itemHtml = `
+                <div class="workflow-item" data-id="${flowId}">
+                    <div class="wf-item-drag">⠿</div>
+                    <div class="wf-item-icon">F</div>
+                    <div class="wf-item-content">
+                        <div class="wf-item-title">
+                            <span class="wf-item-name">${name}</span>
+                            <span class="wf-status-tag">${isPublish ? '已发布' : '草稿'}</span>
+                            <span class="wf-version-tag">v1 备注说明</span>
+                        </div>
+                        <div class="wf-item-details">
+                            <div><span class="wf-detail-label">所在分组</span> ${group}</div>
+                            <div style="margin-left: 20px;"><span class="wf-detail-label">所属机构</span> ${org}</div>
+                        </div>
+                    </div>
+                    <div class="wf-item-right">
+                        <div class="wf-item-time">${timeStr}</div>
+                        <div class="wf-switch open"></div>
+                        <div class="wf-item-actions">
+                            <a href="javascript:void(0)" class="wf-edit-link">编辑</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Append item and toggle visibility
+            listBody.insertAdjacentHTML('beforeend', itemHtml);
+            listBody.style.display = 'flex';
+            if (emptyBody) emptyBody.style.display = 'none';
+
+            // Update card title count
+            const countEl = card?.querySelector('.card-title-text');
+            if (countEl) {
+                const currentCount = listBody.children.length;
+                countEl.textContent = `${group} (${currentCount})`;
+            }
+
+            // Return to list
+            switchView(viewWorkflowSettings, 'menu-workflow-settings');
+            
+            // Success alert
+            alert(isPublish ? '流程发布成功！' : '流程保存成功！');
+        };
+
+        document.getElementById('btn-flow-save-1')?.addEventListener('click', () => saveWorkflow(false));
+        document.getElementById('btn-flow-publish')?.addEventListener('click', () => saveWorkflow(true));
+
+        // --- Initiator Configuration Logic ---
+        const btnOpenInitiator = document.getElementById('btn-open-initiator-config');
+        const btnCloseWfDrawer = document.getElementById('btn-close-wf-drawer');
+        const wfConfigDrawer = document.getElementById('wf-config-drawer');
+        const wfInitiatorNode = document.getElementById('wf-initiator-node');
+        const wfInitiatorDisplayText = document.getElementById('wf-initiator-display-text');
+        
+        const initiatorUserTags = document.getElementById('initiator-user-tags');
+        const initiatorDeptTags = document.getElementById('initiator-dept-tags');
+        const btnAddInitiatorUser = document.getElementById('btn-add-initiator-user');
+        const btnAddInitiatorDept = document.getElementById('btn-add-initiator-dept');
+
+        const toggleWfDrawer = (open) => {
+            if (open) {
+                wfConfigDrawer?.classList.add('open');
+                wfInitiatorNode?.classList.add('active');
+            } else {
+                wfConfigDrawer?.classList.remove('open');
+                wfInitiatorNode?.classList.remove('active');
+            }
+        };
+
+        btnOpenInitiator?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleWfDrawer(true);
+        });
+
+        btnCloseWfDrawer?.addEventListener('click', () => {
+            toggleWfDrawer(false);
+        });
+
+        // Radio change logic
+        document.querySelectorAll('input[name="initiator-type"]').forEach(input => {
+            input.addEventListener('change', (e) => {
+                const isUser = e.target.value === 'user';
+                document.getElementById('initiator-user-config').style.display = isUser ? 'block' : 'none';
+                document.getElementById('initiator-dept-config').style.display = isUser ? 'none' : 'block';
+                // Reset text when switching mode for demo
+                updateNodeText();
+            });
+        });
+
+        const createConfigTag = (text, container) => {
+            if (Array.from(container.children).some(tag => tag.textContent.includes(text))) return;
+            
+            const tag = document.createElement('div');
+            tag.className = 'wf-config-tag';
+            tag.innerHTML = `
+                <span>${text}</span>
+                <span class="wf-tag-remove">&times;</span>
+            `;
+            
+            tag.querySelector('.wf-tag-remove').addEventListener('click', () => {
+                tag.remove();
+                updateNodeText();
+            });
+            
+            container.appendChild(tag);
+            updateNodeText();
+        };
+
+        const updateNodeText = () => {
+            const isUserMode = document.querySelector('input[name="initiator-type"]:checked')?.value === 'user';
+            const container = isUserMode ? initiatorUserTags : initiatorDeptTags;
+            const tags = Array.from(container.children).map(tag => tag.querySelector('span').textContent);
+            
+            if (tags.length > 0) {
+                wfInitiatorDisplayText.textContent = tags.join(', ');
+            } else {
+                wfInitiatorDisplayText.textContent = '所有人';
+            }
+        };
+
+        btnAddInitiatorDept?.addEventListener('click', () => {
+            createConfigTag('业务部', initiatorDeptTags);
+        });
+
+        // --- Node Addition Logic ---
+        const wfNodePopover = document.getElementById('wf-node-popover');
+        const wfNodeList = document.getElementById('wf-node-list');
+        let currentActiveConnector = null;
+
+        const togglePopover = (show, x, y) => {
+            if (show) {
+                wfNodePopover.style.display = 'block';
+                wfNodePopover.style.left = `${x}px`;
+                wfNodePopover.style.top = `${y}px`;
+            } else {
+                wfNodePopover.style.display = 'none';
+            }
+        };
+
+        // Use event delegation for nodes and buttons
+        wfNodeList?.addEventListener('click', (e) => {
+            // Case 1: Click on "+" button to add node
+            if (e.target.classList.contains('wf-add-btn')) {
+                e.stopPropagation();
+                currentActiveConnector = e.target.closest('.wf-connector');
+                const rect = e.target.getBoundingClientRect();
+                const canvasRect = document.querySelector('.wf-canvas').getBoundingClientRect();
+                
+                const x = rect.left + rect.width / 2 - 190 - canvasRect.left + document.querySelector('.wf-canvas').scrollLeft;
+                const y = rect.bottom + 10 - canvasRect.top + document.querySelector('.wf-canvas').scrollTop;
+                
+                togglePopover(true, x, y);
+                return;
+            }
+
+            // Case 2: Click on a node to configure it
+            const node = e.target.closest('.wf-node');
+            if (node && !e.target.classList.contains('wf-node-close')) {
+                e.stopPropagation();
+                
+                // Determine node type
+                let type = 'approver';
+                let title = '审批人';
+                let icon = '✎';
+
+                if (node.classList.contains('initiator')) {
+                    type = 'initiator';
+                    title = '发起人设置';
+                } else if (node.classList.contains('approver')) {
+                    type = 'approver';
+                    title = '审批人';
+                } else if (node.classList.contains('collaborator')) {
+                    type = 'approver'; // Reuse approver panel for now as per demo
+                    title = '协作人';
+                } else if (node.classList.contains('cc')) {
+                    type = 'approver';
+                    title = '抄送人';
+                }
+
+                // Update drawer UI
+                document.getElementById('wf-drawer-title').textContent = title;
+                document.getElementById('wf-drawer-title-icon').textContent = icon;
+                
+                // Toggle panels
+                document.getElementById('panel-config-initiator').style.display = (type === 'initiator' ? 'block' : 'none');
+                document.getElementById('panel-config-approver').style.display = (type === 'approver' ? 'block' : 'none');
+
+                toggleWfDrawer(true);
+            }
+        });
+
+        // Approver Tab Switching
+        document.querySelectorAll('.wf-drawer-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const parent = tab.closest('.wf-drawer-tabs');
+                parent.querySelectorAll('.wf-drawer-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // In a real app, we'd switch body content here as well
+            });
+        });
+
+        // Hide popover when clicking elsewhere
+        window.addEventListener('click', () => togglePopover(false));
+        wfNodePopover?.addEventListener('click', (e) => e.stopPropagation());
+
+        const insertWorkflowNode = (type) => {
+            if (!currentActiveConnector) return;
+
+            const config = {
+                approver: {
+                    title: '审批人',
+                    className: 'approver',
+                    icon: '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>',
+                    placeholder: '请指定审批人'
+                },
+                collaborator: {
+                    title: '协作人',
+                    className: 'collaborator',
+                    icon: '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>',
+                    placeholder: '请指定协作人'
+                },
+                cc: {
+                    title: '抄送人',
+                    className: 'cc',
+                    icon: '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>',
+                    placeholder: '请指定抄送人'
+                }
+            }[type];
+
+            if (config) {
+                const newNodeHtml = `
+                    <div class="wf-node ${config.className}">
+                        <div class="wf-node-header">
+                            ${config.icon}
+                            <span>${config.title}</span>
+                            <span class="wf-node-close">&times;</span>
+                        </div>
+                        <div class="wf-node-body">
+                            <span>${config.placeholder}</span>
+                            <span style="color: #bfbfbf; font-size: 14px;">&gt;</span>
+                        </div>
+                    </div>
+                    <div class="wf-connector">
+                        <div class="wf-add-btn">+</div>
+                    </div>
+                `;
+                
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = newNodeHtml;
+                
+                let lastInserted = currentActiveConnector;
+                while (tempDiv.firstChild) {
+                    const nextNode = tempDiv.firstChild;
+                    wfNodeList.insertBefore(nextNode, lastInserted.nextSibling);
+                    lastInserted = nextNode;
+                }
+            } else if (type === 'condition') {
+                const branchHtml = `
+                    <div class="wf-branch-box">
+                        <div class="wf-add-condition-btn">添加条件</div>
+                        <div class="wf-branch-list">
+                            <!-- 条件1 -->
+                            <div class="wf-branch-item">
+                                <div class="wf-branch-node-line"></div>
+                                <div class="wf-node condition">
+                                    <div class="condition-header">
+                                        <span class="condition-title">条件1</span>
+                                        <span class="condition-priority">优先级1</span>
+                                    </div>
+                                    <div class="wf-node-body">
+                                        <span>请设置条件</span>
+                                    </div>
+                                </div>
+                                <div class="wf-connector">
+                                    <div class="wf-add-btn">+</div>
+                                </div>
+                            </div>
+                            <!-- 默认条件 -->
+                            <div class="wf-branch-item">
+                                <div class="wf-branch-node-line"></div>
+                                <div class="wf-node condition">
+                                    <div class="condition-header">
+                                        <span class="condition-title" style="color: #10b981;">默认条件</span>
+                                        <span class="condition-priority">优先级2</span>
+                                    </div>
+                                    <div class="wf-node-body">
+                                        <span>其它条件进入此分支</span>
+                                    </div>
+                                </div>
+                                <div class="wf-connector">
+                                    <div class="wf-add-btn">+</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wf-connector">
+                        <div class="wf-add-btn">+</div>
+                    </div>
+                `;
+                
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = branchHtml;
+                
+                let lastInserted = currentActiveConnector;
+                while (tempDiv.firstChild) {
+                    const nextNode = tempDiv.firstChild;
+                    wfNodeList.insertBefore(nextNode, lastInserted.nextSibling);
+                    lastInserted = nextNode;
+                }
+            }
+            
+            togglePopover(false);
+            currentActiveConnector = null;
+        };
+
+        wfNodePopover?.querySelectorAll('.wf-popover-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const type = item.getAttribute('data-type');
+                if (type) insertWorkflowNode(type);
+            });
+        });
+
+        // Delete node logic via delegation
+        wfNodeList?.addEventListener('click', (e) => {
+            if (e.target.classList.contains('wf-node-close')) {
+                e.stopPropagation();
+                const node = e.target.closest('.wf-node');
+                const connector = node.nextElementSibling;
+                
+                if (node && connector && connector.classList.contains('wf-connector')) {
+                    node.remove();
+                    connector.remove();
+                }
+            }
+        });
 
         const selectAllSurcharge = document.getElementById('selectAllSurcharge');
         if (selectAllSurcharge) {
