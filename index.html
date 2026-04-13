@@ -3072,10 +3072,13 @@
                 </div>
             </div>
             <div class="modal-footer"
-                style="padding: 12px 20px; border-top: 1px solid #eee; text-align: right; background: #fafafa; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px;">
+                style="padding: 12px 20px; border-top: 1px solid #eee; text-align: right; background: #fafafa; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; display: flex; justify-content: flex-end; gap: 8px;">
                 <button class="btn-reset" id="btn-cancel-waiver"
-                    style="margin-right: 8px; padding: 6px 16px;">取消</button>
-                <button class="btn-primary" id="btn-save-waiver" style="padding: 6px 20px;">保存提交</button>
+                    style="padding: 6px 0; min-width: 90px; height: 32px; font-size: 13px;">取消</button>
+                <button class="ebs-btn" id="btn-draft-waiver"
+                    style="padding: 6px 0; min-width: 90px; height: 32px; font-size: 13px; border: 1px solid #dcdfe6; background: #fff; color: #606266; border-radius: 4px; cursor: pointer;">暂存草稿</button>
+                <button class="btn-primary" id="btn-submit-waiver" 
+                    style="padding: 6px 0; min-width: 90px; height: 32px; font-size: 13px;">提交审核</button>
             </div>
         </div>
     </div>
@@ -3785,6 +3788,7 @@
                     </div>
                 </div>
                 <div style="display: flex; gap: 12px;">
+                    <button class="fbx-btn" style="color: #ff4d4f; border-color: #ff4d4f;">导入保费</button>
                     <button class="fbx-btn fbx-btn-primary" id="btn-batch-insurance"
                         style="display: flex; align-items: center; gap: 6px;">
                         <span>🛡️</span> 批量投保
@@ -8531,7 +8535,8 @@
         const btnOpenWaiver = document.getElementById('btn-open-waiver');
         const btnCloseWaiver = document.getElementById('close-waiver-modal');
         const btnCancelWaiver = document.getElementById('btn-cancel-waiver');
-        const btnSaveWaiver = document.getElementById('btn-save-waiver');
+        const btnDraftWaiver = document.getElementById('btn-draft-waiver');
+        const btnSubmitWaiver = document.getElementById('btn-submit-waiver');
         const waiverFeeSelect = document.getElementById('waiver-fee-select');
         const waiverFeeAmount = document.getElementById('waiver-fee-amount');
         const waiverTbody = document.getElementById('waiver-tbody');
@@ -8590,6 +8595,7 @@
                 let statusClass = 'status-pending';
                 if (app.status === '已批准') statusClass = 'status-approved';
                 if (app.status === '已驳回') statusClass = 'status-rejected';
+                if (app.status === '草稿') statusClass = 'status-pending'; // 使用黄色或自定义灰色标签
 
                 return `
                     <tr style="border-bottom: 1px solid #ebeef5;">
@@ -8609,12 +8615,15 @@
 
         function renderTaskCenterTable() {
             if (!taskTbody) return;
-            if (waiverApplications.length === 0) {
+            // 过滤逻辑：仅显示非草稿状态的申请
+            const activeApplications = waiverApplications.filter(app => app.status !== '草稿');
+            
+            if (activeApplications.length === 0) {
                 taskTbody.innerHTML = `<tr><td colspan="15" style="padding: 100px 0; text-align: center;"><div style="display: flex; flex-direction: column; align-items: center; gap: 8px;"><svg viewBox="0 0 24 24" width="60" height="60" fill="#f0f0f0"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="1" fill="none" /><line x1="21" y1="21" x2="16.65" y2="16.65" stroke="currentColor" stroke-width="2" /><path d="M11 8v6M8 11h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /></svg><div style="color: #999; font-size: 14px;">暂无数据</div></div></td></tr>`;
                 return;
             }
 
-            taskTbody.innerHTML = waiverApplications.map((app, index) => {
+            taskTbody.innerHTML = activeApplications.map((app, index) => {
                 const isUnderReview = app.status === '审核中';
                 const actionHtml = isUnderReview
                     ? `<button class="ebs-btn ebs-btn-primary" onclick="processWaiver('${app.id}', '已批准')" style="padding: 2px 8px; font-size: 11px; margin-right: 4px;">同意</button>
@@ -8657,7 +8666,7 @@
         };
 
         // --- Save Surcharge Waiver (Restructured) ---
-        btnSaveWaiver?.addEventListener('click', () => {
+        const handleWaiverSave = (status) => {
             const orderNo = document.getElementById('waiver-order-select').value;
             const feeType = waiverFeeSelect.value;
             const amount = document.getElementById('waiver-amount-input').value;
@@ -8677,18 +8686,26 @@
                 feeType: feeType,
                 amount: parseFloat(amount).toFixed(2),
                 reason: reason,
-                status: '审核中',
+                status: status,
                 time: `${today} ${time}`,
                 applicant: '当前用户'
             };
 
             waiverApplications.push(newApp);
 
-            alert('申请已提交，已进入管理系统任务中心等待审批');
+            if (status === '草稿') {
+                alert('已成功暂存为草稿');
+            } else {
+                alert('申请已提交，已进入管理系统任务中心等待审批');
+            }
+            
             renderWaiverTable();
             renderTaskCenterTable();
             closeWaiverModal();
-        });
+        };
+
+        btnDraftWaiver?.addEventListener('click', () => handleWaiverSave('草稿'));
+        btnSubmitWaiver?.addEventListener('click', () => handleWaiverSave('审核中'));
 
         // --- Task Center Logic ---
         if (menuTaskCenter) {
