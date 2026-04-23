@@ -2671,16 +2671,19 @@
             border-color: #f0f0f0;
             padding: 14px;
         }
+
         .wf-node.condition .condition-header {
             display: flex;
             justify-content: space-between;
             font-size: 12px;
             margin-bottom: 8px;
         }
+
         .wf-node.condition .condition-title {
             color: #10b981;
             font-weight: 500;
         }
+
         .wf-node.condition .condition-priority {
             color: #8c8c8c;
         }
@@ -2765,12 +2768,15 @@
         .wf-branch-item:first-child::before {
             left: 50%;
         }
+
         .wf-branch-item:last-child::before {
             right: 50%;
         }
+
         .wf-branch-item:first-child::after {
             left: 50%;
         }
+
         .wf-branch-item:last-child::after {
             right: 50%;
         }
@@ -2796,14 +2802,14 @@
             font-size: 13px;
             color: #595959;
             cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
             transition: all 0.2s;
         }
 
         .wf-add-condition-btn:hover {
             color: #3b82f6;
             border-color: #3b82f6;
-            box-shadow: 0 4px 8px rgba(59,130,246,0.1);
+            box-shadow: 0 4px 8px rgba(59, 130, 246, 0.1);
         }
 
         /* Other Settings Switch Component */
@@ -2842,18 +2848,18 @@
             background-color: white;
             transition: .3s;
             border-radius: 50%;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
         }
 
-        input:checked + .wf-switch-slider {
+        input:checked+.wf-switch-slider {
             background-color: #3b82f6;
         }
 
-        input:focus + .wf-switch-slider {
+        input:focus+.wf-switch-slider {
             box-shadow: 0 0 1px #3b82f6;
         }
 
-        input:checked + .wf-switch-slider:before {
+        input:checked+.wf-switch-slider:before {
             transform: translateX(22px);
         }
 
@@ -2887,7 +2893,8 @@
 
         /* Workflow List Row Styles (Img 3) */
         .workflow-list-body {
-            display: none; /* Shown when items exist */
+            display: none;
+            /* Shown when items exist */
             flex-direction: column;
         }
 
@@ -3151,7 +3158,7 @@
 
         .wf-popover-item:hover {
             background: #f0f2f5;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
 
         .wf-popover-icon {
@@ -3162,7 +3169,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
             font-size: 16px;
         }
 
@@ -3203,7 +3210,7 @@
             background: #fff;
             border-radius: 4px;
             padding: 24px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
         }
 
         .flow-section-title {
@@ -3239,7 +3246,8 @@
             flex: 1;
         }
 
-        .flow-form-input, .flow-form-select {
+        .flow-form-input,
+        .flow-form-select {
             width: 100%;
             height: 32px;
             border: 1px solid #d9d9d9;
@@ -3276,7 +3284,7 @@
 </head>
 
 <body>
-    <aside class="primary-sidebar">
+    <aside class="primary-sidebar" id="sidebar-main">
         <div class="primary-logo">
             <svg viewBox="0 0 24 24" fill="currentColor" stroke="none" style="width: 28px; height: 28px;">
                 <path d="M4 4h16v16H4V4zm2 2v12h12V6H6zm2 2h3v8H8V8zm4 0h4v2h-4V8zm0 3h4v2h-4v-2zm0 3h4v2h-4v-2z"
@@ -3786,7 +3794,6 @@
                 <div class="sec-menu-item">收货渠道</div>
                 <div class="sec-menu-item">供应渠道</div>
                 <div class="sec-menu-item" id="menu-bulk-surcharge">散货附加费</div>
-                <div class="sec-menu-item" id="menu-surcharge-confirm">附加费待确认</div>
             </div>
         </div>
     </aside>
@@ -3912,7 +3919,7 @@
                     <div class="crm-subitem">海运订单</div>
                     <div class="crm-subitem">铁运订单</div>
                     <div class="crm-subitem">空运订单</div>
-                    <div class="crm-subitem">FBX订单</div>
+                    <div class="crm-subitem" id="menu-fbx-orders-crm">FBX订单</div>
                     <div class="crm-subitem">俄线订单</div>
                     <div class="crm-subitem">代采订单</div>
                     <div class="crm-subitem">拖车订单</div>
@@ -3958,7 +3965,6 @@
                     <div class="crm-subitem">客户账单</div>
                     <div class="crm-subitem">对账单</div>
                     <div class="crm-subitem">开票申请</div>
-                    <div class="crm-subitem" id="menu-surcharge-waiver">附加费减免申请</div>
                 </div>
             </div>
 
@@ -3976,59 +3982,50 @@
         </div>
     </aside>
 
-    <!-- Modal: Surcharge Waiver Application -->
-    <div class="modal-backdrop" id="modal-surcharge-waiver"
-        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10001; align-items: center; justify-content: center;">
+    <!-- Modal: Fee Waiver Application (New) -->
+    <div class="modal-backdrop" id="modal-fee-waiver"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10002; align-items: center; justify-content: center;">
         <div class="modal"
-            style="background: #fff; width: 520px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); display: flex; flex-direction: column;">
+            style="background: #fff; width: 800px; border-radius: 8px; box-shadow: 0 4px 24px rgba(0,0,0,0.2); display: flex; flex-direction: column; overflow: hidden;">
             <div class="modal-header"
-                style="padding: 16px 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
-                <h3 style="margin: 0; font-size: 16px; font-weight: 600; color: #333;">新增减免申请</h3>
-                <span class="modal-close" id="close-waiver-modal"
-                    style="cursor: pointer; font-size: 20px; color: #999;">&times;</span>
+                style="padding: 16px 24px; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; background: #fafafa;">
+                <h3 style="margin: 0; font-size: 16px; font-weight: 600; color: #262626;">费用减免申请</h3>
+                <span class="modal-close" id="close-fee-waiver-modal"
+                    style="cursor: pointer; font-size: 22px; color: #8c8c8c; line-height: 1;">&times;</span>
             </div>
-            <div style="padding: 24px; display: flex; flex-direction: column; gap: 16px;">
-                <div class="input-group-vertical">
-                    <label style="font-size: 13px; color: #606266; margin-bottom: 8px; display: block;">订单选择</label>
-                    <select id="waiver-order-select"
-                        style="width: 100%; height: 36px; border: 1px solid #dcdfe6; border-radius: 4px; padding: 0 10px;">
-                        <option value="">请选择订单</option>
-                        <option value="ORD20240412001">ORD20240412001</option>
-                        <option value="ORD20240412002">ORD20240412002</option>
-                    </select>
+            <div style="padding: 24px; max-height: 500px; overflow-y: auto;">
+                <div style="margin-bottom: 16px; font-size: 14px; color: #595959;">
+                    已勾选 <span id="waiver-item-count" style="color: #1890ff; font-weight: 600;">0</span> 项费用需申请减免
                 </div>
-                <div class="input-group-vertical">
-                    <label style="font-size: 13px; color: #606266; margin-bottom: 8px; display: block;">附加费选择</label>
-                    <div style="display: flex; gap: 8px; align-items: center;">
-                        <select id="waiver-fee-select"
-                            style="flex: 1; height: 36px; border: 1px solid #dcdfe6; border-radius: 4px; padding: 0 10px;">
-                            <option value="">请选择附加费项</option>
-                            <option value="THC" data-amount="500">THC (码头操作费)</option>
-                            <option value="DOC" data-amount="200">DOC (文件费)</option>
-                        </select>
-                        <span id="waiver-fee-amount"
-                            style="color: #ff4d4f; font-weight: bold; min-width: 80px;">￥0.00</span>
-                    </div>
-                </div>
-                <div class="input-group-vertical">
-                    <label style="font-size: 13px; color: #606266; margin-bottom: 8px; display: block;">减免金额</label>
-                    <input type="number" id="waiver-amount-input" placeholder="请输入减免金额"
-                        style="width: 100%; height: 36px; border: 1px solid #dcdfe6; border-radius: 4px; padding: 0 10px;">
-                </div>
-                <div class="input-group-vertical">
-                    <label style="font-size: 13px; color: #606266; margin-bottom: 8px; display: block;">减免原因</label>
-                    <textarea id="waiver-reason-input" placeholder="请输入减免详细原因"
-                        style="width: 100%; min-height: 80px; border: 1px solid #dcdfe6; border-radius: 4px; padding: 8px 10px; resize: vertical;"></textarea>
+                <table class="table" style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                    <thead style="background: #f5f5f5;">
+                        <tr>
+                            <th style="padding: 10px; border: 1px solid #f0f0f0; text-align: left; width: 150px;">费用名称
+                            </th>
+                            <th style="padding: 10px; border: 1px solid #f0f0f0; text-align: left; width: 180px;">结算公司
+                            </th>
+                            <th style="padding: 10px; border: 1px solid #f0f0f0; text-align: right; width: 120px;">原始金额
+                            </th>
+                            <th style="padding: 10px; border: 1px solid #f0f0f0; text-align: center; width: 150px;">减免金额
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="waiver-modal-tbody">
+                        <!-- Dynamic content -->
+                    </tbody>
+                </table>
+                <div style="margin-top: 20px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #262626;">备注说明</label>
+                    <textarea id="waiver-apply-remark" placeholder="请输入申请原因..."
+                        style="width: 100%; height: 80px; border: 1px solid #d9d9d9; border-radius: 4px; padding: 10px; font-size: 13px; outline: none;"></textarea>
                 </div>
             </div>
             <div class="modal-footer"
-                style="padding: 12px 20px; border-top: 1px solid #eee; text-align: right; background: #fafafa; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; display: flex; justify-content: flex-end; gap: 8px;">
-                <button class="btn-reset" id="btn-cancel-waiver"
-                    style="padding: 6px 0; min-width: 90px; height: 32px; font-size: 13px;">取消</button>
-                <button class="ebs-btn" id="btn-draft-waiver"
-                    style="padding: 6px 0; min-width: 90px; height: 32px; font-size: 13px; border: 1px solid #dcdfe6; background: #fff; color: #606266; border-radius: 4px; cursor: pointer;">暂存草稿</button>
-                <button class="btn-primary" id="btn-submit-waiver"
-                    style="padding: 6px 0; min-width: 90px; height: 32px; font-size: 13px;">提交审核</button>
+                style="padding: 16px 24px; border-top: 1px solid #f0f0f0; text-align: right; display: flex; justify-content: flex-end; gap: 12px; background: #fafafa;">
+                <button id="btn-cancel-fee-waiver"
+                    style="height: 32px; padding: 0 16px; border: 1px solid #d9d9d9; background: #fff; color: #595959; border-radius: 4px; cursor: pointer;">取消</button>
+                <button id="btn-submit-fee-waiver"
+                    style="height: 32px; padding: 0 16px; border: none; background: #1890ff; color: #fff; border-radius: 4px; cursor: pointer;">提交审核</button>
             </div>
         </div>
     </div>
@@ -4126,7 +4123,8 @@
 
 
         <!-- Create Workflow View -->
-        <div id="view-create-workflow" class="view-container" style="display: none; flex-direction: column; padding: 0; align-items: stretch; background: #f5f7fa; flex: 1;">
+        <div id="view-create-workflow" class="view-container"
+            style="display: none; flex-direction: column; padding: 0; align-items: stretch; background: #f5f7fa; flex: 1;">
             <div class="flow-create-header">
                 <div class="flow-header-left" id="btn-back-workflow-settings">
                     <div class="back-btn">&lt;</div>
@@ -4148,93 +4146,107 @@
                 </div>
                 <div class="flow-header-right">
                     <div id="flow-step-1-btns" style="display: flex; gap: 12px;">
-                        <button class="fbx-btn" id="btn-flow-save-1" style="height: 32px; padding: 0 16px;">💾 保存</button>
-                        <button class="fbx-btn fbx-btn-primary" id="btn-flow-next-to-2" style="height: 32px; padding: 0 16px;">下一步</button>
+                        <button class="fbx-btn" id="btn-flow-save-1" style="height: 32px; padding: 0 16px;">💾
+                            保存</button>
+                        <button class="fbx-btn fbx-btn-primary" id="btn-flow-next-to-2"
+                            style="height: 32px; padding: 0 16px;">下一步</button>
                     </div>
                     <div id="flow-step-2-btns" style="display: none; gap: 12px; align-items: center;">
-                        <button class="fbx-btn" id="btn-flow-prev-to-1" style="height: 32px; padding: 0 16px;">上一步</button>
+                        <button class="fbx-btn" id="btn-flow-prev-to-1"
+                            style="height: 32px; padding: 0 16px;">上一步</button>
                         <button class="fbx-btn" style="height: 32px; padding: 0 16px;">恢复默认模板</button>
-                        <button class="fbx-btn" id="btn-flow-next-to-3" style="height: 32px; padding: 0 16px;">下一步</button>
+                        <button class="fbx-btn" id="btn-flow-next-to-3"
+                            style="height: 32px; padding: 0 16px;">下一步</button>
                     </div>
                     <div id="flow-step-3-btns" style="display: none; gap: 12px; align-items: center;">
-                        <button class="fbx-btn" id="btn-flow-prev-to-2" style="height: 32px; padding: 0 16px;">上一步</button>
-                        <button class="fbx-btn fbx-btn-primary" id="btn-flow-publish" style="height: 32px; padding: 0 16px;">🔵 发布</button>
+                        <button class="fbx-btn" id="btn-flow-prev-to-2"
+                            style="height: 32px; padding: 0 16px;">上一步</button>
+                        <button class="fbx-btn fbx-btn-primary" id="btn-flow-publish"
+                            style="height: 32px; padding: 0 16px;">🔵 发布</button>
                     </div>
                 </div>
             </div>
-            
+
             <div class="flow-form-container">
                 <!-- 第一步：基础信息 -->
                 <div class="flow-step-panel step-1 active" id="flow-panel-1">
                     <div class="flow-form-card">
-                    <div class="flow-section-title">基本信息</div>
-                    <div class="flow-form-row">
-                        <div class="flow-form-label">标识</div>
-                        <div class="flow-form-control">
-                            <input type="text" class="flow-form-input" disabled placeholder="自动生成" />
-                        </div>
-                    </div>
-                    <div class="flow-form-row">
-                        <div class="flow-form-label required">名称</div>
-                        <div class="flow-form-control">
-                            <input type="text" class="flow-form-input" id="flow-name-input" value="附加费减免申请" />
-                        </div>
-                    </div>
-                    <div class="flow-form-row">
-                        <div class="flow-form-label required">所在分组</div>
-                        <div class="flow-form-control">
-                            <select class="flow-form-select" id="flow-group-select">
-                                <option value="海运">海运</option>
-                                <option value="财务">财务</option>
-                                <option value="业务">业务</option>
-                                <option value="FBX订单">FBX订单</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="flow-form-row">
-                        <div class="flow-form-label required">所属机构</div>
-                        <div class="flow-form-control">
-                            <select class="flow-form-select" id="flow-org-select">
-                                <option>所有机构</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="flow-form-row" style="align-items: flex-start;">
-                        <div class="flow-form-label required" style="padding-top: 8px;">流程管理员</div>
-                        <div class="flow-form-control">
-                            <div class="flow-admin-avatar">
-                                <div class="avatar-circle">
-                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                                </div>
-                                <span style="font-size: 12px; color: #595959;">yangwu</span>
+                        <div class="flow-section-title">基本信息</div>
+                        <div class="flow-form-row">
+                            <div class="flow-form-label">标识</div>
+                            <div class="flow-form-control">
+                                <input type="text" class="flow-form-input" disabled placeholder="自动生成" />
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="flow-section-title" style="margin-top: 32px;">关联表单</div>
-                    <div class="flow-form-row">
-                        <div class="flow-form-label required">选择表单</div>
-                        <div class="flow-form-control">
-                            <select class="flow-form-select">
-                                <option>FBX订单</option>
-                            </select>
+                        <div class="flow-form-row">
+                            <div class="flow-form-label required">名称</div>
+                            <div class="flow-form-control">
+                                <input type="text" class="flow-form-input" id="flow-name-input" value="附加费减免申请" />
+                            </div>
+                        </div>
+                        <div class="flow-form-row">
+                            <div class="flow-form-label required">所在分组</div>
+                            <div class="flow-form-control">
+                                <select class="flow-form-select" id="flow-group-select">
+                                    <option value="海运">海运</option>
+                                    <option value="财务">财务</option>
+                                    <option value="业务">业务</option>
+                                    <option value="FBX订单">FBX订单</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="flow-form-row">
+                            <div class="flow-form-label required">所属机构</div>
+                            <div class="flow-form-control">
+                                <select class="flow-form-select" id="flow-org-select">
+                                    <option>所有机构</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="flow-form-row" style="align-items: flex-start;">
+                            <div class="flow-form-label required" style="padding-top: 8px;">流程管理员</div>
+                            <div class="flow-form-control">
+                                <div class="flow-admin-avatar">
+                                    <div class="avatar-circle">
+                                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                            <path
+                                                d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                                        </svg>
+                                    </div>
+                                    <span style="font-size: 12px; color: #595959;">yangwu</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flow-section-title" style="margin-top: 32px;">关联表单</div>
+                        <div class="flow-form-row">
+                            <div class="flow-form-label required">选择表单</div>
+                            <div class="flow-form-control">
+                                <select class="flow-form-select">
+                                    <option>FBX订单</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; justify-content: flex-end; margin-top: 40px;">
+                            <button class="fbx-btn fbx-btn-primary" id="btn-flow-next-step"
+                                style="height: 32px; padding: 0 24px; border-radius: 16px;">下一步</button>
                         </div>
                     </div>
-                    
-                    <div style="display: flex; justify-content: flex-end; margin-top: 40px;">
-                        <button class="fbx-btn fbx-btn-primary" id="btn-flow-next-step" style="height: 32px; padding: 0 24px; border-radius: 16px;">下一步</button>
-                    </div>
-                </div>
                 </div>
 
                 <!-- 第二步：审批流程 -->
                 <div class="flow-step-panel step-2" id="flow-panel-2">
                     <div class="wf-canvas">
-                        <div id="wf-node-list" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+                        <div id="wf-node-list"
+                            style="display: flex; flex-direction: column; align-items: center; width: 100%;">
                             <!-- 发起人节点 -->
                             <div class="wf-node" id="wf-initiator-node">
                                 <div class="wf-node-header">
-                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                                        <path
+                                            d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                                    </svg>
                                     <span>发起人</span>
                                 </div>
                                 <div class="wf-node-body" id="btn-open-initiator-config">
@@ -4265,31 +4277,66 @@
                             <div class="wf-popover-grid">
                                 <div class="wf-popover-item" data-type="approver">
                                     <div class="wf-popover-icon" style="color: #eb8d6a;">
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="12" cy="7" r="4"></circle>
+                                        </svg>
                                     </div>
                                     <div class="wf-popover-text">审批人</div>
                                 </div>
                                 <div class="wf-popover-item" data-type="collaborator">
                                     <div class="wf-popover-icon" style="color: #ed6f6f;">
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="9" cy="7" r="4"></circle>
+                                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                        </svg>
                                     </div>
                                     <div class="wf-popover-text">协作人</div>
                                 </div>
                                 <div class="wf-popover-item" data-type="cc">
                                     <div class="wf-popover-icon" style="color: #3b82f6;">
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                                        </svg>
                                     </div>
                                     <div class="wf-popover-text">抄送人</div>
                                 </div>
                                 <div class="wf-popover-item" data-type="condition">
                                     <div class="wf-popover-icon" style="color: #10b981;">
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21v-4a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v4"></path><path d="m9 9 3 3 3-3"></path><path d="m9 4 3 3 3-3"></path></svg>
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <path d="M3 21v-4a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v4"></path>
+                                            <path d="m9 9 3 3 3-3"></path>
+                                            <path d="m9 4 3 3 3-3"></path>
+                                        </svg>
                                     </div>
                                     <div class="wf-popover-text">条件分支</div>
                                 </div>
                                 <div class="wf-popover-item">
                                     <div class="wf-popover-icon" style="color: #a855f7;">
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"></circle><path d="M12 2v4"></path><path d="M12 18v4"></path><path d="M4.93 4.93l2.83 2.83"></path><path d="M16.24 16.24l2.83 2.83"></path><path d="M2 12h4"></path><path d="M18 12h4"></path><path d="M4.93 19.07l2.83-2.83"></path><path d="M16.24 7.76l2.83-2.83"></path></svg>
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <circle cx="12" cy="12" r="2"></circle>
+                                            <path d="M12 2v4"></path>
+                                            <path d="M12 18v4"></path>
+                                            <path d="M4.93 4.93l2.83 2.83"></path>
+                                            <path d="M16.24 16.24l2.83 2.83"></path>
+                                            <path d="M2 12h4"></path>
+                                            <path d="M18 12h4"></path>
+                                            <path d="M4.93 19.07l2.83-2.83"></path>
+                                            <path d="M16.24 7.76l2.83-2.83"></path>
+                                        </svg>
                                     </div>
                                     <div class="wf-popover-text">并行分支</div>
                                 </div>
@@ -4302,18 +4349,25 @@
                                 <span id="wf-drawer-title-icon" style="margin-right: 8px;">✎</span>
                                 <span id="wf-drawer-title">基础配置</span>
                                 <span style="flex: 1;"></span>
-                                <span style="cursor: pointer; color: #999; font-size: 20px;" id="btn-close-wf-drawer">&times;</span>
+                                <span style="cursor: pointer; color: #999; font-size: 20px;"
+                                    id="btn-close-wf-drawer">&times;</span>
                             </div>
 
                             <!-- 发起人配置面板 -->
                             <div id="panel-config-initiator" class="wf-drawer-panel" style="display: none;">
                                 <div class="wf-drawer-section">
                                     <div class="wf-section-header">
-                                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                            <path
+                                                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                                            </path>
+                                        </svg>
                                         <span>设置发起人</span>
                                     </div>
                                     <div class="wf-config-label">选择能发起该审批的人员/部门，不选则默认开放给所有人</div>
-                                    
+
                                     <div class="wf-radio-group" style="margin-top: 16px;">
                                         <label class="wf-radio-item">
                                             <input type="radio" name="initiator-type" value="user" checked> 指定人员
@@ -4324,13 +4378,19 @@
                                     </div>
 
                                     <div id="initiator-user-config" style="margin-top: 16px;">
-                                        <div class="wf-config-add-btn" id="btn-add-initiator-user" style="display: inline-block; padding: 6px 16px; border: 1px dashed #3b82f6; color: #3b82f6; border-radius: 4px; cursor: pointer; font-size: 13px;">+ 选择人员</div>
-                                        <div class="wf-config-tag-list" id="initiator-user-tags" style="margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px;"></div>
+                                        <div class="wf-config-add-btn" id="btn-add-initiator-user"
+                                            style="display: inline-block; padding: 6px 16px; border: 1px dashed #3b82f6; color: #3b82f6; border-radius: 4px; cursor: pointer; font-size: 13px;">
+                                            + 选择人员</div>
+                                        <div class="wf-config-tag-list" id="initiator-user-tags"
+                                            style="margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px;"></div>
                                     </div>
 
                                     <div id="initiator-dept-config" style="display: none; margin-top: 16px;">
-                                        <div class="wf-config-add-btn" id="btn-add-initiator-dept" style="display: inline-block; padding: 6px 16px; border: 1px dashed #3b82f6; color: #3b82f6; border-radius: 4px; cursor: pointer; font-size: 13px;">+ 选择部门</div>
-                                        <div class="wf-config-tag-list" id="initiator-dept-tags" style="margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px;"></div>
+                                        <div class="wf-config-add-btn" id="btn-add-initiator-dept"
+                                            style="display: inline-block; padding: 6px 16px; border: 1px dashed #3b82f6; color: #3b82f6; border-radius: 4px; cursor: pointer; font-size: 13px;">
+                                            + 选择部门</div>
+                                        <div class="wf-config-tag-list" id="initiator-dept-tags"
+                                            style="margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px;"></div>
                                     </div>
                                 </div>
                             </div>
@@ -4345,33 +4405,58 @@
                                     <!-- 选择审批对象 -->
                                     <div class="wf-drawer-section">
                                         <div class="wf-section-header">
-                                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none"
+                                                stroke="currentColor" stroke-width="2">
+                                                <circle cx="12" cy="12" r="3"></circle>
+                                                <path
+                                                    d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                                                </path>
+                                            </svg>
                                             <span>选择审批对象</span>
                                         </div>
                                         <div class="wf-drawer-radio-grid">
-                                            <label class="wf-drawer-radio-item"><input type="radio" name="appr-target" checked> 指定人员</label>
-                                            <label class="wf-drawer-radio-item"><input type="radio" name="appr-target"> 发起人自己</label>
-                                            <label class="wf-drawer-radio-item"><input type="radio" name="appr-target"> 发起人自选</label>
-                                            <label class="wf-drawer-radio-item"><input type="radio" name="appr-target"> 角色</label>
-                                            <label class="wf-drawer-radio-item"><input type="radio" name="appr-target"> 发起人的部门负责人</label>
-                                            <label class="wf-drawer-radio-item"><input type="radio" name="appr-target"> 部门负责人</label>
+                                            <label class="wf-drawer-radio-item"><input type="radio" name="appr-target"
+                                                    checked> 指定人员</label>
+                                            <label class="wf-drawer-radio-item"><input type="radio" name="appr-target">
+                                                发起人自己</label>
+                                            <label class="wf-drawer-radio-item"><input type="radio" name="appr-target">
+                                                发起人自选</label>
+                                            <label class="wf-drawer-radio-item"><input type="radio" name="appr-target">
+                                                角色</label>
+                                            <label class="wf-drawer-radio-item"><input type="radio" name="appr-target">
+                                                发起人的部门负责人</label>
+                                            <label class="wf-drawer-radio-item"><input type="radio" name="appr-target">
+                                                部门负责人</label>
                                         </div>
-                                        <button class="btn-primary" style="margin-top: 20px; padding: 4px 16px; font-size: 13px; border-radius: 16px;">+ 选择人员</button>
+                                        <button class="btn-primary"
+                                            style="margin-top: 20px; padding: 4px 16px; font-size: 13px; border-radius: 16px;">+
+                                            选择人员</button>
                                     </div>
 
                                     <!-- 审批人为空时 -->
                                     <div class="wf-drawer-section">
                                         <div class="wf-section-header">
-                                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none"
+                                                stroke="currentColor" stroke-width="2">
+                                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                                <circle cx="12" cy="7" r="4"></circle>
+                                            </svg>
                                             <span>审批人为空时</span>
                                         </div>
-                                        <label class="wf-drawer-radio-item"><input type="radio" name="empty-handle" checked> 转交流程管理员</label>
+                                        <label class="wf-drawer-radio-item"><input type="radio" name="empty-handle"
+                                                checked> 转交流程管理员</label>
                                     </div>
 
                                     <!-- 任务通知 -->
                                     <div class="wf-drawer-section">
                                         <div class="wf-section-header">
-                                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none"
+                                                stroke="currentColor" stroke-width="2">
+                                                <path
+                                                    d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                                                </path>
+                                                <polyline points="22,6 12,13 2,6"></polyline>
+                                            </svg>
                                             <span>任务通知</span>
                                         </div>
                                         <div style="display: flex; gap: 16px;">
@@ -4386,7 +4471,11 @@
                                     <!-- 审批期限 -->
                                     <div class="wf-drawer-section">
                                         <div class="wf-section-header">
-                                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none"
+                                                stroke="currentColor" stroke-width="2">
+                                                <circle cx="12" cy="12" r="10"></circle>
+                                                <polyline points="12 6 12 12 16 14"></polyline>
+                                            </svg>
                                             <span>审批期限（为 0 则不生效）</span>
                                         </div>
                                         <div class="wf-config-row">
@@ -4398,10 +4487,18 @@
                                         </div>
 
                                         <div class="wf-section-header" style="margin-top: 32px;">
-                                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none"
+                                                stroke="currentColor" stroke-width="2">
+                                                <path
+                                                    d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z">
+                                                </path>
+                                                <line x1="12" y1="9" x2="12" y2="13"></line>
+                                                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                                            </svg>
                                             <span>如果审批被驳回 👇</span>
                                         </div>
-                                        <label class="wf-drawer-radio-item"><input type="radio" name="reject-handle" checked> 直接结束流程</label>
+                                        <label class="wf-drawer-radio-item"><input type="radio" name="reject-handle"
+                                                checked> 直接结束流程</label>
                                     </div>
                                 </div>
                             </div>
@@ -4467,10 +4564,10 @@
                 <div class="fbx-tabs-header">
                     <div class="fbx-tab active">全部</div>
                     <div class="fbx-tab">待受理</div>
-                    <div class="fbx-tab">特派车</div>
+                    <div class="fbx-tab">待派车</div>
                     <div class="fbx-tab">待上门装柜</div>
                     <div class="fbx-tab">待装货</div>
-                    <div class="fbx-tab">待提货确认</div>
+                    <div class="fbx-tab">待拣货确认</div>
                     <div class="fbx-tab">待配载</div>
                     <div class="fbx-tab">待订舱</div>
                     <div class="fbx-tab">待签单</div>
@@ -4542,28 +4639,78 @@
                                 <th style="padding: 12px; font-weight: 500; width: 100px;">结算方式</th>
                                 <th style="padding: 12px; font-weight: 500; width: 150px;">客户备注</th>
                                 <th style="padding: 12px; font-weight: 500; width: 100px;">订单状态</th>
+                                <th style="padding: 12px; font-weight: 500; width: 100px; color: #f56c6c;">超长附加费</th>
+                                <th style="padding: 12px; font-weight: 500; width: 100px; color: #f56c6c;">超重附加费</th>
+                                <th style="padding: 12px; font-weight: 500; width: 100px; color: #f56c6c;">偏远派送费</th>
+                                <th style="padding: 12px; font-weight: 500; width: 100px; color: #f56c6c;">提货费</th>
+                                <th style="padding: 12px; font-weight: 500; width: 100px; color: #f56c6c;">费用合计</th>
                                 <th style="padding: 12px; font-weight: 500; width: 120px;">备注1</th>
                                 <th style="padding: 12px; font-weight: 500; width: 120px;">备注2</th>
                                 <th style="padding: 12px; font-weight: 500; width: 100px;">客户编码</th>
                                 <th
-                                    style="padding: 12px; font-weight: 500; width: 100px; text-align: center; background: #fafafa; position: sticky; right: 0; z-index: 5;">
+                                    style="padding: 12px; font-weight: 500; width: 120px; text-align: center; background: #fafafa; position: sticky; right: 0; z-index: 5;">
                                     操作</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td colspan="16" style="padding: 150px 0; text-align: center;">
-                                    <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
-                                        <svg viewBox="0 0 24 24" width="60" height="60" fill="#f0f0f0">
-                                            <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="1"
-                                                fill="none" />
-                                            <line x1="21" y1="21" x2="16.65" y2="16.65" stroke="currentColor"
-                                                stroke-width="2" />
-                                            <path d="M11 8v6M8 11h6" stroke="currentColor" stroke-width="1.5"
-                                                stroke-linecap="round" />
-                                        </svg>
-                                        <div style="color: #999; font-size: 14px;">暂无数据</div>
-                                    </div>
+                            <tr style="border-bottom: 1px solid #f0f0f0;">
+                                <td style="padding: 12px; text-align: center;"><input type="checkbox"></td>
+                                <td style="padding: 12px; text-align: center;">1</td>
+                                <td style="padding: 12px;">海运</td>
+                                <td style="padding: 12px; color: #1890ff;">ORD20240408001</td>
+                                <td style="padding: 12px;">CSQU112233</td>
+                                <td style="padding: 12px;">COSCO</td>
+                                <td style="padding: 12px;">BKG-001</td>
+                                <td style="padding: 12px;">2024-04-12</td>
+                                <td style="padding: 12px;">演示客户_01</td>
+                                <td style="padding: 12px;">月结</td>
+                                <td style="padding: 12px;">-</td>
+                                <td style="padding: 12px;"><span style="color: #faad14;">待拣货确认</span></td>
+                                <td style="padding: 12px; color: #f56c6c;">¥ 150.00</td>
+                                <td style="padding: 12px; color: #f56c6c;">¥ 200.00</td>
+                                <td style="padding: 12px; color: #f56c6c;">¥ 230.00</td>
+                                <td style="padding: 12px; color: #f56c6c;">¥ 120.00</td>
+                                <td style="padding: 12px; color: #f56c6c; font-weight: 600;">¥ 700.00</td>
+                                <td style="padding: 12px;">-</td>
+                                <td style="padding: 12px;">-</td>
+                                <td style="padding: 12px;">CUST001</td>
+                                <td
+                                    style="padding: 12px; text-align: center; position: sticky; right: 0; background: #fff;">
+                                    <a href="javascript:void(0)" class="fbx-push-btn"
+                                        style="color: #1890ff; margin-right: 8px;">推送</a>
+                                    <a href="javascript:void(0)" class="fbx-copy-btn"
+                                        style="color: #1890ff; margin-right: 8px;">复制</a>
+                                    <a href="javascript:void(0)" style="color: #1890ff;">详情</a>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #f0f0f0;">
+                                <td style="padding: 12px; text-align: center;"><input type="checkbox"></td>
+                                <td style="padding: 12px; text-align: center;">2</td>
+                                <td style="padding: 12px;">海运</td>
+                                <td style="padding: 12px; color: #1890ff;">ORD20240408002</td>
+                                <td style="padding: 12px;">MAEU665544</td>
+                                <td style="padding: 12px;">MSK</td>
+                                <td style="padding: 12px;">BKG-002</td>
+                                <td style="padding: 12px;">2024-04-12</td>
+                                <td style="padding: 12px;">演示客户_02</td>
+                                <td style="padding: 12px;">现结</td>
+                                <td style="padding: 12px;">-</td>
+                                <td style="padding: 12px;"><span style="color: #faad14;">待拣货确认</span></td>
+                                <td style="padding: 12px; color: #f56c6c;">¥ 300.00</td>
+                                <td style="padding: 12px; color: #f56c6c;">¥ 400.00</td>
+                                <td style="padding: 12px; color: #f56c6c;">¥ 500.00</td>
+                                <td style="padding: 12px; color: #f56c6c;">¥ 200.00</td>
+                                <td style="padding: 12px; color: #f56c6c; font-weight: 600;">¥ 1,400.00</td>
+                                <td style="padding: 12px;">-</td>
+                                <td style="padding: 12px;">-</td>
+                                <td style="padding: 12px;">CUST002</td>
+                                <td
+                                    style="padding: 12px; text-align: center; position: sticky; right: 0; background: #fff;">
+                                    <a href="javascript:void(0)" class="fbx-push-btn"
+                                        style="color: #1890ff; margin-right: 8px;">推送</a>
+                                    <a href="javascript:void(0)" class="fbx-copy-btn"
+                                        style="color: #1890ff; margin-right: 8px;">复制</a>
+                                    <a href="javascript:void(0)" style="color: #1890ff;">详情</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -4724,13 +4871,34 @@
                     <div class="fba-radio-matrix">
                         <div style="font-size: 12px; color: #595959;">报关方式</div>
                         <div class="fba-radio-group-wrap">
-                            <label class="fba-radio-item"><input type="radio" name="bg"> 客户自报关</label>
-                            <label class="fba-radio-item"><input type="radio" name="bg"> 我司代报关</label>
-                            <label class="fba-radio-item"><input type="radio" name="bg"> 出口报关</label>
-                            <label class="fba-radio-item"><input type="radio" name="bg"> 目的地区报关</label>
-                            <label class="fba-radio-item"><input type="radio" name="bg"> 区区流转</label>
-                            <label class="fba-radio-item"><input type="radio" name="bg"> 单证报关</label>
-                            <label class="fba-radio-item"><input type="radio" name="bg" checked> 买单报关</label>
+                            <label class="fba-radio-item"><input type="radio" name="bg" value="客户自报关"> 客户自报关</label>
+                            <label class="fba-radio-item"><input type="radio" name="bg" value="我司代报关"> 我司代报关</label>
+                            <label class="fba-radio-item"><input type="radio" name="bg" value="出口报关"> 出口报关</label>
+                            <label class="fba-radio-item"><input type="radio" name="bg" value="目的地区报关"> 目的地区报关</label>
+                            <label class="fba-radio-item"><input type="radio" name="bg" value="区区流转"> 区区流转</label>
+                            <label class="fba-radio-item"><input type="radio" name="bg" value="单证报关"> 单证报关</label>
+                            <label class="fba-radio-item"><input type="radio" name="bg" value="买单报关" checked>
+                                买单报关</label>
+                        </div>
+                        <div id="bg-continuation-wrap"
+                            style="display: none; grid-column: span 2; margin: 4px 0 12px 70px; padding: 12px; background: #fdfdfd; border: 1px solid #eef0f4; border-radius: 6px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <label style="font-size: 12px; color: #595959; white-space: nowrap;">是否有报关续页</label>
+                                <div class="fba-radio-group" style="display: flex; gap: 16px;">
+                                    <label class="fba-radio-item"
+                                        style="cursor: pointer; display: flex; align-items: center; gap: 4px;"><input
+                                            type="radio" name="fba-extra-bg" value="否" checked> 否</label>
+                                    <label class="fba-radio-item"
+                                        style="cursor: pointer; display: flex; align-items: center; gap: 4px;"><input
+                                            type="radio" name="fba-extra-bg" value="是"> 是</label>
+                                </div>
+                                <div id="fba-bg-pages-wrap"
+                                    style="display: none; align-items: center; gap: 8px; margin-left: 20px; padding-left: 20px; border-left: 1px solid #eee;">
+                                    <label style="font-size: 12px; color: #595959;">续页页数</label>
+                                    <input type="number" class="fba-input-box"
+                                        style="width: 60px; height: 24px; padding: 0 8px;" placeholder="页数">
+                                </div>
+                            </div>
                         </div>
                         <div style="font-size: 12px; color: #595959;">清关方式</div>
                         <div class="fba-radio-group-wrap">
@@ -4779,82 +4947,7 @@
                     </div>
                 </div>
 
-                <!-- Section: Surcharges (New) -->
-                <div class="fba-section-card">
-                    <div class="fba-section-title">附加费</div>
-                    <div class="fba-form-grid" style="grid-template-columns: repeat(4, 1fr);">
-                        <!-- Row 1 -->
-                        <div class="fba-field" style="grid-column: span 1;">
-                            <label class="fba-label" style="width: 100px;">是否有报关续页</label>
-                            <div class="fba-radio-group">
-                                <label class="fba-radio-item"><input type="radio" name="fba-extra-bg" value="否" checked>
-                                    否</label>
-                                <label class="fba-radio-item"><input type="radio" name="fba-extra-bg" value="是">
-                                    是</label>
-                            </div>
-                        </div>
-                        <div class="fba-field" id="fba-bg-pages-wrap" style="display: none; grid-column: span 1;">
-                            <label class="fba-label" style="width: 40px;">页数</label>
-                            <input type="number" class="fba-input-box" style="width: 80px;" placeholder="页数">
-                        </div>
-                        <div style="grid-column: span 2;"></div>
-
-                        <!-- Row 2: Original Label Type -->
-                        <div class="fba-field" style="grid-column: span 4; margin-top: 8px;">
-                            <label class="fba-label" style="width: 100px;">打单方式</label>
-                            <div class="fba-radio-group" id="fba-label-type-radio-group">
-                                <label class="fba-radio-item"><input type="radio" name="fba-label-type" value="不指定"
-                                        checked> 不指定</label>
-                                <label class="fba-radio-item"><input type="radio" name="fba-label-type" value="客户自打单">
-                                    客户自打单</label>
-                                <label class="fba-radio-item"><input type="radio" name="fba-label-type" value="指定打单服务商">
-                                    指定打单服务商</label>
-                            </div>
-                            <div id="fba-us-carriers-wrap" style="display: none; margin-left: 20px;">
-                                <select class="fba-select-box" style="width: 200px;">
-                                    <option>请选择美国快递服务商</option>
-                                    <option>UPS</option>
-                                    <option>FedEx</option>
-                                    <option>DHL</option>
-                                    <option>USPS</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <!-- Row 3: New Dynamic Surcharge List (New) -->
-                        <div class="fba-field"
-                            style="grid-column: span 4; margin-top: 12px; border-top: 1px solid #f9f9f9; padding-top: 12px;">
-                            <div style="display: flex; align-items: center; gap: 12px;">
-                                <span style="font-size: 12px; font-weight: 500; color: #595959;">附加费列表</span>
-                                <div style="position: relative; display: flex; align-items: center; gap: 8px;">
-                                    <select id="fba-surcharge-source" class="fba-select-box" style="width: 260px;">
-                                        <option value="">-- 点击选择要添加的附加费 --</option>
-                                        <option>资料不齐附加费+1/KG</option>
-                                        <option>资料不齐附加费+1.5/KG</option>
-                                        <option>资料不齐超功率没装UN箱附加费+2/KG</option>
-                                        <option>资料不齐超功率没装UN箱附加费+1.7/KG</option>
-                                        <option>无资料附加费+1.5/KG</option>
-                                        <option>无资料附加费+2/KG</option>
-                                        <option>无资料超功率没装UN箱附加费+2.5/KG</option>
-                                        <option>产品附加费+1/KG</option>
-                                        <option>产品附加费+2/KG</option>
-                                        <option>产品附加费+3/KG</option>
-                                        <option>产品附加费+5/KG</option>
-                                        <option>产品附加费+8/KG</option>
-                                    </select>
-                                    <button class="fbx-btn" id="btn-add-fba-surcharge"
-                                        style="height: 32px; color: #1890ff; padding: 0 16px; border-color: #91d5ff;">+
-                                        添加项目</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="fba-surcharge-list-wrap" id="fba-surcharge-items-container"
-                            style="grid-column: span 4;">
-                            <div style="color: #bfbfbf; font-size: 12px; padding: 4px;">暂未添加附加费条目</div>
-                        </div>
-                    </div>
-                </div>
-
+                <!-- 附加费模块已移至下方 -->
             </div>
 
             <!-- Section: Pickup Information -->
@@ -4938,43 +5031,108 @@
                 </div>
             </div>
 
-            <!-- Section: Dispatch Information -->
+            <!-- Section: Dispatch Information (Refactored) -->
             <div class="fba-section-card">
                 <div class="fba-section-title">派送信息</div>
-                <div class="fba-sub-tabs">
+                <div class="fba-sub-tabs" style="align-items: center;">
                     <div class="fba-sub-tab">FBA</div>
                     <div class="fba-sub-tab active">FBX</div>
                     <div class="fba-sub-tab">私人地址</div>
                     <div class="fba-sub-tab">商业地址</div>
                     <div class="fba-sub-tab">客户自提</div>
-                    <label
-                        style="margin-left: auto; display: flex; align-items: center; font-size: 12px; color: #595959; gap: 4px; cursor: pointer;">
-                        <input type="checkbox"> HOLD货
-                    </label>
+                    <div style="margin-left: auto; display: flex; gap: 12px;">
+                        <label
+                            style="display: flex; align-items: center; font-size: 12px; color: #595959; gap: 4px; cursor: pointer;">
+                            <input type="checkbox"> HOLD货
+                        </label>
+                        <label
+                            style="display: flex; align-items: center; font-size: 12px; color: #595959; gap: 4px; cursor: pointer;">
+                            <input type="checkbox"> 已签收
+                        </label>
+                    </div>
                 </div>
-                <div class="fba-form-grid" style="grid-template-columns: 1fr 1fr 1.2fr;">
+
+                <!-- Last-mile Method and Label Type Control Bar -->
+                <div
+                    style="padding: 12px 16px; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 40px; background: #fafbfc;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="font-size: 12px; color: #595959;">尾程派送方式:</span>
+                        <div class="fba-radio-group" id="last-mile-type-radios">
+                            <label class="fba-radio-item"><input type="radio" name="last-mile-type" value="卡派" checked>
+                                卡派</label>
+                            <label class="fba-radio-item"><input type="radio" name="last-mile-type" value="快递派">
+                                快递派</label>
+                            <label class="fba-radio-item"><input type="radio" name="last-mile-type" value="亚马逊自提">
+                                亚马逊自提</label>
+                        </div>
+                    </div>
+
+                    <div id="label-type-dispatch-wrap" style="display: none; align-items: center; gap: 12px;">
+                        <span
+                            style="font-size: 12px; color: #595959; border-left: 1px solid #eee; padding-left: 20px; margin-left: 10px;">打单方式:</span>
+                        <div class="fba-radio-group">
+                            <label class="fba-radio-item"><input type="radio" name="fba-label-type-dispatch" value="不指定"
+                                    checked> 不指定</label>
+                            <label class="fba-radio-item"><input type="radio" name="fba-label-type-dispatch"
+                                    value="客户自打单"> 客户自打单</label>
+                            <label class="fba-radio-item"><input type="radio" name="fba-label-type-dispatch"
+                                    value="指定打单服务商"> 指定打单服务商</label>
+                        </div>
+                        <div id="fba-us-carriers-dispatch-wrap" style="display: none; margin-left: 12px;">
+                            <select class="fba-select-box" style="width: 160px; height: 28px; font-size: 11px;">
+                                <option>请选择美国快递服务商</option>
+                                <option>UPS</option>
+                                <option>FedEx</option>
+                                <option>DHL</option>
+                                <option>USPS</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fba-form-grid" style="grid-template-columns: 1fr 1fr 1.2fr; padding-top: 16px;">
+                    <!-- Column 1 -->
                     <div style="display: flex; flex-direction: column; gap: 8px;">
-                        <div class="fba-field"><label class="fba-label">平台</label><select class="fba-select-box"
-                                disabled></select></div>
+                        <div class="fba-field"><label class="fba-label">平台</label><select class="fba-select-box">
+                                <option>请选择</option>
+                            </select></div>
                         <div class="fba-field"><label class="fba-label">仓库</label><select class="fba-select-box">
                                 <option>请选择仓库</option>
                             </select></div>
                         <div class="fba-field"><label class="fba-label">建标时间</label><input type="date"
                                 class="fba-input-box"></div>
-                        <div class="fba-field"><label class="fba-label">通知号1</label>
-                            <div style="display: flex; gap:4px; width:100%;"><input type="text"
-                                    class="fba-input-box"><input type="text" class="fba-input-box"></div>
+                        <div class="fba-field"><label class="fba-label">通知税号1</label>
+                            <div style="display: flex; gap:4px; width:100%;"><input type="text" class="fba-input-box"
+                                    placeholder="请输入"><select class="fba-select-box" style="width: 120px;">
+                                    <option>请选择</option>
+                                </select></div>
                         </div>
-                        <div class="fba-field"><label class="fba-label">通知号2</label>
-                            <div style="display: flex; gap:4px; width:100%;"><input type="text"
-                                    class="fba-input-box"><input type="text" class="fba-input-box"></div>
+                        <div class="fba-field"><label class="fba-label">通知税号2</label>
+                            <div style="display: flex; gap:4px; width:100%;"><input type="text" class="fba-input-box"
+                                    placeholder="请输入"><select class="fba-select-box" style="width: 120px;">
+                                    <option>请选择</option>
+                                </select></div>
                         </div>
-                        <div class="fba-field"><label class="fba-label">快递公司</label><select class="fba-select-box">
-                                <option>请选择</option>
-                            </select></div>
-                        <div class="fba-field"><label class="fba-label">快递单号</label><input type="text"
-                                class="fba-input-box"></div>
+
+                        <div id="dispatch-fields-truck">
+                            <div class="fba-field" style="margin-bottom: 8px;"><label
+                                    class="fba-label">ISA预约号</label><input type="text" class="fba-input-box"
+                                    placeholder="请输入ISA预约号"></div>
+                            <div class="fba-field"><label class="fba-label">拿约日期</label><input type="date"
+                                    class="fba-input-box"></div>
+                        </div>
+
+                        <div id="dispatch-fields-express" style="display: none;">
+                            <div class="fba-field" style="margin-bottom: 8px;"><label
+                                    class="fba-label">快递公司</label><select class="fba-select-box">
+                                    <option>请选择</option>
+                                </select></div>
+                            <div class="fba-field"><label class="fba-label">快递单号</label><input type="text"
+                                    class="fba-input-box" placeholder="请输入"></div>
+                        </div>
                     </div>
+
+                    <!-- Column 2 -->
                     <div style="display: flex; flex-direction: column; gap: 8px;">
                         <div class="fba-field"><label class="fba-label">国家/地区</label><select class="fba-select-box">
                                 <option>请选择</option>
@@ -4983,32 +5141,124 @@
                                 <option>请选择</option>
                             </select></div>
                         <div class="fba-field"><label class="fba-label">区/县</label><input type="text"
-                                class="fba-input-box"></div>
+                                class="fba-input-box" placeholder="请输入"></div>
                         <div class="fba-field"><label class="fba-label">地址1</label><input type="text"
-                                class="fba-input-box"></div>
+                                class="fba-input-box" placeholder="请输入"></div>
                         <div class="fba-field"><label class="fba-label">地址2</label><input type="text"
-                                class="fba-input-box"></div>
+                                class="fba-input-box" placeholder="请输入"></div>
                         <div class="fba-field"><label class="fba-label">地址3</label><input type="text"
-                                class="fba-input-box"></div>
+                                class="fba-input-box" placeholder="请输入"></div>
                         <div class="fba-field"><label class="fba-label">邮编</label><input type="text"
-                                class="fba-input-box"></div>
+                                class="fba-input-box" placeholder="请输入"></div>
                     </div>
+
+                    <!-- Column 3 -->
                     <div style="display: flex; flex-direction: column; gap: 8px;">
-                        <div class="fba-radio-group-wrap" style="padding-left: 20px;">
-                            <label class="fba-radio-item"><input type="radio" name="yy" checked> 非偏远地区</label>
+                        <div class="fba-radio-group-wrap"
+                            style="padding-left: 20px; display: flex; flex-wrap: wrap; gap: 8px;">
+                            <label class="fba-radio-item"><input type="radio" name="yy" checked> 非偏远地方</label>
                             <label class="fba-radio-item"><input type="radio" name="yy"> 偏远地区</label>
                             <label class="fba-radio-item"><input type="radio" name="yy"> 超偏远地区</label>
                             <label class="fba-radio-item"><input type="radio" name="yy"> 极偏远地区</label>
                             <label class="fba-radio-item"><input type="radio" name="yy"> 岛屿</label>
                         </div>
                         <div class="fba-field" style="margin-top: 4px;"><label class="fba-label">派送备注</label><input
-                                type="text" class="fba-input-box"></div>
+                                type="text" class="fba-input-box" placeholder="请输入"></div>
+                        <div class="fba-field"><label class="fba-label">到付金额</label><input type="number"
+                                class="fba-input-box" value="0"></div>
                         <div class="fba-field" style="align-items: flex-start;"><label
                                 class="fba-label">提单收货人</label><textarea class="fba-input-box"
-                                style="height: 100px; padding: 8px; resize: none;"></textarea></div>
-                        <div class="fba-field"><label class="fba-label">计划派送日期</label><input type="date"
-                                class="fba-input-box"></div>
+                                style="height: 100px; padding: 8px; resize: none;" placeholder="请输入"></textarea></div>
                     </div>
+                </div>
+            </div>
+
+            <!-- Section: Surcharges (Moved here) -->
+            <div class="fba-section-card">
+                <div class="fba-section-title">附加费</div>
+                <div class="fba-form-grid" style="grid-template-columns: repeat(4, 1fr);">
+                    <div class="fba-field"
+                        style="grid-column: span 4; margin-top: 12px; border-top: 1px solid #f9f9f9; padding-top: 12px;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <span style="font-size: 12px; font-weight: 500; color: #595959;">附加费列表</span>
+                            <div style="position: relative; display: flex; align-items: center; gap: 8px;">
+                                <button class="fbx-btn" id="btn-add-fba-surcharge"
+                                    style="height: 32px; color: #1890ff; padding: 0 12px; border-color: #91d5ff; font-weight: bold; font-size: 16px; display: flex; align-items: center; gap: 4px;">
+                                    <span>+</span> <span style="font-size: 13px; font-weight: normal;">添加附加费</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fba-surcharge-list-wrap" id="fba-surcharge-items-container"
+                        style="grid-column: span 4;">
+                        <div style="color: #bfbfbf; font-size: 12px; padding: 4px;">暂未添加附加费条目</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section: Receivable Fees (Moved here) -->
+            <div class="fba-section-card" id="crm-only-fees-section" style="display: none; margin-top: 16px;">
+                <div class="fba-section-header"
+                    style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #f0f0f0; padding-bottom: 8px; margin-bottom: 12px;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div class="fba-section-title" style="margin-bottom: 0;">应收费用</div>
+                        <label
+                            style="display: flex; align-items: center; gap: 4px; font-size: 13px; color: #595959; font-weight: normal;">
+                            <input type="checkbox"> 完成应收
+                        </label>
+                    </div>
+                    <div style="color: #bfbfbf; cursor: pointer;">⚙️</div>
+                </div>
+                <div style="margin-bottom: 12px; display: flex; gap: 8px;">
+                    <button class="fbx-btn"
+                        style="background: #e6f7ff; color: #1890ff; border-color: #91d5ff; font-size: 12px; height: 28px; padding: 0 12px;">费用模板</button>
+                    <button class="fbx-btn" id="btn-fee-waiver-apply"
+                        style="background: #1890ff; color: #fff; border: none; font-size: 12px; height: 28px; padding: 0 12px; border-radius: 4px; cursor: pointer;">减免申请</button>
+                </div>
+                <div style="overflow-x: auto;">
+                    <table class="table"
+                        style="width: 100%; border-collapse: collapse; font-size: 12px; color: #262626; border: 1px solid #f0f0f0;">
+                        <thead style="background: #fafafa; border-bottom: 1px solid #f0f0f0;">
+                            <tr>
+                                <th style="padding: 8px; width: 40px; text-align: center;"><input type="checkbox"
+                                        id="fee-check-all"></th>
+                                <th style="padding: 8px; width: 60px; text-align: center;">操作</th>
+                                <th style="padding: 8px; width: 40px; text-align: center;">#</th>
+                                <th style="padding: 8px; width: 100px;">计费日期</th>
+                                <th style="padding: 8px; width: 180px;"><span
+                                        style="color: #ff4d4f; margin-right: 4px;">*</span>结算公司</th>
+                                <th style="padding: 8px; width: 120px;"><span
+                                        style="color: #ff4d4f; margin-right: 4px;">*</span>费用项</th>
+                                <th style="padding: 8px; width: 80px;"><span
+                                        style="color: #ff4d4f; margin-right: 4px;">*</span>币种</th>
+                                <th style="padding: 8px; width: 100px;">单价</th>
+                                <th style="padding: 8px; width: 100px;">数量</th>
+                                <th style="padding: 8px; width: 80px;">单位</th>
+                                <th style="padding: 8px; width: 100px;">金额</th>
+                            </tr>
+                        </thead>
+                        <tbody id="crm-fees-tbody">
+                            <tr style="border-bottom: 1px solid #f0f0f0;">
+                                <td style="padding: 8px; text-align: center;"><input type="checkbox"
+                                        class="fee-item-checkbox"></td>
+                                <td style="padding: 8px; text-align: center;">
+                                    <div style="display: flex; gap: 4px; justify-content: center; font-size: 16px;">
+                                        <span style="color: #bfbfbf; cursor: pointer;">⊖</span>
+                                        <span style="color: #bfbfbf; cursor: pointer;">⊕</span>
+                                    </div>
+                                </td>
+                                <td style="padding: 8px; text-align: center;">1</td>
+                                <td style="padding: 8px; color: #52c41a;">2024-04-14</td>
+                                <td style="padding: 8px; color: #52c41a;">YUNWUYU/运物云10086</td>
+                                <td style="padding: 8px; color: #52c41a;">堆存费</td>
+                                <td style="padding: 8px; color: #52c41a;">CNY</td>
+                                <td style="padding: 8px; color: #52c41a;">100.00</td>
+                                <td style="padding: 8px; color: #52c41a;">1.0000</td>
+                                <td style="padding: 8px; color: #52c41a;"></td>
+                                <td style="padding: 8px; color: #52c41a;">100.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -5022,13 +5272,12 @@
                     <h2 style="margin: 0; font-size: 18px; color: #333;">保险管理</h2>
                     <div class="fbx-tabs-header" style="margin: 0; border: none; background: transparent; padding: 0;">
                         <div class="fbx-tab insurance-tab active">全部</div>
-                        <div class="fbx-tab insurance-tab">未投保</div>
+                        <div class="fbx-tab insurance-tab">待投保</div>
                         <div class="fbx-tab insurance-tab">已投保</div>
-                        <div class="fbx-tab insurance-tab">已投保待修改</div>
+                        <div class="fbx-tab insurance-tab">信息变更</div>
                     </div>
                 </div>
                 <div style="display: flex; gap: 12px;">
-                    <button class="fbx-btn" style="color: #ff4d4f; border-color: #ff4d4f;">导入保费</button>
                     <button class="fbx-btn fbx-btn-primary" id="btn-batch-insurance"
                         style="display: flex; align-items: center; gap: 6px;">
                         <span>🛡️</span> 批量投保
@@ -5163,13 +5412,13 @@
                         <div class="task-side-title">
                             <span style="font-size: 14px;">🛠️</span> 业务功能
                         </div>
-                        <div class="task-side-item active">付款申请</div>
+                        <div class="task-side-item active">减免申请</div>
                         <div class="task-side-item">开票申请</div>
                         <div class="task-side-item">放单申请</div>
                         <div class="task-side-item">海运审批</div>
                         <div class="task-side-item">FBX订单</div>
                         <div class="task-side-item">费用申请</div>
-                        <div class="task-side-item">附加费申请</div>
+                        <div class="task-side-item">付款申请</div>
                     </div>
                     <div class="task-side-section">
                         <div class="task-side-title">
@@ -5192,19 +5441,20 @@
                     <div class="task-table-wrapper">
                         <div style="overflow-x: auto;">
                             <table class="table"
-                                style="width: 100%; min-width: 1600px; border-collapse: collapse; font-size: 13px; color: #262626;">
+                                style="width: 100%; min-width: 1800px; border-collapse: collapse; font-size: 13px; color: #262626;">
                                 <thead style="background: #fafafa; border-bottom: 2px solid #f0f0f0;">
                                     <tr>
-                                        <th style="padding: 12px; width: 40px; text-align: center;"><input
-                                                type="checkbox"></th>
-                                        <th style="padding: 12px; font-weight: 500; width: 140px;">申请单号</th>
-                                        <th style="padding: 12px; font-weight: 500; width: 140px;">对账单号</th>
-                                        <th style="padding: 12px; font-weight: 500; width: 80px;">分类</th>
-                                        <th style="padding: 12px; font-weight: 500; width: 100px;">业务功能</th>
+                                        <th style="padding: 12px; width: 60px; font-weight: 500; text-align: center;">
+                                            序号
+                                        </th>
+                                        <th style="padding: 12px; font-weight: 500; width: 140px;">工作单号</th>
+                                        <th style="padding: 12px; font-weight: 500; width: 100px;">业务类型</th>
+                                        <th style="padding: 12px; font-weight: 500; width: 120px;">客户</th>
                                         <th style="padding: 12px; font-weight: 500; width: 120px;">所属公司</th>
-                                        <th style="padding: 12px; font-weight: 500; width: 100px;">核算单位</th>
-                                        <th style="padding: 12px; font-weight: 500; width: 100px;">申请金额</th>
                                         <th style="padding: 12px; font-weight: 500; width: 100px;">费用名称</th>
+                                        <th style="padding: 12px; font-weight: 500; width: 100px;">减免金额</th>
+                                        <th style="padding: 12px; font-weight: 500; width: 100px;">减免前毛利</th>
+                                        <th style="padding: 12px; font-weight: 500; width: 110px;">减免前毛利率</th>
                                         <th style="padding: 12px; font-weight: 500; width: 100px;">减免后毛利</th>
                                         <th style="padding: 12px; font-weight: 500; width: 110px;">减免后毛利率</th>
                                         <th style="padding: 12px; font-weight: 500; width: 100px;">当前节点</th>
@@ -5212,9 +5462,8 @@
                                         <th style="padding: 12px; font-weight: 500; width: 80px;">发起人</th>
                                         <th style="padding: 12px; font-weight: 500; width: 140px;">申请时间</th>
                                         <th style="padding: 12px; font-weight: 500; width: 140px;">流程完成时间</th>
-                                        <th style="padding: 12px; font-weight: 500; width: 80px; text-align: center;">
-                                            操作
-                                        </th>
+                                        <th style="padding: 12px; font-weight: 500; width: 100px; text-align: center;">
+                                            操作</th>
                                     </tr>
                                 </thead>
                                 <tbody id="task-tbody">
@@ -5269,7 +5518,7 @@
                 <div style="display: flex; align-items: center; gap: 8px;">
                     <div class="input-group" style="margin-right: 0px;">
                         <div class="input-group-addon">关键字</div>
-                        <input type="text" placeholder="附加费代码/附加费名称" style="width: 200px;">
+                        <input type="text" placeholder="方案名称/附加费名称" style="width: 200px;">
                     </div>
                     <button class="btn-query">查询</button>
                     <button class="btn-reset">重置</button>
@@ -5286,8 +5535,8 @@
                             <th style="padding: 12px; width: 40px; text-align: center;"><input type="checkbox"
                                     id="selectAllSurcharge"></th>
                             <th style="padding: 12px; font-weight: 500; color: #909399; width: 60px;">序号</th>
-                            <th style="padding: 12px; font-weight: 500; color: #909399; width: 120px;">附加费代码</th>
-                            <th style="padding: 12px; font-weight: 500; color: #909399; width: 140px;">附加费名称</th>
+                            <th style="padding: 12px; font-weight: 500; color: #909399; width: 140px;">方案名称</th>
+                            <th style="padding: 12px; font-weight: 500; color: #909399; width: 120px;">附加费名称</th>
                             <th style="padding: 12px; font-weight: 500; color: #909399;">附加费条款</th>
                             <th style="padding: 12px; font-weight: 500; color: #909399; width: 100px;">创建日期</th>
                             <th style="padding: 12px; font-weight: 500; color: #909399; width: 100px;">修改日期</th>
@@ -5301,8 +5550,8 @@
                             <td style="padding: 12px; text-align: center;"><input type="checkbox" class="surcharge-cb">
                             </td>
                             <td style="padding: 12px; color: #606266;">1</td>
-                            <td style="padding: 12px; color: #409eff;"></td>
                             <td style="padding: 12px; color: #606266;">报关费</td>
+                            <td style="padding: 12px; color: #409eff;"></td>
                             <td style="padding: 12px; color: #606266;"></td>
                             <td style="padding: 12px; color: #606266;">2023-10-01</td>
                             <td style="padding: 12px; color: #606266;">2023-10-05</td>
@@ -5316,8 +5565,8 @@
                             <td style="padding: 12px; text-align: center;"><input type="checkbox" class="surcharge-cb">
                             </td>
                             <td style="padding: 12px; color: #606266;">2</td>
-                            <td style="padding: 12px; color: #409eff;"></td>
                             <td style="padding: 12px; color: #303133; font-weight: 500;">报关续页费</td>
+                            <td style="padding: 12px; color: #409eff;"></td>
                             <td style="padding: 12px; color: #909399;"></td>
                             <td style="padding: 12px; color: #909399;">2023-10-02</td>
                             <td style="padding: 12px; color: #909399;">2023-10-06</td>
@@ -5334,8 +5583,8 @@
                             <td style="padding: 12px; text-align: center;"><input type="checkbox" class="surcharge-cb">
                             </td>
                             <td style="padding: 12px; color: #606266;">3</td>
-                            <td style="padding: 12px; color: #409eff;"></td>
                             <td style="padding: 12px; color: #303133; font-weight: 500;">超品名费</td>
+                            <td style="padding: 12px; color: #409eff;"></td>
                             <td style="padding: 12px; color: #909399;"></td>
                             <td style="padding: 12px; color: #909399;">2023-11-15</td>
                             <td style="padding: 12px; color: #909399;">2023-11-20</td>
@@ -5352,8 +5601,8 @@
                             <td style="padding: 12px; text-align: center;"><input type="checkbox" class="surcharge-cb">
                             </td>
                             <td style="padding: 12px; color: #606266;">4</td>
-                            <td style="padding: 12px; color: #409eff;"></td>
                             <td style="padding: 12px; color: #303133; font-weight: 500;">偏远附加费</td>
+                            <td style="padding: 12px; color: #409eff;"></td>
                             <td style="padding: 12px; color: #909399;"></td>
                             <td style="padding: 12px; color: #909399;">2023-12-01</td>
                             <td style="padding: 12px; color: #909399;">2023-12-05</td>
@@ -5370,8 +5619,8 @@
                             <td style="padding: 12px; text-align: center;"><input type="checkbox" class="surcharge-cb">
                             </td>
                             <td style="padding: 12px; color: #606266;">5</td>
-                            <td style="padding: 12px; color: #409eff;"></td>
                             <td style="padding: 12px; color: #303133; font-weight: 500;">指定打单服务商费</td>
+                            <td style="padding: 12px; color: #409eff;"></td>
                             <td style="padding: 12px; color: #909399;"></td>
                             <td style="padding: 12px; color: #909399;">2024-01-10</td>
                             <td style="padding: 12px; color: #909399;">2024-01-15</td>
@@ -5388,8 +5637,8 @@
                             <td style="padding: 12px; text-align: center;"><input type="checkbox" class="surcharge-cb">
                             </td>
                             <td style="padding: 12px; color: #606266;">6</td>
-                            <td style="padding: 12px; color: #409eff;"></td>
                             <td style="padding: 12px; color: #303133; font-weight: 500;">派送范围</td>
+                            <td style="padding: 12px; color: #409eff;"></td>
                             <td style="padding: 12px; color: #909399;"></td>
                             <td style="padding: 12px; color: #909399;">2024-02-15</td>
                             <td style="padding: 12px; color: #909399;">2024-02-20</td>
@@ -5406,8 +5655,8 @@
                             <td style="padding: 12px; text-align: center;"><input type="checkbox" class="surcharge-cb">
                             </td>
                             <td style="padding: 12px; color: #606266;">7</td>
-                            <td style="padding: 12px; color: #409eff;"></td>
                             <td style="padding: 12px; color: #303133; font-weight: 500;">海派超长附加费</td>
+                            <td style="padding: 12px; color: #409eff;"></td>
                             <td style="padding: 12px; color: #909399;"></td>
                             <td style="padding: 12px; color: #909399;">2024-03-01</td>
                             <td style="padding: 12px; color: #909399;">2024-03-05</td>
@@ -5424,8 +5673,8 @@
                             <td style="padding: 12px; text-align: center;"><input type="checkbox" class="surcharge-cb">
                             </td>
                             <td style="padding: 12px; color: #606266;">8</td>
-                            <td style="padding: 12px; color: #409eff;"></td>
                             <td style="padding: 12px; color: #303133; font-weight: 500;">提货费</td>
+                            <td style="padding: 12px; color: #409eff;"></td>
                             <td style="padding: 12px; color: #909399;"></td>
                             <td style="padding: 12px; color: #909399;">2024-03-05</td>
                             <td style="padding: 12px; color: #909399;">2024-03-08</td>
@@ -5442,8 +5691,8 @@
                             <td style="padding: 12px; text-align: center;"><input type="checkbox" class="surcharge-cb">
                             </td>
                             <td style="padding: 12px; color: #606266;">9</td>
-                            <td style="padding: 12px; color: #409eff;"></td>
                             <td style="padding: 12px; color: #303133; font-weight: 500;">海派超重附加费</td>
+                            <td style="padding: 12px; color: #409eff;"></td>
                             <td style="padding: 12px; color: #909399;"></td>
                             <td style="padding: 12px; color: #909399;">2024-03-05</td>
                             <td style="padding: 12px; color: #909399;">2024-03-08</td>
@@ -5461,75 +5710,7 @@
             </div>
         </div>
 
-        <!-- Surcharge Confirm View -->
-        <div id="view-surcharge-confirm" class="view-container"
-            style="display: none; background: #FAFAFA; padding: 20px; flex-direction: column;">
-            <!-- Search Toolbar -->
-            <div
-                style="margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; border-radius: 4px; padding: 15px; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.05); width: 100%;">
-                <div style="display: flex; align-items: center; gap: 8px;">
-                    <div class="input-group" style="margin-right: 0px;">
-                        <input type="text" placeholder="请输入订单号"
-                            style="width: 240px; border-radius: 4px; border: 1px solid #dcdfe6; height: 32px; padding: 0 12px; font-size: 13px;">
-                    </div>
-                    <button class="btn-query">查询</button>
-                    <button class="btn-reset">重置</button>
-                </div>
-                <div>
-                    <button id="btnSurchargeBatchConfirm"
-                        style="background-color: #1677ff; color: #fff; border: none; padding: 0 15px; height: 32px; border-radius: 4px; cursor: pointer; font-size: 13px;">批量确认</button>
-                </div>
-            </div>
 
-            <!-- Table View -->
-            <div
-                style="border-radius: 4px; background: #fff; flex: 1; padding: 0; box-shadow: 0 1px 3px rgba(0,0,0,0.05); width: 100%; overflow: auto;">
-                <table class="table" style="width: 100%; border-collapse: collapse; text-align: left; font-size: 13px;">
-                    <thead style="background-color: #f8f9fb; border-bottom: 1px solid #ebeef5;">
-                        <tr>
-                            <th style="padding: 12px; width: 40px; text-align: center;"><input type="checkbox"
-                                    id="selectAllSurchargeConfirm"></th>
-                            <th style="padding: 12px; font-weight: 500; color: #909399; width: 60px;">序号</th>
-                            <th style="padding: 12px; font-weight: 500; color: #909399; width: 180px;">订单号</th>
-                            <th style="padding: 12px; font-weight: 500; color: #909399;">超长附加费</th>
-                            <th style="padding: 12px; font-weight: 500; color: #909399;">超重附加费</th>
-                            <th style="padding: 12px; font-weight: 500; color: #909399;">偏远派送费</th>
-                            <th style="padding: 12px; font-weight: 500; color: #909399;">提货费</th>
-                            <th style="padding: 12px; font-weight: 500; color: #909399; width: 140px;">费用金额</th>
-                            <th style="padding: 12px; font-weight: 500; color: #909399; width: 100px;">操作</th>
-                        </tr>
-                    </thead>
-                    <tbody id="surchargeConfirmTbody">
-                        <tr style="border-bottom: 1px solid #ebeef5;">
-                            <td style="padding: 12px; text-align: center;"><input type="checkbox"
-                                    class="surcharge-confirm-cb"></td>
-                            <td style="padding: 12px; color: #606266;">1</td>
-                            <td style="padding: 12px; color: #409eff;">ORD20240408001</td>
-                            <td style="padding: 12px; color: #f56c6c;">¥ 150.00</td>
-                            <td style="padding: 12px; color: #f56c6c;">¥ 200.00</td>
-                            <td style="padding: 12px; color: #f56c6c;">¥ 230.00</td>
-                            <td style="padding: 12px; color: #f56c6c;">¥ 120.00</td>
-                            <td style="padding: 12px; color: #f56c6c; font-weight: 600;">¥ 700.00</td>
-                            <td style="padding: 12px;"><a href="javascript:void(0)" class="surcharge-detail-btn"
-                                    style="color: #1677ff; text-decoration: none;">确认</a></td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid #ebeef5;">
-                            <td style="padding: 12px; text-align: center;"><input type="checkbox"
-                                    class="surcharge-confirm-cb"></td>
-                            <td style="padding: 12px; color: #606266;">2</td>
-                            <td style="padding: 12px; color: #409eff;">ORD20240408002</td>
-                            <td style="padding: 12px; color: #f56c6c;">¥ 300.00</td>
-                            <td style="padding: 12px; color: #f56c6c;">¥ 400.00</td>
-                            <td style="padding: 12px; color: #f56c6c;">¥ 500.00</td>
-                            <td style="padding: 12px; color: #f56c6c;">¥ 200.00</td>
-                            <td style="padding: 12px; color: #f56c6c; font-weight: 600;">¥ 1,400.00</td>
-                            <td style="padding: 12px;"><a href="javascript:void(0)" class="surcharge-detail-btn"
-                                    style="color: #1677ff; text-decoration: none;">确认</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
 
         <!-- Edit Bulk Surcharge View -->
         <div id="view-edit-bulk-surcharge" class="view-container"
@@ -5742,18 +5923,18 @@
                     </div>
                     <div class="ebs-row">
                         <div class="ebs-form-item">
-                            <span class="ebs-label">附加费名称</span>
+                            <span class="ebs-label">方案名称</span>
                             <input type="text" class="ebs-input" id="ebs-name" value="" disabled>
                         </div>
                         <div class="ebs-form-item">
-                            <span class="ebs-label">附加费代码</span>
+                            <span class="ebs-label">附加费名称</span>
                             <select class="ebs-select" id="ebs-code">
                                 <option value="">请选择</option>
-                                <option value="SUR001">SUR001</option>
-                                <option value="SUR002">SUR002</option>
-                                <option value="SUR003">SUR003</option>
-                                <option value="SUR004">SUR004</option>
-                                <option value="SUR005">SUR005</option>
+                                <option value="报关费">报关费</option>
+                                <option value="报关续页费">报关续页费</option>
+                                <option value="超品名费">超品名费</option>
+                                <option value="提货费">提货费</option>
+                                <option value="偏远费">偏远费</option>
                             </select>
                         </div>
                         <div class="ebs-form-item">
@@ -5783,13 +5964,16 @@
                                     <input type="radio" name="ebs-channel-mode" value="exclude"> 排除收货渠道
                                 </label>
 
+                                <input type="text" id="ebs-channel-search" class="ebs-input" placeholder="搜索渠道名称.."
+                                    style="width: 200px; margin-left: 12px; display: none;">
+
                                 <button class="ebs-btn ebs-btn-primary" id="btn-add-channel-item"
                                     style="height: 28px; padding: 0 12px; font-size: 12px; display: none; margin-left: auto;">+
                                     添加渠道</button>
                             </div>
 
                             <div id="ebs-channel-table-container"
-                                style="display: none; border: 1px solid #ebeef5; border-radius: 4px; padding: 12px; background: #fff;">
+                                style="display: none; border: 1px solid #d9d9d9; border-radius: 4px; overflow: hidden;">
                                 <table class="table" style="width: 100%; border-collapse: collapse; font-size: 13px;">
                                     <thead style="background: #f8f9fb; border-bottom: 1px solid #ebeef5;">
                                         <tr>
@@ -5833,13 +6017,16 @@
                                     <input type="radio" name="ebs-customer-mode" value="exclude"> 排除客户
                                 </label>
 
+                                <input type="text" id="ebs-customer-search" class="ebs-input" placeholder="搜索客户名称/代码.."
+                                    style="width: 200px; margin-left: 12px; display: none;">
+
                                 <button class="ebs-btn ebs-btn-primary" id="btn-add-customer-item"
                                     style="height: 28px; padding: 0 12px; font-size: 12px; display: none; margin-left: auto;">+
                                     添加客户</button>
                             </div>
 
                             <div id="ebs-customer-table-container"
-                                style="display: none; border: 1px solid #ebeef5; border-radius: 4px; padding: 12px; background: #fff;">
+                                style="display: none; border: 1px solid #d9d9d9; border-radius: 4px; overflow: hidden;">
                                 <table class="table" style="width: 100%; border-collapse: collapse; font-size: 13px;">
                                     <thead style="background: #f8f9fb; border-bottom: 1px solid #ebeef5;">
                                         <tr>
@@ -5866,21 +6053,7 @@
                                 style="max-width: none; width: 100%;">
                         </div>
                     </div>
-                    <div class="ebs-row" style="width: 100%; margin-top: 16px;">
-                        <div class="ebs-form-item" style="width: 100%;">
-                            <span class="ebs-label">二次确认</span>
-                            <div style="display: flex; gap: 24px; align-items: center;">
-                                <label
-                                    style="cursor: pointer; display: flex; align-items: center; gap: 4px; font-size: 14px; color: #333;">
-                                    <input type="radio" name="ebs-double-confirm" value="1" checked> 是
-                                </label>
-                                <label
-                                    style="cursor: pointer; display: flex; align-items: center; gap: 4px; font-size: 14px; color: #333;">
-                                    <input type="radio" name="ebs-double-confirm" value="0"> 否
-                                </label>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
 
                 <div class="ebs-card">
@@ -8029,14 +8202,51 @@
         const menuInsurance = document.getElementById('menu-insurance');
         const viewFBXOrders = document.getElementById('view-fbx-orders');
         const menuFBXOrders = document.getElementById('menu-fbx-orders');
+        const menuFBXOrdersCRM = document.getElementById('menu-fbx-orders-crm');
         const viewFBAOrderDetail = document.getElementById('view-fba-order-detail');
         const btnOpenFBADetail = document.getElementById('btn-open-fba-detail');
+        const crmOnlyFeesSection = document.getElementById('crm-only-fees-section');
         const btnBackToFBX = document.getElementById('btn-back-to-fbx');
         const viewCreateWorkflow = document.getElementById('view-create-workflow');
         const btnBackWorkflowSettings = document.getElementById('btn-back-workflow-settings');
 
         // --- Cross-Module Data Store ---
         let waiverApplications = [];
+        let isCRM = false;
+
+        // Mode Switcher Logic
+        const modeSwitcherBtn = document.getElementById('mode-switcher-btn');
+        if (modeSwitcherBtn) {
+            modeSwitcherBtn.addEventListener('click', () => {
+                isCRM = !isCRM;
+                if (isCRM) {
+                    document.body.classList.add('crm-mode');
+                    // Hide primary and all secondary sidebars of management system
+                    const sdMain = document.getElementById('sidebar-main');
+                    if (sdMain) sdMain.style.display = 'none';
+                    document.querySelectorAll('.secondary-sidebar').forEach(s => s.style.display = 'none');
+
+                    const sdCrm = document.getElementById('crm-sidebar');
+                    if (sdCrm) sdCrm.style.display = 'flex';
+
+                    modeSwitcherBtn.innerHTML = '<span>🔄</span> 切换为管理系统';
+                    modeSwitcherBtn.style.borderColor = '#52c41a';
+                    modeSwitcherBtn.style.color = '#52c41a';
+                } else {
+                    document.body.classList.remove('crm-mode');
+                    const sdMain = document.getElementById('sidebar-main');
+                    if (sdMain) sdMain.style.display = 'flex';
+
+                    const sdCrm = document.getElementById('crm-sidebar');
+                    if (sdCrm) sdCrm.style.display = 'none';
+
+                    modeSwitcherBtn.innerHTML = '<span>🔄</span> 切换CRM';
+                    modeSwitcherBtn.style.borderColor = '#1890ff';
+                    modeSwitcherBtn.style.color = '#1890ff';
+                }
+                switchView(viewDefault);
+            });
+        }
 
         const switchView = (targetView, navId) => {
             if (!targetView) {
@@ -8050,7 +8260,7 @@
             if (targetView.style) {
                 targetView.style.display = 'flex';
             }
-            document.querySelectorAll('.sidebar .link, .sec-menu-item').forEach(link => link.classList.remove('active'));
+            document.querySelectorAll('.sidebar .link, .sec-menu-item, .crm-item, .crm-subitem').forEach(link => link.classList.remove('active'));
             if (navId) {
                 const navEl = document.getElementById(navId);
                 if (navEl) navEl.classList.add('active');
@@ -8088,13 +8298,13 @@
                 const card = btn.closest('.workflow-card');
                 const title = card ? card.querySelector('.workflow-card-header span')?.textContent || '' : '';
                 const groupName = title.split('(')[0].trim();
-                
+
                 // Set the group dropdown based on the card title
                 const groupSelect = document.getElementById('flow-group-select');
                 if (groupSelect && groupName) {
                     groupSelect.value = groupName;
                 }
-                
+
                 switchView(viewCreateWorkflow);
             });
         });
@@ -8194,7 +8404,7 @@
 
             // Return to list
             switchView(viewWorkflowSettings, 'menu-workflow-settings');
-            
+
             // Success alert
             alert(isPublish ? '流程发布成功！' : '流程保存成功！');
         };
@@ -8208,7 +8418,7 @@
         const wfConfigDrawer = document.getElementById('wf-config-drawer');
         const wfInitiatorNode = document.getElementById('wf-initiator-node');
         const wfInitiatorDisplayText = document.getElementById('wf-initiator-display-text');
-        
+
         const initiatorUserTags = document.getElementById('initiator-user-tags');
         const initiatorDeptTags = document.getElementById('initiator-dept-tags');
         const btnAddInitiatorUser = document.getElementById('btn-add-initiator-user');
@@ -8246,19 +8456,19 @@
 
         const createConfigTag = (text, container) => {
             if (Array.from(container.children).some(tag => tag.textContent.includes(text))) return;
-            
+
             const tag = document.createElement('div');
             tag.className = 'wf-config-tag';
             tag.innerHTML = `
                 <span>${text}</span>
                 <span class="wf-tag-remove">&times;</span>
             `;
-            
+
             tag.querySelector('.wf-tag-remove').addEventListener('click', () => {
                 tag.remove();
                 updateNodeText();
             });
-            
+
             container.appendChild(tag);
             updateNodeText();
         };
@@ -8267,7 +8477,7 @@
             const isUserMode = document.querySelector('input[name="initiator-type"]:checked')?.value === 'user';
             const container = isUserMode ? initiatorUserTags : initiatorDeptTags;
             const tags = Array.from(container.children).map(tag => tag.querySelector('span').textContent);
-            
+
             if (tags.length > 0) {
                 wfInitiatorDisplayText.textContent = tags.join(', ');
             } else {
@@ -8302,10 +8512,10 @@
                 currentActiveConnector = e.target.closest('.wf-connector');
                 const rect = e.target.getBoundingClientRect();
                 const canvasRect = document.querySelector('.wf-canvas').getBoundingClientRect();
-                
+
                 const x = rect.left + rect.width / 2 - 190 - canvasRect.left + document.querySelector('.wf-canvas').scrollLeft;
                 const y = rect.bottom + 10 - canvasRect.top + document.querySelector('.wf-canvas').scrollTop;
-                
+
                 togglePopover(true, x, y);
                 return;
             }
@@ -8314,7 +8524,7 @@
             const node = e.target.closest('.wf-node');
             if (node && !e.target.classList.contains('wf-node-close')) {
                 e.stopPropagation();
-                
+
                 // Determine node type
                 let type = 'approver';
                 let title = '审批人';
@@ -8337,7 +8547,7 @@
                 // Update drawer UI
                 document.getElementById('wf-drawer-title').textContent = title;
                 document.getElementById('wf-drawer-title-icon').textContent = icon;
-                
+
                 // Toggle panels
                 document.getElementById('panel-config-initiator').style.display = (type === 'initiator' ? 'block' : 'none');
                 document.getElementById('panel-config-approver').style.display = (type === 'approver' ? 'block' : 'none');
@@ -8352,7 +8562,7 @@
                 const parent = tab.closest('.wf-drawer-tabs');
                 parent.querySelectorAll('.wf-drawer-tab').forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
-                
+
                 // In a real app, we'd switch body content here as well
             });
         });
@@ -8402,10 +8612,10 @@
                         <div class="wf-add-btn">+</div>
                     </div>
                 `;
-                
+
                 const tempDiv = document.createElement('div');
                 tempDiv.innerHTML = newNodeHtml;
-                
+
                 let lastInserted = currentActiveConnector;
                 while (tempDiv.firstChild) {
                     const nextNode = tempDiv.firstChild;
@@ -8455,10 +8665,10 @@
                         <div class="wf-add-btn">+</div>
                     </div>
                 `;
-                
+
                 const tempDiv = document.createElement('div');
                 tempDiv.innerHTML = branchHtml;
-                
+
                 let lastInserted = currentActiveConnector;
                 while (tempDiv.firstChild) {
                     const nextNode = tempDiv.firstChild;
@@ -8466,7 +8676,7 @@
                     lastInserted = nextNode;
                 }
             }
-            
+
             togglePopover(false);
             currentActiveConnector = null;
         };
@@ -8484,7 +8694,7 @@
                 e.stopPropagation();
                 const node = e.target.closest('.wf-node');
                 const connector = node.nextElementSibling;
-                
+
                 if (node && connector && connector.classList.contains('wf-connector')) {
                     node.remove();
                     connector.remove();
@@ -8538,7 +8748,7 @@
             const row = document.createElement('div');
             row.className = 'ebs-condition-row';
             row.innerHTML = `
-                <select class="ebs-select ebs-cond-field" style="width: 160px; flex: none;">
+                <select class="ebs-select ebs-cond-field" style="width: 190px; flex: none;">
                     <option value="" ${field === '' ? 'selected' : ''}>请选择</option>
                     <option value="订单·报关方式" ${field === '订单·报关方式' ? 'selected' : ''}>订单·报关方式</option>
                     <option value="订单·货物类型" ${field === '订单·货物类型' ? 'selected' : ''}>订单·货物类型</option>
@@ -8546,8 +8756,8 @@
                     <option value="订单·交税方式" ${field === '订单·交税方式' ? 'selected' : ''}>订单·交税方式</option>
                     <option value="订单·其他服务" ${field === '订单·其他服务' ? 'selected' : ''}>订单·其他服务</option>
                     <option value="订单·总件数" ${field === '订单·总件数' ? 'selected' : ''}>订单·总件数</option>
-                    <option value="订单·总重量" ${field === '订单·总重量' ? 'selected' : ''}>订单·总重量</option>
-                    <option value="订单·总体积" ${field === '订单·总体积' ? 'selected' : ''}>订单·总体积</option>
+                    <option value="订单·总重量(KG)" ${field === '订单·总重量(KG)' ? 'selected' : ''}>订单·总重量(KG)</option>
+                    <option value="订单·总体积(CBM)" ${field === '订单·总体积(CBM)' ? 'selected' : ''}>订单·总体积(CBM)</option>
                     <option value="发件人·提货类型" ${field === '发件人·提货类型' ? 'selected' : ''}>发件人·提货类型</option>
                     <option value="收件人·国家" ${field === '收件人·国家' ? 'selected' : ''}>收件人·国家</option>
                     <option value="收件人·省/州" ${field === '收件人·省/州' ? 'selected' : ''}>收件人·省/州</option>
@@ -8555,12 +8765,12 @@
                     <option value="收件人·地址类型" ${field === '收件人·地址类型' ? 'selected' : ''}>收件人·地址类型</option>
                     <option value="收件人·平台类型" ${field === '收件人·平台类型' ? 'selected' : ''}>收件人·平台类型</option>
                     <option value="收件人·偏远类型" ${field === '收件人·偏远类型' ? 'selected' : ''}>收件人·偏远类型</option>
-                    <option value="货箱·单箱重量" ${field === '货箱·单箱重量' ? 'selected' : ''}>货箱·单箱重量</option>
-                    <option value="货箱·单箱体积" ${field === '货箱·单箱体积' ? 'selected' : ''}>货箱·单箱体积</option>
-                    <option value="货箱·围长(cm)" ${field === '货箱·围长(cm)' ? 'selected' : ''}>货箱·围长(cm)</option>
-                    <option value="货箱·第一边长(cm)" ${field === '货箱·第一边长(cm)' ? 'selected' : ''}>货箱·第一边长(cm)</option>
-                    <option value="货箱·第二边长(cm)" ${field === '货箱·第二边长(cm)' ? 'selected' : ''}>货箱·第二边长(cm)</option>
-                    <option value="货箱·品名" ${field === '货箱·品名' ? 'selected' : ''}>货箱·品名</option>
+                    <option value="拣货数据·单箱重量" ${field === '拣货数据·单箱重量' ? 'selected' : ''}>拣货数据·单箱重量</option>
+                    <option value="拣货数据·单箱体积" ${field === '拣货数据·单箱体积' ? 'selected' : ''}>拣货数据·单箱体积</option>
+                    <option value="拣货数据·围长(cm)" ${field === '拣货数据·围长(cm)' ? 'selected' : ''}>拣货数据·围长(cm)</option>
+                    <option value="拣货数据·第一边长(cm)" ${field === '拣货数据·第一边长(cm)' ? 'selected' : ''}>拣货数据·第一边长(cm)</option>
+                    <option value="拣货数据·第二边长(cm)" ${field === '拣货数据·第二边长(cm)' ? 'selected' : ''}>拣货数据·第二边长(cm)</option>
+                    <option value="拣货数据·品名" ${field === '拣货数据·品名' ? 'selected' : ''}>拣货数据·品名</option>
                     <option value="指定打单服务商" ${field === '指定打单服务商' ? 'selected' : ''}>指定打单服务商</option>
                 </select>
                 <select class="ebs-select ebs-cond-operator" style="width: 100px;">
@@ -8599,7 +8809,7 @@
             const updateDropdown = (fld, initialVals = []) => {
                 msDropdown.innerHTML = '';
 
-                if (['货箱·品名', '订单·总件数', '订单·总重量', '订单·总体积', '货箱·围长(cm)', '货箱·第一边长(cm)', '货箱·第二边长(cm)', '货箱·单箱重量', '货箱·单箱体积'].includes(fld)) {
+                if (['拣货数据·品名', '订单·总件数', '订单·总重量(KG)', '订单·总体积(CBM)', '拣货数据·围长(cm)', '拣货数据·第一边长(cm)', '拣货数据·第二边长(cm)', '拣货数据·单箱重量', '拣货数据·单箱体积'].includes(fld)) {
                     msContainer.style.display = 'none';
                     valInput.style.display = 'block';
                     valInput.value = Array.isArray(initialVals) ? initialVals.join(',') : (initialVals || '');
@@ -8790,7 +9000,7 @@
                     <span class="ebs-label" style="font-weight: 500;">计费：</span>
                     <label style="margin-right: 16px; cursor: pointer; display: flex; align-items: center;"><input type="radio" name="ebs-billing-type-${ebsPlanCount}" value="fixed" ${billingType === 'fixed' ? 'checked' : ''} class="ebs-billing-radio" style="margin-right: 4px;">固定费用</label>
                     <label style="margin-right: 16px; cursor: pointer; display: flex; align-items: center;"><input type="radio" name="ebs-billing-type-${ebsPlanCount}" value="formula" ${billingType === 'formula' ? 'checked' : ''} class="ebs-billing-radio" style="margin-right: 4px;">公式</label>
-                    <label style="cursor: pointer; display: flex; align-items: center;"><input type="radio" name="ebs-billing-type-${ebsPlanCount}" value="reject" ${billingType === 'reject' ? 'checked' : ''} class="ebs-billing-radio" style="margin-right: 4px;">拒单</label>
+                    <label style="cursor: pointer; display: flex; align-items: center;"><input type="radio" name="ebs-billing-type-${ebsPlanCount}" value="reject" ${billingType === 'reject' ? 'checked' : ''} class="ebs-billing-radio" style="margin-right: 4px;">产生问题件</label>
                 </div>
                 <div class="ebs-calc-row ebs-currency-row" style="padding-left: 54px; margin-top: 0; display: ${billingType === 'reject' ? 'none' : 'flex'}; align-items: center;">
                     <span class="ebs-label">币制</span>
@@ -8815,7 +9025,7 @@
                     <span class="ebs-label" style="margin-top: 8px;">参考字段</span>
                     <div style="display: flex; gap: 16px; flex: 1;">
                         <div style="border: 1px solid #d9d9d9; border-radius: 4px; padding: 8px 0; width: 220px; height: 140px; overflow-y: auto; background: #fff;">
-                            ${['订单·总件数', '订单·总重量', '订单·总体积', '货箱·品名', '货箱·围长(cm)', '货箱·第一边长(cm)', '货箱·第二边长(cm)', '货箱·单箱重量', '货箱·单箱体积'].map(f => `
+                            ${['订单·总件数', '订单·总重量(KG)', '订单·总体积(CBM)', '拣货数据·品名', '拣货数据·围长(cm)', '拣货数据·第一边长(cm)', '拣货数据·第二边长(cm)', '拣货数据·单箱重量', '拣货数据·单箱体积'].map(f => `
                             <div class="ebs-ref-item" data-val="[${f}]" style="padding: 6px 16px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-size: 13px; color: #333;">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2"><path d="M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" /><path d="M7 9l5-5 5 5" /><path d="M12 4v12" /></svg>
                                 <span>${f}</span>
@@ -8823,7 +9033,7 @@
                             `).join('')}
                         </div>
                         <div style="border: 1px solid #d9d9d9; border-radius: 4px; padding: 8px 0; width: 160px; height: 140px; overflow-y: auto; background: #fff;">
-                            ${['+', '-', '*', '/', '=', '＞', '≥', '＜', '≤', '()'].map(op => `
+                            ${['+', '-', '*', '/', '=', '＞', '≥', '＜', '≤'].map(op => `
                             <div class="ebs-ref-item" data-val="${op}" style="padding: 6px 16px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-size: 13px; color: #333;">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2"><path d="M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" /><path d="M7 9l5-5 5 5" /><path d="M12 4v12" /></svg>
                                 <span>${op}</span>
@@ -8975,9 +9185,6 @@
                 const statusText = row.cells[6].textContent.trim();
                 document.getElementById('ebs-status').value = statusText === '已启用' ? '1' : (statusText === '已禁用' ? '0' : '');
 
-                // 加载二次确认状态
-                const isDoubleConfirm = row.dataset.doubleConfirm === '0' ? '0' : '1';
-                document.querySelector(`input[name="ebs-double-confirm"][value="${isDoubleConfirm}"]`).checked = true;
 
                 // 加载渠道数据
                 const channelsData = row.dataset.savedChannels ? JSON.parse(row.dataset.savedChannels) : { operator: 'all', values: [] };
@@ -8987,6 +9194,7 @@
 
                 channelTableContainer.style.display = mode === 'all' ? 'none' : 'block';
                 if (btnAddChannelItem) btnAddChannelItem.style.display = mode === 'all' ? 'none' : 'block';
+                if (document.getElementById('ebs-channel-search')) document.getElementById('ebs-channel-search').style.display = mode === 'all' ? 'none' : 'block';
 
                 channelTableBody.innerHTML = '';
                 if (mode !== 'all' && channelsData.values) {
@@ -9006,6 +9214,7 @@
 
                 customerTableContainer.style.display = custMode === 'all' ? 'none' : 'block';
                 if (btnAddCustomerItem) btnAddCustomerItem.style.display = custMode === 'all' ? 'none' : 'block';
+                if (document.getElementById('ebs-customer-search')) document.getElementById('ebs-customer-search').style.display = custMode === 'all' ? 'none' : 'block';
 
                 customerTableBody.innerHTML = '';
                 if (custMode !== 'all' && customersData.values) {
@@ -9019,7 +9228,6 @@
                 document.getElementById('ebs-code').value = '';
                 document.getElementById('ebs-terms').value = '';
                 document.getElementById('ebs-status').value = '1';
-                document.querySelector('input[name="ebs-double-confirm"][value="1"]').checked = true;
 
                 // 重置渠道数据
                 document.querySelector('input[name="ebs-channel-mode"][value="all"]').checked = true;
@@ -9131,9 +9339,6 @@
             targetRow.cells[3].textContent = name;
             targetRow.cells[4].textContent = terms;
 
-            // 保存二次确认状态
-            const doubleConfirm = document.querySelector('input[name="ebs-double-confirm"]:checked').value;
-            targetRow.dataset.doubleConfirm = doubleConfirm;
 
             if (status === '1') {
                 targetRow.cells[6].innerHTML = '<span style="color: #67c23a; font-size: 12px;">已启用</span>';
@@ -9152,7 +9357,7 @@
                     conditions.push({
                         field: fieldVal,
                         operator: row.querySelector('.ebs-cond-operator').value,
-                        value: ['货箱·品名', '订单·总件数', '订单·总重量', '订单·总体积'].includes(fieldVal) ? [row.querySelector('.ebs-cond-value-input').value] : JSON.parse(row.querySelector('.ebs-multi-select-container').dataset.value || '[]')
+                        value: ['拣货数据·品名', '订单·总件数', '订单·总重量(KG)', '订单·总体积(CBM)'].includes(fieldVal) ? [row.querySelector('.ebs-cond-value-input').value] : JSON.parse(row.querySelector('.ebs-multi-select-container').dataset.value || '[]')
                     });
                 });
 
@@ -9932,15 +10137,18 @@
         const btnAddChannelItem = document.getElementById('btn-add-channel-item');
 
         // Toggle Table Visibility & Clear List on Mode Change
-        channelRadioGroup.forEach(radio => {
+        const chSearch = document.getElementById('ebs-channel-search');
+        const _ebsChannelRadios = document.getElementsByName('ebs-channel-mode');
+        _ebsChannelRadios.forEach(radio => {
             radio.addEventListener('change', (e) => {
                 const mode = e.target.value;
-                if (mode === 'all') {
-                    channelTableContainer.style.display = 'none';
-                    if (btnAddChannelItem) btnAddChannelItem.style.display = 'none';
-                } else {
-                    channelTableContainer.style.display = 'block';
-                    if (btnAddChannelItem) btnAddChannelItem.style.display = 'block';
+                channelTableContainer.style.display = mode === 'all' ? 'none' : 'block';
+                if (btnAddChannelItem) btnAddChannelItem.style.display = mode === 'all' ? 'none' : 'block';
+                if (chSearch) {
+                    chSearch.style.display = mode === 'all' ? 'none' : 'block';
+                    chSearch.value = ''; // 切换时清空搜索
+                    const rows = channelTableBody.getElementsByTagName('tr');
+                    for (let i = 0; i < rows.length; i++) rows[i].style.display = '';
                 }
                 channelTableBody.innerHTML = '';
                 updateEbsChannelData();
@@ -10008,7 +10216,6 @@
         const ebsCustomerWrapper = document.getElementById('ebs-customer-wrapper');
         const btnAddCustomerItem = document.getElementById('btn-add-customer-item');
         const modalCustomerSelect = document.getElementById('modalCustomerSelect');
-        const customerRadioGroup = document.getElementsByName('ebs-customer-mode');
 
         const AVAILABLE_CUSTOMERS = [
             { name: '贝塔科技有限公司', short: '贝塔科技' },
@@ -10019,15 +10226,18 @@
             { name: '宏发制造中心', short: '宏发制造' }
         ];
 
-        customerRadioGroup.forEach(radio => {
+        const custSearch = document.getElementById('ebs-customer-search');
+        const _ebsCustomerRadios = document.getElementsByName('ebs-customer-mode');
+        _ebsCustomerRadios.forEach(radio => {
             radio.addEventListener('change', (e) => {
                 const mode = e.target.value;
-                if (mode === 'all') {
-                    customerTableContainer.style.display = 'none';
-                    if (btnAddCustomerItem) btnAddCustomerItem.style.display = 'none';
-                } else {
-                    customerTableContainer.style.display = 'block';
-                    if (btnAddCustomerItem) btnAddCustomerItem.style.display = 'block';
+                customerTableContainer.style.display = mode === 'all' ? 'none' : 'block';
+                if (btnAddCustomerItem) btnAddCustomerItem.style.display = mode === 'all' ? 'none' : 'block';
+                if (custSearch) {
+                    custSearch.style.display = mode === 'all' ? 'none' : 'block';
+                    custSearch.value = ''; // 切换时清空搜索
+                    const rows = customerTableBody.getElementsByTagName('tr');
+                    for (let i = 0; i < rows.length; i++) rows[i].style.display = '';
                 }
                 customerTableBody.innerHTML = '';
                 updateEbsCustomerData();
@@ -10090,39 +10300,6 @@
             if (ebsCustomerWrapper) ebsCustomerWrapper.dataset.value = JSON.stringify(names);
         }
 
-        // --- Mode Switching & CRM Sidebar Logic ---
-        const modeSwitcherBtn = document.getElementById('mode-switcher-btn');
-        const primarySidebar = document.querySelector('.primary-sidebar');
-        const crmSidebar = document.getElementById('crm-sidebar');
-        let isCRMMode = false;
-
-        if (modeSwitcherBtn) {
-            modeSwitcherBtn.addEventListener('click', () => {
-                isCRMMode = !isCRMMode;
-
-                if (isCRMMode) {
-                    // Switch to CRM
-                    primarySidebar.style.display = 'none';
-                    // Hide all active secondary sidebars
-                    document.querySelectorAll('.secondary-sidebar').forEach(s => s.style.display = 'none');
-                    crmSidebar.style.display = 'flex';
-                    modeSwitcherBtn.innerHTML = '<span>🔄</span> 切换为管理系统';
-                    modeSwitcherBtn.style.borderColor = '#52c41a';
-                    modeSwitcherBtn.style.color = '#52c41a';
-                } else {
-                    // Switch to Management
-                    primarySidebar.style.display = 'flex';
-                    crmSidebar.style.display = 'none';
-                    modeSwitcherBtn.innerHTML = '<span>🔄</span> 切换CRM';
-                    modeSwitcherBtn.style.borderColor = '#1890ff';
-                    modeSwitcherBtn.style.color = '#1890ff';
-                }
-                // Reset main content view to default when switching modes
-                if (typeof switchView === 'function') {
-                    switchView(viewDefault);
-                }
-            });
-        }
 
         // CRM Accordion Logic
         document.querySelectorAll('.crm-sidebar .toggle-group').forEach(groupToggle => {
@@ -10238,11 +10415,14 @@
             const activeApplications = waiverApplications.filter(app => app.status !== '草稿');
 
             if (activeApplications.length === 0) {
-                taskTbody.innerHTML = `<tr><td colspan="15" style="padding: 100px 0; text-align: center;"><div style="display: flex; flex-direction: column; align-items: center; gap: 8px;"><svg viewBox="0 0 24 24" width="60" height="60" fill="#f0f0f0"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="1" fill="none" /><line x1="21" y1="21" x2="16.65" y2="16.65" stroke="currentColor" stroke-width="2" /><path d="M11 8v6M8 11h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /></svg><div style="color: #999; font-size: 14px;">暂无数据</div></div></td></tr>`;
+                taskTbody.innerHTML = `<tr><td colspan="17" style="padding: 100px 0; text-align: center;"><div style="display: flex; flex-direction: column; align-items: center; gap: 8px;"><svg viewBox="0 0 24 24" width="60" height="60" fill="#f0f0f0"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="1" fill="none" /><line x1="21" y1="21" x2="16.65" y2="16.65" stroke="currentColor" stroke-width="2" /><path d="M11 8v608 11h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /></svg><div style="color: #999; font-size: 14px;">暂无数据</div></div></td></tr>`;
                 return;
             }
 
-            taskTbody.innerHTML = activeApplications.map((app, index) => {
+            // 获取显示顺序（反转后的索引）
+            const reversedApps = [...activeApplications].reverse();
+
+            taskTbody.innerHTML = reversedApps.map((app, index) => {
                 const isUnderReview = app.status === '审核中';
                 const actionHtml = isUnderReview
                     ? `<button class="ebs-btn ebs-btn-primary" onclick="processWaiver('${app.id}', '已批准')" style="padding: 2px 8px; font-size: 11px; margin-right: 4px;">同意</button>
@@ -10251,26 +10431,30 @@
 
                 return `
                     <tr style="border-bottom: 1px solid #f0f0f0;">
-                        <td style="padding: 12px; text-align: center;"><input type="checkbox"></td>
-                        <td style="padding: 12px;">WAV-${app.id}</td>
-                        <td style="padding: 12px;">-</td>
+                        <td style="padding: 12px; text-align: center; color: #8c8c8c;">${index + 1}</td>
+                        <td style="padding: 12px; color: #1890ff;">WAV-${app.id}</td>
                         <td style="padding: 12px;">附加费</td>
-                        <td style="padding: 12px;">申请减免</td>
+                        <td style="padding: 12px;">演示客户_01</td>
                         <td style="padding: 12px;">演示中心</td>
-                        <td style="padding: 12px;">财务部</td>
-                        <td style="padding: 12px; color: #ff4d4f; font-weight: bold;">￥${app.amount}</td>
                         <td style="padding: 12px;">${app.feeType}</td>
+                        <td style="padding: 12px; color: #ff4d4f; font-weight: bold;">￥${app.amount}</td>
+                        <td style="padding: 12px; color: #595959;">￥850.50</td>
+                        <td style="padding: 12px; color: #595959;">17.01%</td>
                         <td style="padding: 12px; color: #52c41a; font-weight: 500;">￥${(850.50 - parseFloat(app.amount)).toFixed(2)}</td>
-                        <td style="padding: 12px;">${((850.5 - parseFloat(app.amount)) / 5000 * 100).toFixed(2)}%</td>
+                        <td style="padding: 12px; color: #52c41a;">${((850.5 - parseFloat(app.amount)) / 5000 * 100).toFixed(2)}%</td>
                         <td style="padding: 12px;">主管审批</td>
-                        <td style="padding: 12px;">${app.status}</td>
+                        <td style="padding: 12px;">
+                            <span style="padding: 2px 8px; border-radius: 2px; font-size: 12px; background: ${app.status === '审核中' ? '#e6f7ff' : (app.status === '已批准' ? '#f6ffed' : '#fff1f0')}; color: ${app.status === '审核中' ? '#1890ff' : (app.status === '已批准' ? '#52c41a' : '#f5222d')}; border: 1px solid ${app.status === '审核中' ? '#91d5ff' : (app.status === '已批准' ? '#b7eb8f' : '#ffa39e')};">
+                                ${app.status}
+                            </span>
+                        </td>
                         <td style="padding: 12px;">${app.applicant}</td>
-                        <td style="padding: 12px;">${app.time}</td>
-                        <td style="padding: 12px;">-</td>
+                        <td style="padding: 12px; color: #8c8c8c;">${app.time}</td>
+                        <td style="padding: 12px; color: #8c8c8c;">-</td>
                         <td style="padding: 12px; text-align: center;">${actionHtml}</td>
                     </tr>
                 `;
-            }).reverse().join('');
+            }).join('');
         }
 
         // Global function for onclick in templates
@@ -10278,6 +10462,36 @@
             const app = waiverApplications.find(a => a.id === id);
             if (app) {
                 app.status = status;
+
+                // --- 审批通过后的逻辑联动 ---
+                if (status === '已批准') {
+                    const feeTbody = document.getElementById('crm-fees-tbody');
+                    if (feeTbody) {
+                        const today = new Date().toISOString().split('T')[0];
+                        const newRow = document.createElement('tr');
+                        newRow.style = "border-bottom: 1px solid #f0f0f0;";
+                        newRow.innerHTML = `
+                            <td style="padding: 8px; text-align: center;"><input type="checkbox" class="fee-item-checkbox"></td>
+                            <td style="padding: 8px; text-align: center;">
+                                <div style="display: flex; gap: 4px; justify-content: center; font-size: 16px;">
+                                    <span style="color: #bfbfbf; cursor: pointer;">⊖</span>
+                                    <span style="color: #bfbfbf; cursor: pointer;">⊕</span>
+                                </div>
+                            </td>
+                            <td style="padding: 8px; text-align: center;">${feeTbody.querySelectorAll('tr').length + 1}</td>
+                            <td style="padding: 8px; color: #ff4d4f;">${today}</td>
+                            <td style="padding: 8px; color: #ff4d4f;">YUNWUYU/运物云10086</td>
+                            <td style="padding: 8px; color: #ff4d4f;">${app.feeType}减免</td>
+                            <td style="padding: 8px; color: #ff4d4f;">CNY</td>
+                            <td style="padding: 8px; color: #ff4d4f;">-${app.amount}</td>
+                            <td style="padding: 8px; color: #ff4d4f;">1.0000</td>
+                            <td style="padding: 8px; color: #ff4d4f;">批准号: WAV-${id}</td>
+                            <td style="padding: 8px; color: #ff4d4f;">-${app.amount}</td>
+                        `;
+                        feeTbody.appendChild(newRow);
+                    }
+                }
+
                 alert(`申请单 WAV-${id} 已${status}`);
                 renderWaiverTable();
                 renderTaskCenterTable();
@@ -10332,6 +10546,10 @@
                 e.preventDefault();
                 switchView(viewTaskCenter, 'menu-task-center');
                 renderTaskCenterTable(); // Refresh tasks when entering
+
+                // 默认选中第一个侧边栏项目 (减免申请)
+                const firstItem = document.querySelector('.task-side-item');
+                if (firstItem) firstItem.click();
             });
         }
 
@@ -10492,6 +10710,13 @@
             });
         }
 
+        if (menuFBXOrdersCRM) {
+            menuFBXOrdersCRM.addEventListener('click', (e) => {
+                e.preventDefault();
+                switchView(viewFBXOrders, 'menu-fbx-orders-crm');
+            });
+        }
+
         document.querySelectorAll('.fbx-tab').forEach(tab => {
             tab.addEventListener('click', () => {
                 document.querySelectorAll('.fbx-tab').forEach(t => t.classList.remove('active'));
@@ -10503,6 +10728,9 @@
         if (btnOpenFBADetail) {
             btnOpenFBADetail.addEventListener('click', () => {
                 switchView(viewFBAOrderDetail);
+                if (crmOnlyFeesSection) {
+                    crmOnlyFeesSection.style.display = isCRM ? 'block' : 'none';
+                }
             });
         }
 
@@ -10542,29 +10770,77 @@
             });
         });
 
-        // Dynamic Surcharge List Logic
-        let selectedSurcharges = [];
-        const surchargeSource = document.getElementById('fba-surcharge-source');
+        // --- FBX Surcharge Logic (Final Polish) ---
+        let selectedSurcharges = []; // [{ type, currency, amount, unit }]
         const btnAddSurcharge = document.getElementById('btn-add-fba-surcharge');
         const surchargeContainer = document.getElementById('fba-surcharge-items-container');
+        const surchargeTypes = [
+            "资料不齐附加费",
+            "资料不齐超功率没装UN箱附加费",
+            "无资料附加费",
+            "无资料超功率没装UN箱附加费",
+            "产品附加费"
+        ];
 
         const renderSurchargeList = () => {
             if (!surchargeContainer) return;
             if (selectedSurcharges.length === 0) {
-                surchargeContainer.innerHTML = '<div style="color: #bfbfbf; font-size: 12px; padding: 4px;">暂未添加附加费条目</div>';
+                surchargeContainer.innerHTML = '<div style="color: #bfbfbf; font-size: 12px; padding: 8px 4px;">暂未添加附加费项，点击右上角“+”号添加</div>';
                 return;
             }
 
             surchargeContainer.innerHTML = '';
-            selectedSurcharges.forEach((text, index) => {
-                const tag = document.createElement('div');
-                tag.className = 'fba-surcharge-tag';
-                tag.innerHTML = `
-                    <span>${text}</span>
-                    <span class="remove-icon" onclick="removeSurcharge(${index})">&times;</span>
+            selectedSurcharges.forEach((item, index) => {
+                const row = document.createElement('div');
+                row.className = 'fba-surcharge-row';
+                row.style = 'display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; padding: 12px; background: #fafafa; border: 1px dashed #d9d9d9; border-radius: 6px; position: relative;';
+
+                row.innerHTML = `
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+                        <select onchange="handleTypeChange(${index}, this.value)" style="flex: 1; height: 32px; border: 1px solid #d9d9d9; border-radius: 4px; padding: 0 8px; font-size: 13px; outline: none; background: #fff;">
+                            <option value="">-- 请选择附加费类型 --</option>
+                            ${surchargeTypes.map(t => `<option value="${t}" ${item.type === t ? 'selected' : ''}>${t}</option>`).join('')}
+                        </select>
+                        <button onclick="removeSurcharge(${index})" style="margin-left: 12px; border: none; background: transparent; color: #ff4d4f; cursor: pointer; font-size: 18px; font-weight: bold;">&times;</button>
+                    </div>
+                    <div style="display: flex; align-items: center; background: #fff; border: 1px solid #dcdfe6; border-radius: 4px; overflow: hidden; height: 34px;">
+                        <select onchange="updateSurcharge(${index}, 'currency', this.value)" style="border: none; background: transparent; height: 100%; border-right: 1px solid #dcdfe6; padding: 0 8px; font-size: 12px; outline: none;">
+                            <option value="CNY" ${item.currency === 'CNY' ? 'selected' : ''}>CNY</option>
+                            <option value="USD" ${item.currency === 'USD' ? 'selected' : ''}>USD</option>
+                        </select>
+                        <input type="number" step="0.01" value="${item.amount}" oninput="updateSurcharge(${index}, 'amount', this.value)" placeholder="请输入金额"
+                            style="flex: 1; border: none; background: transparent; height: 100%; padding: 0 12px; font-size: 13px; outline: none;">
+                        <div style="display: flex; height: 100%; border-left: 1px solid #dcdfe6; background: #f5f7fa;">
+                            <div onclick="updateSurcharge(${index}, 'unit', '/ KG')" style="display: flex; align-items: center; padding: 0 12px; border-right: 1px solid #dcdfe6; cursor: pointer; font-size: 12px; color: ${item.unit === '/ KG' ? '#1890ff' : '#606266'}; font-weight: ${item.unit === '/ KG' ? '600' : 'normal'}; background: ${item.unit === '/ KG' ? '#e6f7ff' : 'transparent'}; transition: all 0.3s;">/ KG</div>
+                            <div onclick="updateSurcharge(${index}, 'unit', '/ CBM')" style="display: flex; align-items: center; padding: 0 12px; border-right: 1px solid #dcdfe6; cursor: pointer; font-size: 12px; color: ${item.unit === '/ CBM' ? '#1890ff' : '#606266'}; font-weight: ${item.unit === '/ CBM' ? '600' : 'normal'}; background: ${item.unit === '/ CBM' ? '#e6f7ff' : 'transparent'}; transition: all 0.3s;">/ CBM</div>
+                            <div onclick="updateSurcharge(${index}, 'unit', '综合')" style="display: flex; align-items: center; padding: 0 12px; cursor: pointer; font-size: 12px; color: ${item.unit === '综合' ? '#1890ff' : '#606266'}; font-weight: ${item.unit === '综合' ? '600' : 'normal'}; background: ${item.unit === '综合' ? '#e6f7ff' : 'transparent'}; transition: all 0.3s;">综合</div>
+                        </div>
+                    </div>
                 `;
-                surchargeContainer.appendChild(tag);
+                surchargeContainer.appendChild(row);
             });
+        };
+
+        window.handleTypeChange = (index, value) => {
+            if (!value) return;
+            // Check uniqueness
+            const exists = selectedSurcharges.some((item, idx) => item.type === value && idx !== index);
+            if (exists) {
+                alert('该项附加费已在列表中，请选择其他类型');
+                renderSurchargeList(); // Reset view
+                return;
+            }
+            selectedSurcharges[index].type = value;
+        };
+
+        window.updateSurcharge = (index, field, value) => {
+            if (field === 'amount') {
+                selectedSurcharges[index][field] = parseFloat(value) || 0;
+            } else {
+                selectedSurcharges[index][field] = value;
+                // Re-render only for UI toggles (unit)
+                if (field === 'unit') renderSurchargeList();
+            }
         };
 
         window.removeSurcharge = (index) => {
@@ -10574,20 +10850,224 @@
 
         if (btnAddSurcharge) {
             btnAddSurcharge.addEventListener('click', () => {
-                const val = surchargeSource.value;
-                if (!val) {
-                    alert('请先从下拉列表中选择一项附加费');
+                if (selectedSurcharges.length >= surchargeTypes.length) {
+                    alert('已添加所有可选的附加费类型');
                     return;
                 }
-                if (selectedSurcharges.includes(val)) {
-                    alert('该项附加费已在列表中');
-                    return;
-                }
-                selectedSurcharges.push(val);
+                selectedSurcharges.push({
+                    type: '',
+                    currency: 'CNY',
+                    amount: 0,
+                    unit: '/ KG'
+                });
                 renderSurchargeList();
-                surchargeSource.value = ''; // Reset select
             });
         }
+
+        // --- Fee Waiver Logic (New) ---
+        const feeCheckAll = document.getElementById('fee-check-all');
+        const btnFeeWaiverApply = document.getElementById('btn-fee-waiver-apply');
+        const modalFeeWaiver = document.getElementById('modal-fee-waiver');
+        const closeFeeWaiverModal = document.getElementById('close-fee-waiver-modal');
+        const btnCancelFeeWaiver = document.getElementById('btn-cancel-fee-waiver');
+        const btnSubmitFeeWaiver = document.getElementById('btn-submit-fee-waiver');
+        const waiverModalTbody = document.getElementById('waiver-modal-tbody');
+        const waiverItemCount = document.getElementById('waiver-item-count');
+
+        // Checkbox interaction
+        feeCheckAll?.addEventListener('change', (e) => {
+            document.querySelectorAll('.fee-item-checkbox').forEach(chk => {
+                chk.checked = e.target.checked;
+            });
+        });
+
+        // Open Waiver Modal
+        btnFeeWaiverApply?.addEventListener('click', () => {
+            const checkedRows = Array.from(document.querySelectorAll('.fee-item-checkbox:checked')).map(chk => {
+                const tr = chk.closest('tr');
+                return {
+                    company: tr.cells[4].innerText,
+                    name: tr.cells[5].innerText,
+                    currency: tr.cells[6].innerText,
+                    amount: tr.cells[10].innerText
+                };
+            });
+
+            if (checkedRows.length === 0) {
+                alert('请先勾选需要申请减免的费用项');
+                return;
+            }
+
+            // Render selected items in modal
+            waiverItemCount.innerText = checkedRows.length;
+            waiverModalTbody.innerHTML = checkedRows.map((item, idx) => `
+                <tr style="border-bottom: 1px solid #f0f0f0;">
+                    <td style="padding: 10px; border: 1px solid #f0f0f0;">${item.name}</td>
+                    <td style="padding: 10px; border: 1px solid #f0f0f0; color: #8c8c8c;">${item.company}</td>
+                    <td style="padding: 10px; border: 1px solid #f0f0f0; text-align: right; color: #595959;">${item.currency} ${item.amount}</td>
+                    <td style="padding: 10px; border: 1px solid #f0f0f0; text-align: center;">
+                        <input type="number" class="waiver-input-amount" data-name="${item.name}" data-amount="${item.amount}" placeholder="减免金额" 
+                            style="width: 100px; padding: 4px 8px; border: 1px solid #d9d9d9; border-radius: 4px; font-size: 13px;">
+                    </td>
+                </tr>
+            `).join('');
+
+            modalFeeWaiver.style.display = 'flex';
+        });
+
+        const closeFeeWaiver = () => {
+            modalFeeWaiver.style.display = 'none';
+            document.getElementById('waiver-apply-remark').value = '';
+        };
+
+        closeFeeWaiverModal?.addEventListener('click', closeFeeWaiver);
+        btnCancelFeeWaiver?.addEventListener('click', closeFeeWaiver);
+
+        // Submit to Task Center
+        btnSubmitFeeWaiver?.addEventListener('click', () => {
+            const inputs = document.querySelectorAll('.waiver-input-amount');
+            let hasError = false;
+            const today = new Date().toISOString().split('T')[0];
+            const time = new Date().toTimeString().split(' ')[0].substring(0, 5);
+
+            inputs.forEach(input => {
+                const waiverVal = input.value;
+                if (!waiverVal || isNaN(waiverVal) || parseFloat(waiverVal) <= 0) {
+                    hasError = true;
+                }
+            });
+
+            if (hasError) {
+                alert('请输入有效的减免金额');
+                return;
+            }
+
+            // Create application records for each item
+            inputs.forEach(input => {
+                const newApp = {
+                    id: Math.random().toString(36).substr(2, 6).toUpperCase(),
+                    orderNo: 'ORD20240414001', // Example Order No
+                    feeType: input.getAttribute('data-name'),
+                    amount: parseFloat(input.value).toFixed(2),
+                    reason: document.getElementById('waiver-apply-remark').value || '客户申请减免',
+                    status: '审核中',
+                    time: `${today} ${time}`,
+                    applicant: 'CRM用户'
+                };
+                waiverApplications.push(newApp);
+            });
+
+            alert(`成功提交 ${inputs.length} 项费用减免申请，已进入任务中心等待审批。`);
+            closeFeeWaiver();
+            renderTaskCenterTable();
+        });
+
+        // --- FBX Order List Actions (New) ---
+        const fbxListTbody = document.querySelector('#view-fbx-orders tbody');
+        if (fbxListTbody) {
+            fbxListTbody.addEventListener('click', (e) => {
+                const target = e.target;
+                const tr = target.closest('tr');
+                if (!tr) return;
+
+                const orderNo = tr.cells[3]?.textContent.trim() || '未知订单';
+
+                if (target.classList.contains('fbx-push-btn')) {
+                    alert(`订单 [${orderNo}] 的附加费已成功推送至下游系统。`);
+                } else if (target.classList.contains('fbx-copy-btn')) {
+                    const data = {
+                        orderNo: orderNo,
+                        surchargeLong: tr.cells[12]?.textContent.trim(),
+                        surchargeHeavy: tr.cells[13]?.textContent.trim(),
+                        surchargeRemote: tr.cells[14]?.textContent.trim(),
+                        surchargePickup: tr.cells[15]?.textContent.trim(),
+                        total: tr.cells[16]?.textContent.trim()
+                    };
+                    const textToCopy = `订单号: ${data.orderNo}\n超长附加费: ${data.surchargeLong}\n超重附加费: ${data.surchargeHeavy}\n偏远派送费: ${data.surchargeRemote}\n提货费: ${data.surchargePickup}\n费用合计: ${data.total}`;
+
+                    navigator.clipboard.writeText(textToCopy).then(() => {
+                        alert(`订单 [${orderNo}] 的数据已复制到剪切板。`);
+                    }).catch(err => {
+                        console.error('复制失败:', err);
+                        // fallback for old browsers
+                        const textArea = document.createElement("textarea");
+                        textArea.value = textToCopy;
+                        document.body.appendChild(textArea);
+                        textArea.select();
+                        document.execCommand("copy");
+                        document.body.removeChild(textArea);
+                        alert(`订单 [${orderNo}] 的数据已复制到剪切板(兼容模式)。`);
+                    });
+                }
+            });
+        }
+        // --- Last-mile Method Linkage ---
+        document.querySelectorAll('input[name="last-mile-type"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                const val = e.target.value;
+                const truckFields = document.getElementById('dispatch-fields-truck');
+                const expressFields = document.getElementById('dispatch-fields-express');
+                const labelTypeWrap = document.getElementById('label-type-dispatch-wrap');
+
+                if (val === '卡派') {
+                    if (truckFields) truckFields.style.display = 'block';
+                    if (expressFields) expressFields.style.display = 'none';
+                    if (labelTypeWrap) labelTypeWrap.style.display = 'none';
+                } else if (val === '快递派') {
+                    if (truckFields) truckFields.style.display = 'none';
+                    if (expressFields) expressFields.style.display = 'block';
+                    if (labelTypeWrap) labelTypeWrap.style.display = 'flex';
+                } else {
+                    // 亚马逊自提
+                    if (truckFields) truckFields.style.display = 'none';
+                    if (expressFields) expressFields.style.display = 'none';
+                    if (labelTypeWrap) labelTypeWrap.style.display = 'none';
+                }
+            });
+        });
+
+        // --- Label Type (Dispatch) Linkage ---
+        document.querySelectorAll('input[name="fba-label-type-dispatch"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                const wrap = document.getElementById('fba-us-carriers-dispatch-wrap');
+                if (wrap) wrap.style.display = e.target.value !== '不指定' ? 'flex' : 'none';
+            });
+        });
+        // --- BG Method Linkage Logic ---
+        document.querySelectorAll('input[name="bg"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                const wrap = document.getElementById('bg-continuation-wrap');
+                if (wrap) {
+                    wrap.style.display = e.target.value === '单证报关' ? 'block' : 'none';
+                }
+            });
+        });
+        // 表格过滤通用逻辑
+        const filterTable = (inputId, tbodyId) => {
+            const input = document.getElementById(inputId);
+            const tbody = document.getElementById(tbodyId);
+            if (!input || !tbody) return;
+
+            input.addEventListener('input', () => {
+                const filter = input.value.toLowerCase();
+                const rows = tbody.getElementsByTagName('tr');
+                for (let i = 0; i < rows.length; i++) {
+                    const cells = rows[i].getElementsByTagName('td');
+                    let found = false;
+                    for (let j = 0; j < cells.length; j++) {
+                        if (cells[j].textContent.toLowerCase().includes(filter)) {
+                            found = true;
+                            break;
+                        }
+                    }
+                    rows[i].style.display = found ? '' : 'none';
+                }
+            });
+        };
+
+        // 初始化搜索过滤
+        filterTable('ebs-channel-search', 'ebs-channel-table-body');
+        filterTable('ebs-customer-search', 'ebs-customer-table-body');
     </script>
 
 </body>
