@@ -640,6 +640,57 @@
             color: #fff;
         }
 
+        /* Bottom Bar Dropdown Styles */
+        .fbx-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .fbx-dropdown-content {
+            display: none;
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #fff;
+            min-width: 100px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border-radius: 4px;
+            padding: 4px 0;
+            z-index: 1001;
+            border: 1px solid #f0f0f0;
+        }
+
+        .fbx-dropdown:hover .fbx-dropdown-content {
+            display: block;
+        }
+
+        .fbx-dropdown-item {
+            padding: 8px 16px;
+            font-size: 13px;
+            color: #595959;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .fbx-dropdown-item:hover {
+            background-color: #e6f7ff;
+            color: #1890ff;
+        }
+
+        .fbx-dropdown-content::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #fff transparent transparent transparent;
+        }
+
         /* FBA Detail Page Styles */
         .fba-header {
             background: #fff;
@@ -3280,6 +3331,156 @@
             justify-content: center;
             color: #bfbfbf;
         }
+
+        /* --- Customer Bill Module Styles --- */
+        .bill-container {
+            display: flex;
+            height: 100%;
+            background: #f5f7fa;
+            overflow: hidden;
+        }
+
+        .bill-sidebar {
+            width: 240px;
+            background: #fff;
+            border-right: 1px solid #e8e8e8;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+
+        .bill-sidebar-header {
+            padding: 16px;
+            border-bottom: 1px solid #f0f0f0;
+            font-weight: 600;
+            font-size: 14px;
+            color: #262626;
+        }
+
+        .bill-sidebar-search {
+            padding: 12px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .bill-customer-list {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .customer-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            border-bottom: 1px solid #f9f9f9;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+
+        .customer-item:hover {
+            background: #f0f7ff;
+        }
+
+        .customer-item.active {
+            background: #e6f7ff;
+            color: #1890ff;
+            border-right: 3px solid #1890ff;
+        }
+
+        .bill-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        .bill-tabs {
+            background: #fff;
+            padding: 0 16px;
+            display: flex;
+            gap: 24px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .bill-tab {
+            padding: 12px 4px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #595959;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .bill-tab.active {
+            color: #1890ff;
+            font-weight: 600;
+        }
+
+        .bill-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #1890ff;
+        }
+
+        .bill-tab-badge {
+            background: #1890ff;
+            color: #fff;
+            font-size: 10px;
+            padding: 0 6px;
+            border-radius: 10px;
+            margin-left: 4px;
+            vertical-align: top;
+        }
+
+        .bill-toolbar {
+            background: #fff;
+            padding: 16px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .bill-toolbar-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .bill-label {
+            font-size: 13px;
+            color: #595959;
+            white-space: nowrap;
+        }
+
+        .bill-input {
+            height: 32px;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            padding: 0 8px;
+            font-size: 13px;
+        }
+
+        .bill-table-container {
+            flex: 1;
+            background: #fff;
+            margin: 12px;
+            overflow: auto;
+            border-radius: 4px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .bill-footer {
+            background: #fff;
+            padding: 10px 16px;
+            border-top: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
     </style>
 </head>
 
@@ -3342,7 +3543,7 @@
             </svg>
             <span class="label">管理</span>
         </div>
-        <div class="primary-menu-item">
+        <div class="primary-menu-item" id="menu-settlement">
             <svg viewBox="0 0 24 24">
                 <rect x="4" y="2" width="16" height="20" rx="2" ry="2" />
                 <line x1="8" y1="6" x2="16" y2="6" />
@@ -3729,6 +3930,133 @@
                 <div class="sec-menu-item">API推送规则</div>
             </div>
         </div>
+
+        <div class="sec-section">
+            <div class="sec-title">
+                <svg viewBox="0 0 24 24">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" />
+                </svg>
+                <span>客商服务</span>
+            </div>
+            <div class="sec-menu-grid">
+                <div class="sec-menu-item">客商管理</div>
+                <div class="sec-menu-item">联系人管理</div>
+            </div>
+        </div>
+    </aside>
+
+    <aside class="secondary-sidebar" id="sidebar-settlement" style="display: none;">
+        <div class="sec-section" style="margin-top: 0;">
+            <div class="sec-title">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                </svg>
+                <span>应收应付</span>
+            </div>
+            <div class="sec-menu-grid">
+                <div class="sec-menu-item">对账单</div>
+                <div class="sec-menu-item" id="menu-customer-bill">客户账单</div>
+                <div class="sec-menu-item">发送账单</div>
+                <div class="sec-menu-item">接收账单</div>
+                <div class="sec-menu-item">批量确认</div>
+                <div class="sec-menu-item">费用明细</div>
+                <div class="sec-menu-item">应收明细</div>
+                <div class="sec-menu-item">应付明细</div>
+                <div class="sec-menu-item">业务员成本明细</div>
+                <div class="sec-menu-item">代收代付明细</div>
+            </div>
+        </div>
+
+        <div class="sec-section">
+            <div class="sec-title">
+                <svg viewBox="0 0 24 24">
+                    <rect x="3" y="11" width="18" height="10" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+                <span>收付</span>
+            </div>
+            <div class="sec-menu-grid">
+                <div class="sec-menu-item">收付款</div>
+                <div class="sec-menu-item">付款申请</div>
+            </div>
+        </div>
+
+        <div class="sec-section">
+            <div class="sec-title">
+                <svg viewBox="0 0 24 24">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+                <span>放单</span>
+            </div>
+            <div class="sec-menu-grid">
+                <div class="sec-menu-item">放单</div>
+                <div class="sec-menu-item">放货</div>
+            </div>
+        </div>
+
+        <div class="sec-section">
+            <div class="sec-title">
+                <svg viewBox="0 0 24 24">
+                    <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                    <line x1="2" y1="10" x2="22" y2="10"></line>
+                    <line x1="7" y1="15" x2="7.01" y2="15"></line>
+                    <line x1="12" y1="15" x2="12.01" y2="15"></line>
+                </svg>
+                <span>发票</span>
+            </div>
+            <div class="sec-menu-grid">
+                <div class="sec-menu-item">发票管理</div>
+                <div class="sec-menu-item">开票申请</div>
+                <div class="sec-menu-item">开票费用配置</div>
+                <div class="sec-menu-item">红字申请确认单</div>
+            </div>
+        </div>
+
+        <div class="sec-section">
+            <div class="sec-title">
+                <svg viewBox="0 0 24 24">
+                    <path d="M3 21h18M3 7l9-4 9 4v14H3V7z"></path>
+                    <path d="M9 21V11h6v10"></path>
+                </svg>
+                <span>结算主体</span>
+            </div>
+            <div class="sec-menu-grid">
+                <div class="sec-menu-item">结算单位</div>
+            </div>
+        </div>
+
+        <div class="sec-section">
+            <div class="sec-title">
+                <svg viewBox="0 0 24 24">
+                    <path d="M2 22h20M2 13h20M2 5h20M5 2c0 2 0 2 0 3M19 2c0 2 0 2 0 3"></path>
+                </svg>
+                <span>银企直连</span>
+            </div>
+            <div class="sec-menu-grid">
+                <div class="sec-menu-item">银行收款流水</div>
+                <div class="sec-menu-item">银行付款流水</div>
+                <div class="sec-menu-item">银企直连配置</div>
+            </div>
+        </div>
+
+        <div class="sec-section">
+            <div class="sec-title">
+                <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path
+                        d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                    </path>
+                </svg>
+                <span>设置</span>
+            </div>
+            <div class="sec-menu-grid">
+                <div class="sec-menu-item">结算设置</div>
+            </div>
+        </div>
     </aside>
 
     <aside class="secondary-sidebar" id="sidebar-quotation" style="display: none;">
@@ -4030,6 +4358,55 @@
         </div>
     </div>
 
+    <!-- Modal: Enter Collection Record (New) -->
+    <div class="modal-backdrop" id="modal-collection-edit"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10003; align-items: center; justify-content: center;">
+        <div class="modal"
+            style="background: #fff; width: 500px; border-radius: 8px; box-shadow: 0 4px 24px rgba(0,0,0,0.2); overflow: hidden;">
+            <div class="modal-header"
+                style="padding: 16px 20px; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; background: #fafafa;">
+                <h3 style="margin: 0; font-size: 15px; font-weight: 600;">录入催收记录</h3>
+                <span class="modal-close" id="close-collection-edit"
+                    style="cursor: pointer; font-size: 20px; color: #999;">&times;</span>
+            </div>
+            <div style="padding: 20px;">
+                <label style="display: block; margin-bottom: 8px; font-size: 13px; color: #595959;">催收内容记录</label>
+                <textarea id="collection-input" placeholder="请输入催收详情内容..."
+                    style="width: 100%; height: 120px; border: 1px solid #d9d9d9; border-radius: 4px; padding: 10px; font-size: 13px; outline: none; resize: vertical;"></textarea>
+                <div style="margin-top: 12px; font-size: 12px; color: #8c8c8c;"></div>
+            </div>
+            <div class="modal-footer"
+                style="padding: 12px 20px; border-top: 1px solid #f0f0f0; text-align: right; background: #fafafa; display: flex; justify-content: flex-end; gap: 10px;">
+                <button id="btn-cancel-collection"
+                    style="height: 32px; padding: 0 16px; border: 1px solid #d9d9d9; background: #fff; border-radius: 4px; cursor: pointer;">取消</button>
+                <button id="btn-save-collection"
+                    style="height: 32px; padding: 0 16px; border: none; background: #1890ff; color: #fff; border-radius: 4px; cursor: pointer;">保存记录</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: View Collection Record (New) -->
+    <div class="modal-backdrop" id="modal-collection-view"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10003; align-items: center; justify-content: center;">
+        <div class="modal"
+            style="background: #fff; width: 500px; border-radius: 8px; box-shadow: 0 4px 24px rgba(0,0,0,0.2); overflow: hidden;">
+            <div class="modal-header"
+                style="padding: 16px 20px; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; background: #fafafa;">
+                <h3 style="margin: 0; font-size: 15px; font-weight: 600;">查看催收记录</h3>
+                <span class="modal-close" id="close-collection-view"
+                    style="cursor: pointer; font-size: 20px; color: #999;">&times;</span>
+            </div>
+            <div style="padding: 20px; max-height: 400px; overflow-y: auto;" id="collection-view-list">
+                <!-- Timeline records will be injected here -->
+            </div>
+            <div class="modal-footer"
+                style="padding: 12px 20px; border-top: 1px solid #f0f0f0; text-align: right; background: #fafafa;">
+                <button id="btn-close-collection-view"
+                    style="height: 32px; padding: 0 20px; border: 1px solid #d9d9d9; background: #fff; border-radius: 4px; cursor: pointer;">关闭</button>
+            </div>
+        </div>
+    </div>
+
     <main class="content">
         <button id="mode-switcher-btn">
             <span>🔄</span> 切换CRM
@@ -4041,6 +4418,196 @@
             <div style="font-size: 48px; margin-bottom: 20px;">🏢</div>
             <h1 style="color: #333; margin-bottom: 12px;">欢迎使用 EBS 综合业务管理系统</h1>
             <p style="color: #666; font-size: 16px;">请点击左侧菜单开始您的业务操作</p>
+        </div>
+
+        <!-- Customer Bill View -->
+        <div id="view-customer-bill" class="view-container"
+            style="display: none; height: 100%; border-top: 1px solid #e8e8e8;">
+            <div class="bill-container">
+                <!-- Left Sidebar: Customer List -->
+                <div class="bill-sidebar">
+                    <div class="bill-sidebar-header">客户列表</div>
+                    <div class="bill-sidebar-search">
+                        <input type="text" class="bill-input" placeholder="全部客商" style="flex: 1;">
+                        <button class="fbx-btn" style="height: 32px;">更多</button>
+                    </div>
+                    <div style="padding: 0 12px 12px 12px; display: flex; gap: 8px;">
+                        <input type="text" class="bill-input" placeholder="请输入" style="flex: 1;">
+                        <button class="fbx-btn"
+                            style="height: 32px; background: #1890ff; color: #fff; border: none; padding: 0 8px;">🔍</button>
+                    </div>
+                    <div class="bill-customer-list">
+                        <div class="customer-item active">全部 (1)</div>
+                        <div class="customer-item">运物云10086 (1)</div>
+                    </div>
+                    <div style="padding: 10px; border-top: 1px solid #f0f0f0;">
+                        <button class="fbx-btn" style="width: 100%; border-style: dashed;">+ 新增客户</button>
+                    </div>
+                </div>
+
+                <!-- Main Content Area -->
+                <div class="bill-main">
+                    <!-- Top Tabs -->
+                    <div class="bill-tabs">
+                        <div class="bill-tab active" data-tab="all">全部</div>
+                        <div class="bill-tab" data-tab="pending-rec">待收款 <span class="bill-tab-badge">1</span></div>
+                        <div class="bill-tab" data-tab="pending-pay">待付款</div>
+                        <div class="bill-tab" data-tab="received">已收款</div>
+                        <div class="bill-tab" data-tab="paid">已付款</div>
+                        <div class="bill-tab" data-tab="pending-confirm">待业务员确认 <span class="bill-tab-badge">1</span>
+                        </div>
+                        <div class="bill-tab" data-tab="submitted">已提交预销</div>
+                        <div class="bill-tab" data-tab="pending-writeoff">待确认核销</div>
+                    </div>
+
+                    <!-- Filter Toolbar -->
+                    <div class="bill-toolbar">
+                        <div class="bill-toolbar-item">
+                            <span class="bill-label">账单日期</span>
+                            <div style="display: flex; align-items: center; gap: 4px;">
+                                <input type="date" class="bill-input" style="width: 130px;">
+                                <span style="color: #bfbfbf;">-</span>
+                                <input type="date" class="bill-input" style="width: 130px;">
+                            </div>
+                        </div>
+                        <div class="bill-toolbar-item">
+                            <select class="bill-input" style="width: 100px;">
+                                <option>请选择</option>
+                                <option>月结</option>
+                            </select>
+                        </div>
+                        <div class="bill-toolbar-item">
+                            <span class="bill-label">关键字</span>
+                            <input type="text" class="bill-input" placeholder="账单号/工作单号/订舱号..." style="width: 260px;">
+                        </div>
+                        <div class="bill-toolbar-item">
+                            <span class="bill-label">账期</span>
+                            <select class="bill-input" style="width: 100px;">
+                                <option>请选择</option>
+                            </select>
+                        </div>
+                        <div class="bill-toolbar-item">
+                            <span class="bill-label">业务员</span>
+                            <select class="bill-input" style="width: 100px;">
+                                <option>请选择</option>
+                            </select>
+                        </div>
+                        <div class="bill-toolbar-item">
+                            <span class="bill-label">操作员</span>
+                            <select class="bill-input" style="width: 100px;">
+                                <option>请选择</option>
+                            </select>
+                        </div>
+
+                        <div style="display: flex; gap: 8px;">
+                            <button class="fbx-btn"
+                                style="background: #1890ff; color: #fff; border: none; padding: 0 16px; height: 32px;">查询</button>
+                            <button class="fbx-btn" style="padding: 0 16px; height: 32px;">重置</button>
+                            <button class="fbx-btn"
+                                style="background: #e6f7ff; color: #1890ff; border: 1px solid #91d5ff; padding: 0 16px; height: 32px;">提交预销</button>
+                            <button class="fbx-btn"
+                                style="background: #1890ff; color: #fff; border: none; padding: 0 16px; height: 32px;">创建账单</button>
+                            <button class="fbx-btn"
+                                style="background: #1890ff; color: #fff; border: none; padding: 0 16px; height: 32px;">生成对账单</button>
+                            <button class="fbx-btn" id="btn-batch-collection"
+                                style="background: #1890ff; color: #fff; border: none; padding: 0 16px; height: 32px;">批量录入催收记录</button>
+                        </div>
+
+                        <div class="bill-toolbar-item" style="margin-left: auto;">
+                            <label
+                                style="display: flex; align-items: center; gap: 4px; font-size: 13px; color: #595959; cursor: pointer;">
+                                <input type="checkbox"> 仅显示我创建的
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Data Table -->
+                    <div class="bill-table-container">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 13px; min-width: 1500px;">
+                            <thead style="background: #fafafa; position: sticky; top: 0; z-index: 1;">
+                                <tr>
+                                    <th style="padding: 10px; border-bottom: 1px solid #f0f0f0; width: 40px;"><input
+                                            type="checkbox"></th>
+                                    <th style="padding: 10px; border-bottom: 1px solid #f0f0f0; width: 50px;">#</th>
+                                    <th style="padding: 10px; border-bottom: 1px solid #f0f0f0; width: 80px;">收付方向</th>
+                                    <th style="padding: 10px; border-bottom: 1px solid #f0f0f0; width: 80px;">账单类型</th>
+                                    <th style="padding: 10px; border-bottom: 1px solid #f0f0f0; width: 120px;">账单号</th>
+                                    <th style="padding: 10px; border-bottom: 1px solid #f0f0f0; width: 150px;">结算公司</th>
+                                    <th style="padding: 10px; border-bottom: 1px solid #f0f0f0; width: 100px;">固定金额</th>
+                                    <th style="padding: 10px; border-bottom: 1px solid #f0f0f0; width: 120px;">折合币别</th>
+                                    <th style="padding: 10px; border-bottom: 1px solid #f0f0f0; width: 100px;">折合金额</th>
+                                    <th style="padding: 10px; border-bottom: 1px solid #f0f0f0; width: 100px;">账单日期</th>
+                                    <th style="padding: 10px; border-bottom: 1px solid #f0f0f0; width: 100px;">发送日期</th>
+                                    <th style="padding: 10px; border-bottom: 1px solid #f0f0f0; width: 120px;">订舱号</th>
+                                    <th style="padding: 10px; border-bottom: 1px solid #f0f0f0; width: 120px;">柜号</th>
+                                    <th style="padding: 10px; border-bottom: 1px solid #f0f0f0; width: 140px;">工作单号</th>
+                                    <th style="padding: 10px; border-bottom: 1px solid #f0f0f0; width: 80px;">业务员</th>
+                                    <th style="padding: 10px; border-bottom: 1px solid #f0f0f0; width: 80px;">操作员</th>
+                                    <th style="padding: 10px; border-bottom: 1px solid #f0f0f0; width: 80px;">催收记录</th>
+                                    <th style="padding: 10px; border-bottom: 1px solid #f0f0f0; width: 200px;">账单公司</th>
+                                    <th
+                                        style="padding: 10px; border-bottom: 1px solid #f0f0f0; width: 110px; position: sticky; right: 0; background: #fafafa;">
+                                        操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bill-table-body">
+                                <tr style="border-bottom: 1px solid #f0f0f0;">
+                                    <td style="padding: 12px; text-align: center;"><input type="checkbox"></td>
+                                    <td style="padding: 12px; text-align: center;">1</td>
+                                    <td style="padding: 12px; text-align: center;"><span
+                                            style="color: #52c41a; font-weight: bold;">AR</span></td>
+                                    <td style="padding: 12px; text-align: center;">票币</td>
+                                    <td style="padding: 12px; color: #1890ff; cursor: pointer;">R26040001</td>
+                                    <td style="padding: 12px;">运物云10086</td>
+                                    <td style="padding: 12px; text-align: right;"></td>
+                                    <td style="padding: 12px;"><span style="color: #52c41a;">AR: CNY100.00</span></td>
+                                    <td style="padding: 12px; text-align: right;"></td>
+                                    <td style="padding: 12px; text-align: center;">2026-04-27</td>
+                                    <td style="padding: 12px; text-align: center;"></td>
+                                    <td style="padding: 12px;"></td>
+                                    <td style="padding: 12px;"></td>
+                                    <td style="padding: 12px;">YD260400001</td>
+                                    <td style="padding: 12px; text-align: center;">林权</td>
+                                    <td style="padding: 12px; text-align: center;"></td>
+                                    <td style="padding: 12px; text-align: center;" class="col-collection-status">
+                                        <!-- Placeholder for View button if record exists -->
+                                    </td>
+                                    <td style="padding: 12px;">深圳运物云科技有限公司</td>
+                                    <td
+                                        style="padding: 12px; text-align: center; position: sticky; right: 0; background: #fff;">
+                                        <div style="display: flex; gap: 8px; justify-content: center; font-size: 16px;">
+                                            <span style="color: #1890ff; cursor: pointer;" title="录入催收记录"
+                                                class="btn-entry-collection">📝</span>
+                                            <span style="color: #1890ff; cursor: pointer;" title="编辑">👤</span>
+                                            <span style="color: #1890ff; cursor: pointer;" title="打印">📑</span>
+                                            <span style="color: #ff4d4f; cursor: pointer;" title="删除">🗑️</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Bottom Pagination -->
+                    <div class="bill-footer">
+                        <button class="fbx-btn" style="height: 32px;">批量客户确认</button>
+                        <div style="display: flex; align-items: center; gap: 12px; font-size: 13px; color: #595959;">
+                            <span>共 1 条</span>
+                            <select class="bill-input" style="width: 80px;">
+                                <option>10条/页</option>
+                            </select>
+                            <div style="display: flex; align-items: center; gap: 4px;">
+                                <button class="fbx-btn" style="padding: 0 8px; height: 28px;">&lt;</button>
+                                <span
+                                    style="background: #1890ff; color: #fff; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 4px;">1</span>
+                                <button class="fbx-btn" style="padding: 0 8px; height: 28px;">&gt;</button>
+                            </div>
+                            <span>前往 <input type="text" class="bill-input" value="1"
+                                    style="width: 40px; text-align: center;"> 页</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Workflow Management View -->
@@ -4610,6 +5177,8 @@
                     </label>
 
                     <div style="margin-left: auto; display: flex; gap: 8px;">
+                        <button class="fbx-btn">批量推送</button>
+                        <button class="fbx-btn">批量复制</button>
                         <button class="fbx-btn">费用试算</button>
                         <button class="fbx-btn">单证</button>
                         <button class="fbx-btn">导出</button>
@@ -4647,6 +5216,7 @@
                                 <th style="padding: 12px; font-weight: 500; width: 120px;">备注1</th>
                                 <th style="padding: 12px; font-weight: 500; width: 120px;">备注2</th>
                                 <th style="padding: 12px; font-weight: 500; width: 100px;">客户编码</th>
+                                <th style="padding: 12px; font-weight: 500; width: 110px;">尾程派送方式</th>
                                 <th
                                     style="padding: 12px; font-weight: 500; width: 120px; text-align: center; background: #fafafa; position: sticky; right: 0; z-index: 5;">
                                     操作</th>
@@ -4674,6 +5244,7 @@
                                 <td style="padding: 12px;">-</td>
                                 <td style="padding: 12px;">-</td>
                                 <td style="padding: 12px;">CUST001</td>
+                                <td style="padding: 12px;">快递派</td>
                                 <td
                                     style="padding: 12px; text-align: center; position: sticky; right: 0; background: #fff;">
                                     <a href="javascript:void(0)" class="fbx-push-btn"
@@ -4704,6 +5275,7 @@
                                 <td style="padding: 12px;">-</td>
                                 <td style="padding: 12px;">-</td>
                                 <td style="padding: 12px;">CUST002</td>
+                                <td style="padding: 12px;">快递派</td>
                                 <td
                                     style="padding: 12px; text-align: center; position: sticky; right: 0; background: #fff;">
                                     <a href="javascript:void(0)" class="fbx-push-btn"
@@ -4730,6 +5302,16 @@
                     <button class="fbx-btn">推送货主互联 <span style="font-size: 10px; margin-left: 2px;">▲</span></button>
                     <button class="fbx-btn">新建问题 <span style="font-size: 10px; margin-left: 2px;">▲</span></button>
                     <button class="fbx-btn">新增轨迹 <span style="font-size: 10px; margin-left: 2px;">▲</span></button>
+
+                    <div class="fbx-dropdown">
+                        <button class="fbx-btn" style="border-radius: 4px;">快递打单 <span
+                                style="font-size: 10px; margin-left: 2px;">▲</span></button>
+                        <div class="fbx-dropdown-content">
+                            <div class="fbx-dropdown-item" onclick="openPriceComparison()">价格对比</div>
+                            <div class="fbx-dropdown-item" onclick="openPrintPanel()">打印面板</div>
+                            <div class="fbx-dropdown-item" onclick="cancelPrinting()">取消打单</div>
+                        </div>
+                    </div>
 
                     <div
                         style="margin-left: auto; display: flex; align-items: center; gap: 16px; font-size: 13px; color: #595959;">
@@ -5278,6 +5860,10 @@
                     </div>
                 </div>
                 <div style="display: flex; gap: 12px;">
+                    <button class="fbx-btn" id="btn-calc-premium"
+                        style="display: flex; align-items: center; gap: 6px; color: #fa8c16; border-color: #fa8c16;">
+                        保费计算
+                    </button>
                     <button class="fbx-btn fbx-btn-primary" id="btn-batch-insurance"
                         style="display: flex; align-items: center; gap: 6px;">
                         <span>🛡️</span> 批量投保
@@ -5315,7 +5901,7 @@
                                 收货渠道</th>
                             <th
                                 style="padding: 12px; border-bottom: 2px solid #eee; text-align: left; width: 100px; white-space: nowrap;">
-                                收件日期</th>
+                                入仓日期</th>
                             <th
                                 style="padding: 12px; border-bottom: 2px solid #eee; text-align: left; width: 150px; white-space: nowrap;">
                                 最新轨迹</th>
@@ -5383,6 +5969,9 @@
                                 style="padding: 12px; border-bottom: 2px solid #eee; text-align: left; width: 200px; white-space: nowrap;">
                                 外部备注</th>
                             <th
+                                style="padding: 12px; border-bottom: 2px solid #eee; text-align: left; width: 150px; white-space: nowrap;">
+                                是否额外购买保险</th>
+                            <th
                                 style="padding: 12px; border-bottom: 2px solid #eee; text-align: right; width: 120px; white-space: nowrap;">
                                 投保货值</th>
                             <th
@@ -5391,6 +5980,9 @@
                             <th
                                 style="padding: 12px; border-bottom: 2px solid #eee; text-align: right; width: 100px; white-space: nowrap;">
                                 保费</th>
+                            <th
+                                style="padding: 12px; border-bottom: 2px solid #eee; text-align: left; width: 150px; white-space: nowrap;">
+                                保险公司</th>
                             <th
                                 style="padding: 12px; border-bottom: 2px solid #eee; text-align: center; width: 100px; white-space: nowrap; background: #fafafa; position: sticky; right: 0; z-index: 5;">
                                 操作</th>
@@ -5509,6 +6101,46 @@
             </div>
         </div>
 
+        <!-- Task Process Detail View [REFINED] -->
+        <div id="view-task-process" class="view-container" style="display: none; background: #fff; flex-direction: column; flex: 1; overflow: hidden; width: 100%;">
+            <div style="padding: 12px 20px; border-bottom: 2px solid #f0f0f0; display: flex; align-items: center; background: #fff; z-index: 10; width: 100%; box-sizing: border-box;">
+                <div style="display: flex; align-items: center; gap: 8px; font-size: 14px; color: #262626;">
+                    <span style="font-weight: 500;">申请单号：</span>
+                    <span id="detail-app-id" style="font-weight: 500; color: #1890ff;"></span>
+                </div>
+                <div id="process-action-buttons" style="display: flex; gap: 8px; margin-left: auto;">
+                    <button id="btn-approve-task" class="ebs-btn ebs-btn-primary" style="padding: 4px 16px; background: #1890ff; border-color: #1890ff; font-size: 13px;">同意</button>
+                    <button id="btn-reject-task" class="ebs-btn" style="padding: 4px 16px; border: 1px solid #ff4d4f; color: #ff4d4f; background: #fff; font-size: 13px;">拒绝</button>
+                    <button id="btn-back-to-task" style="background: #fff; border: 1px solid #d9d9d9; padding: 4px 16px; border-radius: 2px; cursor: pointer; color: #595959; font-size: 13px;">返回</button>
+                </div>
+            </div>
+            
+            <div style="flex: 1; overflow: auto; padding: 0;">
+                <table class="table" style="width: 100%; min-width: 1500px; border-collapse: collapse; font-size: 13px;">
+                    <thead style="background: #fafafa; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; z-index: 5;">
+                        <tr>
+                            <th style="padding: 12px; font-weight: 500; text-align: left; background: #fafafa;">工作单号</th>
+                            <th style="padding: 12px; font-weight: 500; text-align: left; background: #fafafa;">结算单位</th>
+                            <th style="padding: 12px; font-weight: 500; text-align: left; background: #fafafa;">计费日期</th>
+                            <th style="padding: 12px; font-weight: 500; text-align: left; background: #fafafa;">工作单日期</th>
+                            <th style="padding: 12px; font-weight: 500; text-align: left; background: #fafafa;">费用名称</th>
+                            <th style="padding: 12px; font-weight: 500; text-align: left; background: #fafafa;">币种</th>
+                            <th style="padding: 12px; font-weight: 500; text-align: right; background: #fafafa;">数量</th>
+                            <th style="padding: 12px; font-weight: 500; text-align: right; background: #fafafa;">单价</th>
+                            <th style="padding: 12px; font-weight: 500; text-align: right; background: #fafafa;">减免前毛利</th>
+                            <th style="padding: 12px; font-weight: 500; text-align: right; background: #fafafa;">减免前毛利率</th>
+                            <th style="padding: 12px; font-weight: 500; text-align: right; background: #fafafa;">减免后毛利</th>
+                            <th style="padding: 12px; font-weight: 500; text-align: right; background: #fafafa;">减免后毛利率</th>
+                            <th style="padding: 12px; font-weight: 500; text-align: left; background: #fafafa;">业务员</th>
+                        </tr>
+                    </thead>
+                    <tbody id="process-detail-tbody">
+                        <!-- JS Dynamic Render -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
         <!-- Bulk Surcharge View -->
         <div id="view-bulk-surcharge" class="view-container"
             style="display: none; background: #FAFAFA; padding: 20px; flex-direction: column;">
@@ -5537,6 +6169,8 @@
                             <th style="padding: 12px; font-weight: 500; color: #909399; width: 60px;">序号</th>
                             <th style="padding: 12px; font-weight: 500; color: #909399; width: 140px;">方案名称</th>
                             <th style="padding: 12px; font-weight: 500; color: #909399; width: 120px;">附加费名称</th>
+                            <th style="padding: 12px; font-weight: 500; color: #909399; width: 120px;">适用收货渠道</th>
+                            <th style="padding: 12px; font-weight: 500; color: #909399; width: 120px;">适用客户</th>
                             <th style="padding: 12px; font-weight: 500; color: #909399;">附加费条款</th>
                             <th style="padding: 12px; font-weight: 500; color: #909399; width: 100px;">创建日期</th>
                             <th style="padding: 12px; font-weight: 500; color: #909399; width: 100px;">修改日期</th>
@@ -5552,6 +6186,8 @@
                             <td style="padding: 12px; color: #606266;">1</td>
                             <td style="padding: 12px; color: #606266;">报关费</td>
                             <td style="padding: 12px; color: #409eff;"></td>
+                            <td style="padding: 12px; color: #606266;">-</td>
+                            <td style="padding: 12px; color: #606266;">-</td>
                             <td style="padding: 12px; color: #606266;"></td>
                             <td style="padding: 12px; color: #606266;">2023-10-01</td>
                             <td style="padding: 12px; color: #606266;">2023-10-05</td>
@@ -5567,6 +6203,8 @@
                             <td style="padding: 12px; color: #606266;">2</td>
                             <td style="padding: 12px; color: #303133; font-weight: 500;">报关续页费</td>
                             <td style="padding: 12px; color: #409eff;"></td>
+                            <td style="padding: 12px; color: #606266;">-</td>
+                            <td style="padding: 12px; color: #606266;">-</td>
                             <td style="padding: 12px; color: #909399;"></td>
                             <td style="padding: 12px; color: #909399;">2023-10-02</td>
                             <td style="padding: 12px; color: #909399;">2023-10-06</td>
@@ -5585,6 +6223,8 @@
                             <td style="padding: 12px; color: #606266;">3</td>
                             <td style="padding: 12px; color: #303133; font-weight: 500;">超品名费</td>
                             <td style="padding: 12px; color: #409eff;"></td>
+                            <td style="padding: 12px; color: #606266;">-</td>
+                            <td style="padding: 12px; color: #606266;">-</td>
                             <td style="padding: 12px; color: #909399;"></td>
                             <td style="padding: 12px; color: #909399;">2023-11-15</td>
                             <td style="padding: 12px; color: #909399;">2023-11-20</td>
@@ -5603,6 +6243,8 @@
                             <td style="padding: 12px; color: #606266;">4</td>
                             <td style="padding: 12px; color: #303133; font-weight: 500;">偏远附加费</td>
                             <td style="padding: 12px; color: #409eff;"></td>
+                            <td style="padding: 12px; color: #606266;">-</td>
+                            <td style="padding: 12px; color: #606266;">-</td>
                             <td style="padding: 12px; color: #909399;"></td>
                             <td style="padding: 12px; color: #909399;">2023-12-01</td>
                             <td style="padding: 12px; color: #909399;">2023-12-05</td>
@@ -5621,6 +6263,8 @@
                             <td style="padding: 12px; color: #606266;">5</td>
                             <td style="padding: 12px; color: #303133; font-weight: 500;">指定打单服务商费</td>
                             <td style="padding: 12px; color: #409eff;"></td>
+                            <td style="padding: 12px; color: #606266;">-</td>
+                            <td style="padding: 12px; color: #606266;">-</td>
                             <td style="padding: 12px; color: #909399;"></td>
                             <td style="padding: 12px; color: #909399;">2024-01-10</td>
                             <td style="padding: 12px; color: #909399;">2024-01-15</td>
@@ -5639,6 +6283,8 @@
                             <td style="padding: 12px; color: #606266;">6</td>
                             <td style="padding: 12px; color: #303133; font-weight: 500;">派送范围</td>
                             <td style="padding: 12px; color: #409eff;"></td>
+                            <td style="padding: 12px; color: #606266;">-</td>
+                            <td style="padding: 12px; color: #606266;">-</td>
                             <td style="padding: 12px; color: #909399;"></td>
                             <td style="padding: 12px; color: #909399;">2024-02-15</td>
                             <td style="padding: 12px; color: #909399;">2024-02-20</td>
@@ -5657,6 +6303,8 @@
                             <td style="padding: 12px; color: #606266;">7</td>
                             <td style="padding: 12px; color: #303133; font-weight: 500;">海派超长附加费</td>
                             <td style="padding: 12px; color: #409eff;"></td>
+                            <td style="padding: 12px; color: #606266;">-</td>
+                            <td style="padding: 12px; color: #606266;">-</td>
                             <td style="padding: 12px; color: #909399;"></td>
                             <td style="padding: 12px; color: #909399;">2024-03-01</td>
                             <td style="padding: 12px; color: #909399;">2024-03-05</td>
@@ -5675,6 +6323,8 @@
                             <td style="padding: 12px; color: #606266;">8</td>
                             <td style="padding: 12px; color: #303133; font-weight: 500;">提货费</td>
                             <td style="padding: 12px; color: #409eff;"></td>
+                            <td style="padding: 12px; color: #606266;">-</td>
+                            <td style="padding: 12px; color: #606266;">-</td>
                             <td style="padding: 12px; color: #909399;"></td>
                             <td style="padding: 12px; color: #909399;">2024-03-05</td>
                             <td style="padding: 12px; color: #909399;">2024-03-08</td>
@@ -5693,6 +6343,8 @@
                             <td style="padding: 12px; color: #606266;">9</td>
                             <td style="padding: 12px; color: #303133; font-weight: 500;">海派超重附加费</td>
                             <td style="padding: 12px; color: #409eff;"></td>
+                            <td style="padding: 12px; color: #606266;">-</td>
+                            <td style="padding: 12px; color: #606266;">-</td>
                             <td style="padding: 12px; color: #909399;"></td>
                             <td style="padding: 12px; color: #909399;">2024-03-05</td>
                             <td style="padding: 12px; color: #909399;">2024-03-08</td>
@@ -8209,6 +8861,11 @@
         const btnBackToFBX = document.getElementById('btn-back-to-fbx');
         const viewCreateWorkflow = document.getElementById('view-create-workflow');
         const btnBackWorkflowSettings = document.getElementById('btn-back-workflow-settings');
+        const viewTaskProcess = document.getElementById('view-task-process');
+
+        // Customer Bill Variables
+        const viewCustomerBill = document.getElementById('view-customer-bill');
+        const menuCustomerBill = document.getElementById('menu-customer-bill');
 
         // --- Cross-Module Data Store ---
         let waiverApplications = [];
@@ -8253,7 +8910,7 @@
                 console.error('switchView Error: targetView is null');
                 return;
             }
-            const allViews = [viewDefault, viewRoleMgmt, viewOrgMgmt, viewEmployeeMgmt, viewBulkSurcharge, viewEditBulkSurcharge, viewSurchargeConfirm, viewWorkflowSettings, viewSurchargeWaiver, viewTaskCenter, viewFBXOrders, viewFBAOrderDetail, viewInsurance, viewCreateWorkflow];
+            const allViews = [viewDefault, viewRoleMgmt, viewOrgMgmt, viewEmployeeMgmt, viewBulkSurcharge, viewEditBulkSurcharge, viewSurchargeConfirm, viewWorkflowSettings, viewSurchargeWaiver, viewTaskCenter, viewTaskProcess, viewFBXOrders, viewFBAOrderDetail, viewInsurance, viewCreateWorkflow, viewCustomerBill];
             allViews.forEach(v => {
                 if (v && v.style) v.style.display = 'none';
             });
@@ -8269,7 +8926,177 @@
             document.querySelectorAll('.secondary-sidebar').forEach(sidebar => {
                 sidebar.style.display = 'none';
             });
+            // 重置一级菜单激活状态
+            document.querySelectorAll('.primary-menu-item').forEach(item => item.classList.remove('active'));
         };
+
+        // --- Customer Bill Data & Logic ---
+        let billsData = [
+            {
+                id: 1,
+                direction: 'AR',
+                type: '票币',
+                billNo: 'R26040001',
+                company: '运物云10086',
+                fixedAmount: '',
+                currency: 'AR: CNY100.00',
+                amount: '',
+                billDate: '2026-04-27',
+                sendDate: '',
+                bookingNo: '',
+                containerNo: '',
+                jobNo: 'YD260400001',
+                salesman: '林权',
+                operator: '',
+                billCompany: '深圳运物云科技有限公司',
+                collectionRecords: [] // Array of { content, time, operator }
+            }
+        ];
+
+        const billTableBody = document.getElementById('bill-table-body');
+        const modalCollEdit = document.getElementById('modal-collection-edit');
+        const modalCollView = document.getElementById('modal-collection-view');
+        const collInput = document.getElementById('collection-input');
+        let currentTargetIds = [];
+
+        function renderBillsTable() {
+            if (!billTableBody) return;
+            billTableBody.innerHTML = billsData.map((bill, index) => `
+                <tr style="border-bottom: 1px solid #f0f0f0;" data-id="${bill.id}">
+                    <td style="padding: 12px; text-align: center;"><input type="checkbox" class="bill-row-checkbox"></td>
+                    <td style="padding: 12px; text-align: center;">${index + 1}</td>
+                    <td style="padding: 12px; text-align: center;"><span style="color: ${bill.direction === 'AR' ? '#52c41a' : '#ff4d4f'}; font-weight: bold;">${bill.direction}</span></td>
+                    <td style="padding: 12px; text-align: center;">${bill.type}</td>
+                    <td style="padding: 12px; color: #1890ff; cursor: pointer;">${bill.billNo}</td>
+                    <td style="padding: 12px;">${bill.company}</td>
+                    <td style="padding: 12px; text-align: right;">${bill.fixedAmount}</td>
+                    <td style="padding: 12px;"><span style="color: #52c41a;">${bill.currency}</span></td>
+                    <td style="padding: 12px; text-align: right;">${bill.amount}</td>
+                    <td style="padding: 12px; text-align: center;">${bill.billDate}</td>
+                    <td style="padding: 12px; text-align: center;">${bill.sendDate}</td>
+                    <td style="padding: 12px;">${bill.bookingNo}</td>
+                    <td style="padding: 12px;">${bill.containerNo}</td>
+                    <td style="padding: 12px;">${bill.jobNo}</td>
+                    <td style="padding: 12px; text-align: center;">${bill.salesman}</td>
+                    <td style="padding: 12px; text-align: center;">${bill.operator}</td>
+                    <td style="padding: 12px; text-align: center;">
+                        ${bill.collectionRecords.length > 0 ? `<button class="fbx-btn btn-view-collection" style="padding: 2px 8px; font-size: 11px; background: #e6f7ff; color: #1890ff; border: 1px solid #91d5ff;">查看</button>` : '-'}
+                    </td>
+                    <td style="padding: 12px;">${bill.billCompany}</td>
+                    <td style="padding: 12px; text-align: center; position: sticky; right: 0; background: #fff;">
+                        <div style="display: flex; gap: 8px; justify-content: center; font-size: 16px;">
+                            <span style="color: #1890ff; cursor: pointer;" title="录入催收记录" class="btn-entry-collection">📝</span>
+                            <span style="color: #1890ff; cursor: pointer;" title="编辑">👤</span>
+                            <span style="color: #1890ff; cursor: pointer;" title="打印">📑</span>
+                            <span style="color: #ff4d4f; cursor: pointer;" title="删除">🗑️</span>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+
+            // Update total count
+            const totalCountEl = document.querySelector('.bill-footer span:first-child');
+            if (totalCountEl) totalCountEl.textContent = `共 ${billsData.length} 条`;
+
+            bindTableEvents();
+        }
+
+        // Header Checkbox
+        const billSelectAll = document.querySelector('.bill-table-container thead input[type="checkbox"]');
+        if (billSelectAll) {
+            billSelectAll.addEventListener('change', (e) => {
+                document.querySelectorAll('.bill-row-checkbox').forEach(cb => cb.checked = e.target.checked);
+            });
+        }
+
+        function bindTableEvents() {
+            document.querySelectorAll('.btn-entry-collection').forEach(btn => {
+                btn.onclick = () => {
+                    const id = parseInt(btn.closest('tr').dataset.id);
+                    currentTargetIds = [id];
+                    collInput.value = ''; // Always empty for adding new
+                    modalCollEdit.style.display = 'flex';
+                };
+            });
+            document.querySelectorAll('.btn-view-collection').forEach(btn => {
+                btn.onclick = () => {
+                    const id = parseInt(btn.closest('tr').dataset.id);
+                    const bill = billsData.find(b => b.id === id);
+                    if (bill && bill.collectionRecords.length > 0) {
+                        const listEl = document.getElementById('collection-view-list');
+                        listEl.innerHTML = bill.collectionRecords.map(rec => `
+                            <div style="margin-bottom: 16px; border-bottom: 1px dashed #f0f0f0; padding-bottom: 12px;">
+                                <div style="font-size: 14px; color: #262626; background: #f9f9f9; padding: 10px; border-radius: 4px; line-height: 1.5;">${rec.content}</div>
+                                <div style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; color: #8c8c8c;">
+                                    <span>录入人：${rec.operator}</span>
+                                    <span>时间：${rec.time}</span>
+                                </div>
+                            </div>
+                        `).join('');
+                        modalCollView.style.display = 'flex';
+                    }
+                };
+            });
+        }
+
+        if (menuCustomerBill) {
+            menuCustomerBill.addEventListener('click', (e) => {
+                e.stopPropagation();
+                switchView(viewCustomerBill, 'menu-customer-bill');
+                renderBillsTable();
+            });
+        }
+
+        document.getElementById('btn-batch-collection')?.addEventListener('click', () => {
+            const checkedBoxes = document.querySelectorAll('.bill-row-checkbox:checked');
+            if (checkedBoxes.length === 0) {
+                alert('请先勾选需要批量录入的账单数据！');
+                return;
+            }
+            currentTargetIds = Array.from(checkedBoxes).map(cb => parseInt(cb.closest('tr').dataset.id));
+            collInput.value = '';
+            modalCollEdit.style.display = 'flex';
+        });
+
+        document.getElementById('btn-save-collection')?.addEventListener('click', () => {
+            const content = collInput.value.trim();
+            if (!content) {
+                alert('请输入催收内容！');
+                return;
+            }
+            const now = new Date().toLocaleString();
+            currentTargetIds.forEach(id => {
+                const bill = billsData.find(b => b.id === id);
+                if (bill) {
+                    bill.collectionRecords.push({ content, time: now, operator: 'yangwu' });
+                }
+            });
+            modalCollEdit.style.display = 'none';
+            renderBillsTable();
+        });
+
+        [document.getElementById('close-collection-edit'), document.getElementById('btn-cancel-collection')].forEach(b => {
+            b?.addEventListener('click', () => modalCollEdit.style.display = 'none');
+        });
+        [document.getElementById('close-collection-view'), document.getElementById('btn-close-collection-view')].forEach(b => {
+            b?.addEventListener('click', () => modalCollView.style.display = 'none');
+        });
+
+        // Tab Switching in Customer Bill
+        document.querySelectorAll('.bill-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                tab.parentElement.querySelectorAll('.bill-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+            });
+        });
+
+        // Customer Selection in Customer Bill
+        document.querySelectorAll('.customer-item').forEach(item => {
+            item.addEventListener('click', () => {
+                item.parentElement.querySelectorAll('.customer-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+            });
+        });
 
         if (menuBulkSurcharge) {
             menuBulkSurcharge.addEventListener('click', (e) => {
@@ -10038,6 +10865,7 @@
         const sidebarWarehouse = document.getElementById('sidebar-warehouse');
         const sidebarManagement = document.getElementById('sidebar-management');
         const sidebarSystem = document.getElementById('sidebar-system');
+        const sidebarSettlement = document.getElementById('sidebar-settlement');
         const sidebarQuotation = document.getElementById('sidebar-quotation');
         const sidebarBusiness = document.getElementById('sidebar-business');
         const primaryMenuItems = Array.from(document.querySelectorAll('.primary-menu-item'));
@@ -10047,6 +10875,7 @@
         const warehouseBtn = document.getElementById('menu-warehouse');
         const managementBtn = document.getElementById('menu-management');
         const systemBtn = document.getElementById('menu-system');
+        const settlementBtn = document.getElementById('menu-settlement');
         const quotationBtn = primaryMenuItems.find(el => el.querySelector('.label')?.textContent === '报价');
         const businessBtn = document.getElementById('menu-business');
 
@@ -10113,6 +10942,13 @@
             businessBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 toggleSecondarySidebar(businessBtn, sidebarBusiness);
+            });
+        }
+
+        if (settlementBtn && sidebarSettlement) {
+            settlementBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleSecondarySidebar(settlementBtn, sidebarSettlement);
             });
         }
 
@@ -10409,6 +11245,68 @@
             }).reverse().join('');
         }
 
+        // --- Task Center Detail View Logic ---
+        const processDetailTbody = document.getElementById('process-detail-tbody');
+        let currentWaiverId = null;
+
+        window.openProcessView = function(id, isReadOnly = false) {
+            currentWaiverId = id;
+            const app = waiverApplications.find(a => a.id === id);
+            if (!app) return;
+
+            // Fill Header Info
+            document.getElementById('detail-app-id').textContent = `WAV-${app.id}`;
+
+            // Control Buttons
+            const actionBtns = document.getElementById('process-action-buttons');
+            actionBtns.style.display = isReadOnly ? 'none' : 'flex';
+
+            // Render Detail Table (Mock 13 columns for the request)
+            processDetailTbody.innerHTML = `
+                <tr style="border-bottom: 1px solid #f0f0f0;">
+                    <td style="padding: 12px; color: #1890ff;">SO24041201</td>
+                    <td style="padding: 12px;">演示结算单位A</td>
+                    <td style="padding: 12px;">2024-04-20</td>
+                    <td style="padding: 12px;">2024-04-18</td>
+                    <td style="padding: 12px;">${app.feeType}</td>
+                    <td style="padding: 12px;">CNY</td>
+                    <td style="padding: 12px; text-align: right;">1.00</td>
+                    <td style="padding: 12px; text-align: right;">${app.amount}</td>
+                    <td style="padding: 12px; text-align: right; color: #595959;">￥850.50</td>
+                    <td style="padding: 12px; text-align: right; color: #595959;">17.01%</td>
+                    <td style="padding: 12px; text-align: right; color: #52c41a; font-weight: 500;">￥${(850.50 - parseFloat(app.amount)).toFixed(2)}</td>
+                    <td style="padding: 12px; text-align: right; color: #52c41a;">${((850.5 - parseFloat(app.amount)) / 5000 * 100).toFixed(2)}%</td>
+                    <td style="padding: 12px;">张三 (业务员)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #f0f0f0; background: #fafafa;">
+                    <td colspan="13" style="padding: 12px; color: #8c8c8c;">
+                        <span style="font-weight: 500; color: #262626;">申请原因：</span>${app.reason}
+                    </td>
+                </tr>
+            `;
+
+            switchView(viewTaskProcess, 'menu-task-center');
+        };
+
+        document.getElementById('btn-back-to-task')?.addEventListener('click', () => {
+            switchView(viewTaskCenter, 'menu-task-center');
+            renderTaskCenterTable();
+        });
+
+        document.getElementById('btn-approve-task')?.addEventListener('click', () => {
+            if (currentWaiverId) {
+                processWaiver(currentWaiverId, '已批准');
+                switchView(viewTaskCenter, 'menu-task-center');
+            }
+        });
+
+        document.getElementById('btn-reject-task')?.addEventListener('click', () => {
+            if (currentWaiverId) {
+                processWaiver(currentWaiverId, '已驳回');
+                switchView(viewTaskCenter, 'menu-task-center');
+            }
+        });
+
         function renderTaskCenterTable() {
             if (!taskTbody) return;
             // 过滤逻辑：仅显示非草稿状态的申请
@@ -10425,9 +11323,9 @@
             taskTbody.innerHTML = reversedApps.map((app, index) => {
                 const isUnderReview = app.status === '审核中';
                 const actionHtml = isUnderReview
-                    ? `<button class="ebs-btn ebs-btn-primary" onclick="processWaiver('${app.id}', '已批准')" style="padding: 2px 8px; font-size: 11px; margin-right: 4px;">同意</button>
-                       <button class="ebs-btn" onclick="processWaiver('${app.id}', '已驳回')" style="padding: 2px 8px; font-size: 11px; border: 1px solid #ff4d4f; color: #ff4d4f;">拒绝</button>`
-                    : `<span style="color: #999; font-size: 11px;">已处理</span>`;
+                    ? `<button class="ebs-btn ebs-btn-primary" onclick="alert('流程查看功能暂未开放')" style="padding: 2px 8px; font-size: 11px; margin-right: 4px; background: #52c41a; border-color: #52c41a;">流程</button>
+                       <button class="ebs-btn ebs-btn-primary" onclick="openProcessView('${app.id}')" style="padding: 2px 8px; font-size: 11px;">处理</button>`
+                    : `<button class="ebs-btn" onclick="openProcessView('${app.id}', true)" style="padding: 2px 8px; font-size: 11px; color: #1890ff; border-color: #1890ff;">查看</button>`;
 
                 return `
                     <tr style="border-bottom: 1px solid #f0f0f0;">
@@ -10573,10 +11471,10 @@
 
         const insuranceMockData = [
             { id: 'SO24041201', fba: 'FBA15GZ8JK', channel: '美森正班', date: '2024-04-12', track: '[上海] 已到达码头', type: '直客', customer: '客户A', ref: 'REF-99881', nameCn: '电子配件', nameEn: 'Electronic', items: 50, units: 500, weight: 850.5, bWeight: 950.0, amount: '12500.00', hbl: 'HBL001', ship: 'COSCO/098W', container: 'CSQU112233', expType: 'UPS', tracking: '1Z123...01', pol: 'SHA', pod: 'LAX', dest: 'ONT8', address: '24300 Nandina Ave...', inNote: '已报备', outNote: '无', insValue: 12500, boxValue: 250, premium: 37.5, status: '已投保' },
-            { id: 'SO24041202', fba: 'FBA15H9Y2M', channel: '以星快船', date: '2024-04-12', track: '[宁波] 待装箱', type: '同行', customer: '同行B', ref: 'REF-88772', nameCn: '生活用品', nameEn: 'Daily Use', items: 30, units: 300, weight: 450.0, bWeight: 500.0, amount: '5000.00', hbl: 'HBL002', ship: 'ZIM/221E', container: '', expType: 'FedEx', tracking: '7788...02', pol: 'NGB', pod: 'LGB', dest: 'LGB8', address: '1567 Industry Way...', inNote: '柜号待补', outNote: '急单', insValue: 0, boxValue: 0, premium: 0, status: '未投保' },
+            { id: 'SO24041202', fba: 'FBA15H9Y2M', channel: '以星快船', date: '2024-04-12', track: '[宁波] 待装箱', type: '同行', customer: '同行B', ref: 'REF-88772', nameCn: '生活用品', nameEn: 'Daily Use', items: 30, units: 300, weight: 450.0, bWeight: 500.0, amount: '5000.00', hbl: 'HBL002', ship: 'ZIM/221E', container: '', expType: 'FedEx', tracking: '7788...02', pol: 'NGB', pod: 'LGB', dest: 'LGB8', address: '1567 Industry Way...', inNote: '柜号待补', outNote: '急单', insValue: 5000, boxValue: 166.67, premium: 0, status: '未投保' },
             { id: 'SO24041203', fba: 'FBA15K8L5P', channel: '美森加班', date: '2024-04-11', track: '[盐田] 已清关', type: '直客', customer: '客户C', ref: 'REF-77663', nameCn: '户外工具', nameEn: 'Outdoor Tools', items: 100, units: 1000, weight: 1200.0, bWeight: 1350.0, amount: '22000.00', hbl: 'HBL003', ship: 'MATSON/055S', container: 'MAEU665544', expType: 'UPS', tracking: '1Z99...03', pol: 'SHEN', pod: 'SEA', dest: 'BFI4', address: '21005 64th Ave S...', inNote: '需修改柜号', outNote: '无', insValue: 22000, boxValue: 220, premium: 66.0, status: '已投保' },
             { id: 'SO24041204', fba: 'FBA15M9N0Q', channel: '盐田限时达', date: '2024-04-10', track: '[洛杉矶] 派送中', type: '直客', customer: '客户D', ref: 'REF-66554', nameCn: '服装', nameEn: 'Garmets', items: 80, units: 2400, weight: 350.0, bWeight: 400.0, amount: '8000.00', hbl: 'HBL004', ship: 'OOCL/889W', container: 'OOCU998877', expType: 'Truck', tracking: 'TK-8854', pol: 'SHEN', pod: 'LAX', dest: 'LAX9', address: '11201 Citrus Ave...', inNote: '入仓完成', outNote: '客户要求签收单', insValue: 8000, boxValue: 100, premium: 24.0, status: '已投保' },
-            { id: 'SO24041205', fba: 'FBA15P1R2S', channel: '普船海派', date: '2024-04-09', track: '[上海] 仓库收货', type: '同行', customer: '代理X', ref: 'REF-55443', nameCn: '灯具', nameEn: 'Lighting', items: 25, units: 250, weight: 300.2, bWeight: 310.5, amount: '3500.00', hbl: 'HBL005', ship: 'HPL/001S', container: '', expType: 'UPS', tracking: '1Z77...05', pol: 'SHA', pod: 'HOU', dest: 'HOU2', address: '123 Enterprise Dr...', inNote: '待投保', outNote: '无', insValue: 0, boxValue: 0, premium: 0, status: '未投保' }
+            { id: 'SO24041205', fba: 'FBA15P1R2S', channel: '普船海派', date: '2024-04-09', track: '[上海] 仓库收货', type: '同行', customer: '代理X', ref: 'REF-55443', nameCn: '灯具', nameEn: 'Lighting', items: 25, units: 250, weight: 300.2, bWeight: 310.5, amount: '3500.00', hbl: 'HBL005', ship: 'HPL/001S', container: '', expType: 'UPS', tracking: '1Z77...05', pol: 'SHA', pod: 'HOU', dest: 'HOU2', address: '123 Enterprise Dr...', inNote: '待投保', outNote: '无', insValue: 3500, boxValue: 140, premium: 0, status: '未投保' }
         ];
 
         const renderInsuranceTable = (filterTab = '全部') => {
@@ -10589,7 +11487,8 @@
 
             let filteredData = insuranceMockData;
             if (filterTab !== '全部') {
-                filteredData = insuranceMockData.filter(item => item.status === filterTab);
+                const targetStatus = filterTab === '待投保' ? '未投保' : filterTab;
+                filteredData = insuranceMockData.filter(item => item.status === targetStatus);
             }
 
             tbody.innerHTML = filteredData.map(item => `
@@ -10623,12 +11522,17 @@
                     <td style="padding: 12px; white-space: nowrap;">${item.address}</td>
                     <td style="padding: 12px; white-space: nowrap; color: #8c8c8c;">${item.inNote}</td>
                     <td style="padding: 12px; white-space: nowrap; color: #8c8c8c;">${item.outNote}</td>
+                    <td style="padding: 12px; white-space: nowrap; color: #52c41a;">是</td>
                     <td style="padding: 12px; text-align: right; white-space: nowrap; color: #fa8c16;">${item.insValue.toFixed(2)}</td>
                     <td style="padding: 12px; text-align: right; white-space: nowrap;">${item.boxValue.toFixed(2)}</td>
                     <td style="padding: 12px; text-align: right; white-space: nowrap; color: #52c41a;">${item.premium.toFixed(2)}</td>
-                    <td style="padding: 12px; text-align: center; white-space: nowrap; background: #fff; position: sticky; right: 0; z-index: 5; border-left: 1px solid #f0f0f0;">
+                    <td style="padding: 12px; text-align: left; white-space: nowrap;">太平洋保险</td>
+                    <td style="padding: 12px; text-align: center; white-space: nowrap; background: #fff; position: sticky; right: 0; z-index: 5; border-left: 1px solid #f0f0f0; display: flex; justify-content: center; align-items: center; gap: 8px; height: 100%; box-sizing: border-box;">
                         ${item.status === '未投保'
-                    ? `<button class="fbx-btn" onclick="insureRow('${item.id}')" style="padding: 2px 8px; font-size: 12px; background: #e6f7ff; color: #1890ff; border-color: #91d5ff;">投保</button>`
+                    ? `
+                        <button class="fbx-btn" onclick="insureRow('${item.id}')" style="padding: 2px 8px; font-size: 12px; background: #e6f7ff; color: #1890ff; border-color: #91d5ff;">投保</button>
+                        <button class="fbx-btn" onclick="editPremium('${item.id}')" style="padding: 2px 8px; font-size: 12px; background: #fff7e6; color: #fa8c16; border-color: #ffd591;">修改保费</button>
+                    `
                     : `<span style="color: #52c41a; font-size: 12px;">已投保</span>`}
                     </td>
                 </tr>
@@ -10701,6 +11605,169 @@
                 renderInsuranceTable(tab.textContent.trim());
             });
         });
+
+        // --- Premium Calculation Logic ---
+        const closeCalcModal = () => {
+            const modal = document.getElementById('modal-calc-premium');
+            if (modal) modal.style.display = 'none';
+        }
+
+        const openCalcModal = () => {
+            const selectedChecks = document.querySelectorAll('.insurance-row-check:checked');
+            if (selectedChecks.length === 0) {
+                alert('请先勾选需要计算保费的订单');
+                return;
+            }
+            const modal = document.getElementById('modal-calc-premium');
+            if (modal) modal.style.display = 'flex';
+        }
+
+        const confirmCalcPremium = () => {
+            const rateInput = document.getElementById('calc-rate-input');
+            const rate = parseFloat(rateInput.value) / 100;
+            if (isNaN(rate) || rate <= 0) {
+                alert('请输入有效的费率');
+                return;
+            }
+
+            const selectedChecks = document.querySelectorAll('.insurance-row-check:checked');
+            let updatedCount = 0;
+            selectedChecks.forEach(check => {
+                const id = check.getAttribute('data-id');
+                const item = insuranceMockData.find(d => d.id === id);
+                if (item && item.status !== '已投保') {
+                    if (item.items > 0) {
+                        item.premium = (item.insValue / item.items) * rate;
+                        updatedCount++;
+                    }
+                }
+            });
+
+            closeCalcModal();
+            renderInsuranceTable(insuranceCurrentTab);
+            alert(`计算完成，已更新 ${updatedCount} 项订单的保费数值。`);
+        }
+
+        window.closeCalcModal = closeCalcModal;
+        window.confirmCalcPremium = confirmCalcPremium;
+
+        const btnCalcPremium = document.getElementById('btn-calc-premium');
+        if (btnCalcPremium) {
+            btnCalcPremium.addEventListener('click', openCalcModal);
+        }
+
+        // --- Inline Edit Premium ---
+        const editPremium = (id) => {
+            const item = insuranceMockData.find(d => d.id === id);
+            if (!item) return;
+
+            const newVal = prompt(`手动修改订单 ${id} 的保费额度:`, item.premium.toFixed(2));
+            if (newVal !== null) {
+                const premium = parseFloat(newVal);
+                if (!isNaN(premium) && premium >= 0) {
+                    item.premium = premium;
+                    renderInsuranceTable(insuranceCurrentTab);
+                } else {
+                    alert('请输入有效的金额数值');
+                }
+            }
+        }
+        window.editPremium = editPremium;
+
+        // --- FBX Orders: Price Comparison & Printing logic ---
+        let isCarrierSelected = false; // 业务状态：是否已选择承运商
+
+        const carrierData = [
+            { name: 'UPS', service: 'UPS Ground', price: 12.50, time: '3-5 Days' },
+            { name: 'FedEx', service: 'Home Delivery', price: 13.20, time: '2-4 Days' },
+            { name: 'DHL', service: 'Express Worldwide', price: 15.80, time: '1-3 Days' },
+            { name: 'USPS', service: 'Priority Mail', price: 11.90, time: '2-3 Days' },
+            { name: 'Amazon', service: 'ALN standard', price: 10.50, time: '5-7 Days' }
+        ];
+
+        const openPriceComparison = () => {
+            const selectedCount = document.querySelectorAll('.fbx-table-area tbody input[type="checkbox"]:checked').length;
+            if (selectedCount === 0) {
+                alert('请先在列表中勾选需要对比价格的订单');
+                return;
+            }
+
+            const modal = document.getElementById('modal-price-comparison');
+            const tbody = document.getElementById('price-comparison-tbody');
+
+            // Sort by price: Low to High
+            carrierData.sort((a, b) => a.price - b.price);
+
+            tbody.innerHTML = carrierData.map((c, i) => `
+                <tr style="border-bottom: 1px solid #f0f0f0;">
+                    <td style="padding: 12px; text-align: center;">${i + 1}</td>
+                    <td style="padding: 12px; font-weight: 500;">${c.name}</td>
+                    <td style="padding: 12px; color: #595959;">${c.service}</td>
+                    <td style="padding: 12px; color: #52c41a; font-weight: 600;">$ ${c.price.toFixed(2)}</td>
+                    <td style="padding: 12px; color: #8c8c8c;">${c.time}</td>
+                    <td style="padding: 12px; text-align: center;">
+                        <button class="fbx-btn" onclick="selectCarrier('${c.name}')" 
+                            style="padding: 2px 12px; font-size: 12px; border-color: #1890ff; color: #1890ff;">选择</button>
+                    </td>
+                </tr>
+            `).join('');
+
+            modal.style.display = 'flex';
+        }
+
+        const closePriceModal = () => {
+            document.getElementById('modal-price-comparison').style.display = 'none';
+        }
+
+        const selectCarrier = (name) => {
+            isCarrierSelected = true;
+            alert(`已成功选择 [${name}] 进行打单准备，请前往打印面板核对信息。`);
+            closePriceModal();
+        }
+
+        const openPrintPanel = () => {
+            const modal = document.getElementById('modal-printing-demo');
+            const bar = document.getElementById('print-progress-bar');
+            const text = document.getElementById('print-status-text');
+
+            modal.style.display = 'flex';
+            bar.style.width = '0%';
+            text.innerText = '正在生成面单文件...';
+
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 35;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    text.innerText = '面单预览 (PDF) 已生成，可以开始打印。';
+                }
+                bar.style.width = progress + '%';
+            }, 600);
+        }
+
+        const closePrintModal = () => {
+            document.getElementById('modal-printing-demo').style.display = 'none';
+        }
+
+        const cancelPrinting = () => {
+            // 业务校验：必须价格对比后选择了公司才能取消
+            if (!isCarrierSelected) {
+                alert('操作无效：当前尚未选择任何快递方案，无法取消打单任务。');
+                return;
+            }
+            if (confirm('确定要取消此单的打单操作吗？之前选取的承运商信息将重置。')) {
+                isCarrierSelected = false;
+                alert('打单任务已取消，业务状态已重置为初始。');
+            }
+        }
+
+        window.openPriceComparison = openPriceComparison;
+        window.closePriceModal = closePriceModal;
+        window.selectCarrier = selectCarrier;
+        window.openPrintPanel = openPrintPanel;
+        window.closePrintModal = closePrintModal;
+        window.cancelPrinting = cancelPrinting;
 
         // --- FBX Orders Logic ---
         if (menuFBXOrders) {
@@ -11069,6 +12136,91 @@
         filterTable('ebs-channel-search', 'ebs-channel-table-body');
         filterTable('ebs-customer-search', 'ebs-customer-table-body');
     </script>
+
+    <!-- Modal: Premium Calculation -->
+    <div id="modal-calc-premium"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: center;">
+        <div
+            style="background: #fff; padding: 24px; border-radius: 8px; width: 320px; box-shadow: 0 4px 24px rgba(0,0,0,0.2);">
+            <h3
+                style="margin: 0 0 16px 0; font-size: 16px; color: #333; border-bottom: 1px solid #f0f0f0; padding-bottom: 12px;">
+                保费计算</h3>
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 8px; font-size: 13px; color: #595959;">请输入费率 (%)，如 0.03 代表
+                    0.03%:</label>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <input type="number" id="calc-rate-input" placeholder="0.03" step="0.0001"
+                        style="flex: 1; padding: 8px 12px; border: 1px solid #d9d9d9; border-radius: 4px; box-sizing: border-box; outline: none; font-size: 14px;">
+                    <span style="font-size: 14px; font-weight: bold; color: #333;">%</span>
+                </div>
+                <div style="margin-top: 8px; font-size: 12px; color: #8c8c8c;">计算公式：(投保货值 / 件数) * (费率 / 100)</div>
+            </div>
+            <div style="display: flex; justify-content: flex-end; gap: 8px;">
+                <button class="fbx-btn" onclick="closeCalcModal()" style="font-size: 13px;">取消</button>
+                <button class="fbx-btn fbx-btn-primary" onclick="confirmCalcPremium()"
+                    style="font-size: 13px;">确定计算</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Price Comparison -->
+    <div id="modal-price-comparison"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: center;">
+        <div
+            style="background: #fff; padding: 0; border-radius: 8px; width: 700px; max-width: 90%; box-shadow: 0 4px 24px rgba(0,0,0,0.2); overflow: hidden;">
+            <div
+                style="padding: 16px 24px; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; background: #fafafa;">
+                <h3 style="margin: 0; font-size: 16px; color: #262626;">快递价格对比 (US Express Comparison)</h3>
+                <span onclick="closePriceModal()" style="cursor: pointer; font-size: 20px; color: #999;">&times;</span>
+            </div>
+            <div style="padding: 20px; max-height: 400px; overflow-y: auto;">
+                <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                    <thead style="background: #f5f5f5;">
+                        <tr>
+                            <th style="padding: 12px; text-align: center; width: 50px;">排名</th>
+                            <th style="padding: 12px; text-align: left;">快递公司</th>
+                            <th style="padding: 12px; text-align: left;">服务类型</th>
+                            <th style="padding: 12px; text-align: left;">预估费用</th>
+                            <th style="padding: 12px; text-align: left;">预计时效</th>
+                            <th style="padding: 12px; text-align: center; width: 80px;">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="price-comparison-tbody">
+                        <!-- Content rendered by JS -->
+                    </tbody>
+                </table>
+            </div>
+            <div
+                style="padding: 16px 24px; border-top: 1px solid #f0f0f0; display: flex; justify-content: flex-end; gap: 12px;">
+                <button class="fbx-btn" onclick="closePriceModal()" style="font-size: 13px;">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Printing Demo -->
+    <div id="modal-printing-demo"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10000; justify-content: center; align-items: center;">
+        <div
+            style="background: #fff; padding: 24px; border-radius: 8px; width: 440px; box-shadow: 0 6px 36px rgba(0,0,0,0.3);">
+            <h3
+                style="margin: 0 0 16px 0; font-size: 16px; color: #262626; border-bottom: 1px solid #f0f0f0; padding-bottom: 12px;">
+                打印作业预览 (Print Preview)</h3>
+            <div style="margin: 20px 0 30px 0;">
+                <div id="print-status-text" style="font-size: 14px; color: #595959; margin-bottom: 15px;">连接打印服务中...
+                </div>
+                <div
+                    style="height: 10px; width: 100%; background: #f0f0f0; border-radius: 5px; overflow: hidden; border: 1px solid #e8e8e8;">
+                    <div id="print-progress-bar"
+                        style="height: 100%; width: 0%; background: linear-gradient(90deg, #1890ff, #40a9ff); transition: width 0.4s;">
+                    </div>
+                </div>
+            </div>
+            <div style="display: flex; justify-content: flex-end; gap: 12px;">
+                <button class="fbx-btn" onclick="closePrintModal()" style="font-size: 13px;">关闭窗口</button>
+                <button class="fbx-btn fbx-btn-primary" style="font-size: 13px;">确认打印</button>
+            </div>
+        </div>
+    </div>
 
 </body>
 
