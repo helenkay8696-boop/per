@@ -1462,13 +1462,50 @@
             transform: rotate(-90deg);
         }
 
-        /* Checkboxes */
-        input[type="checkbox"],
-        input[type="radio"] {
-            width: 18px;
-            height: 18px;
-            accent-color: var(--primary);
+        /* Toggle Switch */
+        .ebs-switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 22px;
+        }
+
+        .ebs-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .ebs-slider {
+            position: absolute;
             cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 22px;
+        }
+
+        .ebs-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        .ebs-switch input:checked+.ebs-slider {
+            background-color: #1890ff;
+        }
+
+        .ebs-switch input:checked+.ebs-slider:before {
+            transform: translateX(22px);
         }
 
         /* Modal */
@@ -4196,7 +4233,7 @@
                 <span>EDI开放平台</span>
             </div>
             <div class="sec-menu-grid-1">
-                <div class="sec-menu-item">集成服务</div>
+                <div class="sec-menu-item" id="menu-integration-services">集成服务</div>
             </div>
         </div>
 
@@ -4332,9 +4369,13 @@
                             </th>
                             <th style="padding: 10px; border: 1px solid #f0f0f0; text-align: left; width: 180px;">结算公司
                             </th>
-                            <th style="padding: 10px; border: 1px solid #f0f0f0; text-align: right; width: 120px;">原始金额
+                            <th style="padding: 10px; border: 1px solid #f0f0f0; text-align: right; width: 100px;">原始金额
                             </th>
-                            <th style="padding: 10px; border: 1px solid #f0f0f0; text-align: center; width: 150px;">减免金额
+                            <th style="padding: 10px; border: 1px solid #f0f0f0; text-align: right; width: 100px;">已销金额
+                            </th>
+                            <th style="padding: 10px; border: 1px solid #f0f0f0; text-align: right; width: 100px;">未销金额
+                            </th>
+                            <th style="padding: 10px; border: 1px solid #f0f0f0; text-align: center; width: 130px;">减免金额
                             </th>
                         </tr>
                     </thead>
@@ -4381,6 +4422,118 @@
                     style="height: 32px; padding: 0 16px; border: 1px solid #d9d9d9; background: #fff; border-radius: 4px; cursor: pointer;">取消</button>
                 <button id="btn-save-collection"
                     style="height: 32px; padding: 0 16px; border: none; background: #1890ff; color: #fff; border-radius: 4px; cursor: pointer;">保存记录</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: CTT Config (New) -->
+    <div class="modal-backdrop" id="modal-ctt-config"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10004; align-items: center; justify-content: center;">
+        <div class="modal"
+            style="background: #fff; width: 450px; border-radius: 8px; box-shadow: 0 4px 24px rgba(0,0,0,0.2); overflow: hidden; padding: 0;">
+            <div class="modal-header"
+                style="padding: 16px 20px; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; background: #fafafa;">
+                <h3 style="margin: 0; font-size: 15px; font-weight: 600;">CTT打单系统配置</h3>
+                <span class="modal-close" id="close-ctt-config"
+                    style="cursor: pointer; font-size: 20px; color: #999;">&times;</span>
+            </div>
+            <div style="padding: 24px; display: flex; flex-direction: column; gap: 16px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <label style="width: 80px; font-size: 13px; color: #595959; text-align: right;">Api密钥</label>
+                    <input type="text" placeholder="请输入Api密钥"
+                        style="flex: 1; height: 32px; border: 1px solid #d9d9d9; border-radius: 4px; padding: 0 10px; outline: none;">
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <label style="width: 80px; font-size: 13px; color: #595959; text-align: right;">appkey</label>
+                    <input type="text" placeholder="请输入appkey"
+                        style="flex: 1; height: 32px; border: 1px solid #d9d9d9; border-radius: 4px; padding: 0 10px; outline: none;">
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <label style="width: 80px; font-size: 13px; color: #595959; text-align: right;">apptoken</label>
+                    <input type="text" placeholder="请输入apptoken"
+                        style="flex: 1; height: 32px; border: 1px solid #d9d9d9; border-radius: 4px; padding: 0 10px; outline: none;">
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <label style="width: 80px; font-size: 13px; color: #595959; text-align: right;">是否启用</label>
+                    <label class="ebs-switch">
+                        <input type="checkbox" checked>
+                        <span class="ebs-slider"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer"
+                style="padding: 12px 20px; border-top: 1px solid #f0f0f0; text-align: right; background: #fafafa; display: flex; justify-content: flex-end; gap: 10px;">
+                <button id="btn-cancel-ctt"
+                    style="height: 32px; padding: 0 15px; border: 1px solid #d9d9d9; background: #fff; border-radius: 4px; cursor: pointer; font-size: 13px;">取消</button>
+                <button id="btn-save-ctt"
+                    style="height: 32px; padding: 0 15px; border: none; background: #1890ff; color: #fff; border-radius: 4px; cursor: pointer; font-size: 13px;">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: DanDanYi Config (New) -->
+    <div class="modal-backdrop" id="modal-dandanyi-config"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10005; align-items: center; justify-content: center;">
+        <div class="modal"
+            style="background: #fff; width: 450px; border-radius: 8px; box-shadow: 0 4px 24px rgba(0,0,0,0.2); overflow: hidden; padding: 0;">
+            <div class="modal-header"
+                style="padding: 16px 20px; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; background: #fafafa;">
+                <h3 style="margin: 0; font-size: 15px; font-weight: 600;">打单易配置</h3>
+                <span class="modal-close" id="close-dandanyi-config"
+                    style="cursor: pointer; font-size: 20px; color: #999;">&times;</span>
+            </div>
+            <div style="padding: 24px; display: flex; flex-direction: column; gap: 16px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <label style="width: 80px; font-size: 13px; color: #595959; text-align: right;">apiToken</label>
+                    <input type="text" placeholder="请输入apiToken"
+                        style="flex: 1; height: 32px; border: 1px solid #d9d9d9; border-radius: 4px; padding: 0 10px; outline: none;">
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <label style="width: 80px; font-size: 13px; color: #595959; text-align: right;">是否启用</label>
+                    <label class="ebs-switch">
+                        <input type="checkbox" checked>
+                        <span class="ebs-slider"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer"
+                style="padding: 12px 20px; border-top: 1px solid #f0f0f0; text-align: right; background: #fafafa; display: flex; justify-content: flex-end; gap: 10px;">
+                <button id="btn-cancel-dandanyi"
+                    style="height: 32px; padding: 0 15px; border: 1px solid #d9d9d9; background: #fff; border-radius: 4px; cursor: pointer; font-size: 13px;">取消</button>
+                <button id="btn-save-dandanyi"
+                    style="height: 32px; padding: 0 15px; border: none; background: #1890ff; color: #fff; border-radius: 4px; cursor: pointer; font-size: 13px;">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Select Insurance Company (New) -->
+    <div class="modal-backdrop" id="modal-insurance-company"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10006; align-items: center; justify-content: center;">
+        <div class="modal"
+            style="background: #fff; width: 400px; border-radius: 8px; box-shadow: 0 4px 24px rgba(0,0,0,0.2); overflow: hidden; padding: 0;">
+            <div class="modal-header"
+                style="padding: 16px 20px; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; background: #fafafa;">
+                <h3 style="margin: 0; font-size: 15px; font-weight: 600;">批量投保 - 选择保险公司</h3>
+                <span class="modal-close" onclick="document.getElementById('modal-insurance-company').style.display='none'"
+                    style="cursor: pointer; font-size: 20px; color: #999;">&times;</span>
+            </div>
+            <div style="padding: 24px;">
+                <div style="margin-bottom: 16px;">
+                    <label style="display: block; margin-bottom: 8px; font-size: 13px; color: #595959;">保险公司</label>
+                    <select id="insurance-company-select" 
+                        style="width: 100%; height: 32px; border: 1px solid #d9d9d9; border-radius: 4px; padding: 0 10px; outline: none;">
+                        <option value="太平洋保险">太平洋保险</option>
+                        <option value="平安保险">平安保险</option>
+                        <option value="中国人寿">中国人寿</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer"
+                style="padding: 12px 20px; border-top: 1px solid #f0f0f0; text-align: right; background: #fafafa; display: flex; justify-content: flex-end; gap: 10px;">
+                <button onclick="document.getElementById('modal-insurance-company').style.display='none'"
+                    style="height: 32px; padding: 0 15px; border: 1px solid #d9d9d9; background: #fff; border-radius: 4px; cursor: pointer; font-size: 13px;">取消</button>
+                <button onclick="confirmBatchInsure()"
+                    style="height: 32px; padding: 0 15px; border: none; background: #1890ff; color: #fff; border-radius: 4px; cursor: pointer; font-size: 13px;">确认投保</button>
             </div>
         </div>
     </div>
@@ -5308,7 +5461,7 @@
                                 style="font-size: 10px; margin-left: 2px;">▲</span></button>
                         <div class="fbx-dropdown-content">
                             <div class="fbx-dropdown-item" onclick="openPriceComparison()">价格对比</div>
-                            <div class="fbx-dropdown-item" onclick="openPrintPanel()">打印面板</div>
+                            <div class="fbx-dropdown-item" onclick="openPrintPanel()">打印面单</div>
                             <div class="fbx-dropdown-item" onclick="cancelPrinting()">取消打单</div>
                         </div>
                     </div>
@@ -5856,7 +6009,6 @@
                         <div class="fbx-tab insurance-tab active">全部</div>
                         <div class="fbx-tab insurance-tab">待投保</div>
                         <div class="fbx-tab insurance-tab">已投保</div>
-                        <div class="fbx-tab insurance-tab">信息变更</div>
                     </div>
                 </div>
                 <div style="display: flex; gap: 12px;">
@@ -6102,35 +6254,51 @@
         </div>
 
         <!-- Task Process Detail View [REFINED] -->
-        <div id="view-task-process" class="view-container" style="display: none; background: #fff; flex-direction: column; flex: 1; overflow: hidden; width: 100%;">
-            <div style="padding: 12px 20px; border-bottom: 2px solid #f0f0f0; display: flex; align-items: center; background: #fff; z-index: 10; width: 100%; box-sizing: border-box;">
+        <div id="view-task-process" class="view-container"
+            style="display: none; background: #fff; flex-direction: column; flex: 1; overflow: hidden; width: 100%;">
+            <div
+                style="padding: 12px 20px; border-bottom: 2px solid #f0f0f0; display: flex; align-items: center; background: #fff; z-index: 10; width: 100%; box-sizing: border-box;">
                 <div style="display: flex; align-items: center; gap: 8px; font-size: 14px; color: #262626;">
                     <span style="font-weight: 500;">申请单号：</span>
                     <span id="detail-app-id" style="font-weight: 500; color: #1890ff;"></span>
                 </div>
                 <div id="process-action-buttons" style="display: flex; gap: 8px; margin-left: auto;">
-                    <button id="btn-approve-task" class="ebs-btn ebs-btn-primary" style="padding: 4px 16px; background: #1890ff; border-color: #1890ff; font-size: 13px;">同意</button>
-                    <button id="btn-reject-task" class="ebs-btn" style="padding: 4px 16px; border: 1px solid #ff4d4f; color: #ff4d4f; background: #fff; font-size: 13px;">拒绝</button>
-                    <button id="btn-back-to-task" style="background: #fff; border: 1px solid #d9d9d9; padding: 4px 16px; border-radius: 2px; cursor: pointer; color: #595959; font-size: 13px;">返回</button>
+                    <button id="btn-approve-task" class="ebs-btn ebs-btn-primary"
+                        style="padding: 4px 16px; background: #1890ff; border-color: #1890ff; font-size: 13px;">同意</button>
+                    <button id="btn-reject-task" class="ebs-btn"
+                        style="padding: 4px 16px; border: 1px solid #ff4d4f; color: #ff4d4f; background: #fff; font-size: 13px;">拒绝</button>
+                    <button id="btn-back-to-task"
+                        style="background: #fff; border: 1px solid #d9d9d9; padding: 4px 16px; border-radius: 2px; cursor: pointer; color: #595959; font-size: 13px;">返回</button>
                 </div>
             </div>
-            
+
             <div style="flex: 1; overflow: auto; padding: 0;">
-                <table class="table" style="width: 100%; min-width: 1500px; border-collapse: collapse; font-size: 13px;">
-                    <thead style="background: #fafafa; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; z-index: 5;">
+                <table class="table"
+                    style="width: 100%; min-width: 1500px; border-collapse: collapse; font-size: 13px;">
+                    <thead
+                        style="background: #fafafa; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; z-index: 5;">
                         <tr>
-                            <th style="padding: 12px; font-weight: 500; text-align: left; background: #fafafa;">工作单号</th>
-                            <th style="padding: 12px; font-weight: 500; text-align: left; background: #fafafa;">结算单位</th>
-                            <th style="padding: 12px; font-weight: 500; text-align: left; background: #fafafa;">计费日期</th>
-                            <th style="padding: 12px; font-weight: 500; text-align: left; background: #fafafa;">工作单日期</th>
-                            <th style="padding: 12px; font-weight: 500; text-align: left; background: #fafafa;">费用名称</th>
+                            <th style="padding: 12px; font-weight: 500; text-align: left; background: #fafafa;">工作单号
+                            </th>
+                            <th style="padding: 12px; font-weight: 500; text-align: left; background: #fafafa;">结算单位
+                            </th>
+                            <th style="padding: 12px; font-weight: 500; text-align: left; background: #fafafa;">计费日期
+                            </th>
+                            <th style="padding: 12px; font-weight: 500; text-align: left; background: #fafafa;">工作单日期
+                            </th>
+                            <th style="padding: 12px; font-weight: 500; text-align: left; background: #fafafa;">费用名称
+                            </th>
                             <th style="padding: 12px; font-weight: 500; text-align: left; background: #fafafa;">币种</th>
                             <th style="padding: 12px; font-weight: 500; text-align: right; background: #fafafa;">数量</th>
                             <th style="padding: 12px; font-weight: 500; text-align: right; background: #fafafa;">单价</th>
-                            <th style="padding: 12px; font-weight: 500; text-align: right; background: #fafafa;">减免前毛利</th>
-                            <th style="padding: 12px; font-weight: 500; text-align: right; background: #fafafa;">减免前毛利率</th>
-                            <th style="padding: 12px; font-weight: 500; text-align: right; background: #fafafa;">减免后毛利</th>
-                            <th style="padding: 12px; font-weight: 500; text-align: right; background: #fafafa;">减免后毛利率</th>
+                            <th style="padding: 12px; font-weight: 500; text-align: right; background: #fafafa;">减免前毛利
+                            </th>
+                            <th style="padding: 12px; font-weight: 500; text-align: right; background: #fafafa;">减免前毛利率
+                            </th>
+                            <th style="padding: 12px; font-weight: 500; text-align: right; background: #fafafa;">减免后毛利
+                            </th>
+                            <th style="padding: 12px; font-weight: 500; text-align: right; background: #fafafa;">减免后毛利率
+                            </th>
                             <th style="padding: 12px; font-weight: 500; text-align: left; background: #fafafa;">业务员</th>
                         </tr>
                     </thead>
@@ -6363,8 +6531,87 @@
         </div>
 
 
+        <!-- Integration Services View -->
+        <div id="view-integration-services" class="view-container"
+            style="display: none; background: #FAFAFA; padding: 20px; flex-direction: column;">
+            <!-- Search Toolbar -->
+            <div
+                style="margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; border-radius: 4px; padding: 15px; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.05); width: 100%;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <div class="input-group" style="margin-right: 0px;">
+                        <div class="input-group-addon">平台</div>
+                        <input type="text" placeholder="请输入平台名称" style="width: 200px;">
+                    </div>
+                    <button class="btn-query">查询</button>
+                    <button class="btn-reset">重置</button>
+                </div>
+                <button class="btn-primary">新增</button>
+            </div>
 
-        <!-- Edit Bulk Surcharge View -->
+            <!-- Table View -->
+            <div
+                style="border-radius: 4px; background: #fff; flex: 1; padding: 0; box-shadow: 0 1px 3px rgba(0,0,0,0.05); width: 100%; overflow: auto;">
+                <table class="table" style="width: 100%; border-collapse: collapse; text-align: left; font-size: 13px;">
+                    <thead style="background-color: #f8f9fb; border-bottom: 1px solid #ebeef5;">
+                        <tr>
+                            <th
+                                style="padding: 12px; font-weight: 500; color: #909399; width: 60px; text-align: center;">
+                                #</th>
+                            <th style="padding: 12px; font-weight: 500; color: #909399;">平台</th>
+                            <th style="padding: 12px; font-weight: 500; color: #909399; width: 150px;">修改人</th>
+                            <th style="padding: 12px; font-weight: 500; color: #909399; width: 200px;">修改时间</th>
+                            <th
+                                style="padding: 12px; font-weight: 500; color: #909399; width: 100px; text-align: center;">
+                                启用</th>
+                            <th
+                                style="padding: 12px; font-weight: 500; color: #909399; width: 100px; text-align: center;">
+                                操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid #ebeef5;">
+                            <td style="padding: 12px; text-align: center; color: #606266;">1</td>
+                            <td style="padding: 12px; color: #606266;">XTRAS</td>
+                            <td style="padding: 12px; color: #606266;">system</td>
+                            <td style="padding: 12px; color: #606266;">2025-03-06 20:09:29</td>
+                            <td style="padding: 12px; text-align: center;">
+                                <span style="color: #52c41a; font-weight: bold; font-size: 16px;">√</span>
+                            </td>
+                            <td style="padding: 12px; text-align: center;">
+                                <a href="javascript:void(0)" style="color: #1890ff; text-decoration: none;">编辑</a>
+                            </td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #ebeef5;">
+                            <td style="padding: 12px; text-align: center; color: #606266;">2</td>
+                            <td style="padding: 12px; color: #606266;">CTT打单系统</td>
+                            <td style="padding: 12px; color: #606266;">system</td>
+                            <td style="padding: 12px; color: #606266;">2026-04-30 11:46:00</td>
+                            <td style="padding: 12px; text-align: center;">
+                                <span style="color: #52c41a; font-weight: bold; font-size: 16px;">√</span>
+                            </td>
+                            <td style="padding: 12px; text-align: center;">
+                                <a href="javascript:void(0)" id="btn-edit-ctt"
+                                    style="color: #1890ff; text-decoration: none;">编辑</a>
+                            </td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #ebeef5;">
+                            <td style="padding: 12px; text-align: center; color: #606266;">3</td>
+                            <td style="padding: 12px; color: #606266;">打单易</td>
+                            <td style="padding: 12px; color: #606266;">system</td>
+                            <td style="padding: 12px; color: #606266;">2026-04-30 13:10:00</td>
+                            <td style="padding: 12px; text-align: center;">
+                                <span style="color: #52c41a; font-weight: bold; font-size: 16px;">√</span>
+                            </td>
+                            <td style="padding: 12px; text-align: center;">
+                                <a href="javascript:void(0)" id="btn-edit-dandanyi"
+                                    style="color: #1890ff; text-decoration: none;">编辑</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
         <div id="view-edit-bulk-surcharge" class="view-container"
             style="display: none; flex-direction: column; width: 100%; overflow-y: auto; background: #f0f2f5;">
             <style>
@@ -8862,6 +9109,8 @@
         const viewCreateWorkflow = document.getElementById('view-create-workflow');
         const btnBackWorkflowSettings = document.getElementById('btn-back-workflow-settings');
         const viewTaskProcess = document.getElementById('view-task-process');
+        const viewIntegrationServices = document.getElementById('view-integration-services');
+        const menuIntegrationServices = document.getElementById('menu-integration-services');
 
         // Customer Bill Variables
         const viewCustomerBill = document.getElementById('view-customer-bill');
@@ -8910,7 +9159,7 @@
                 console.error('switchView Error: targetView is null');
                 return;
             }
-            const allViews = [viewDefault, viewRoleMgmt, viewOrgMgmt, viewEmployeeMgmt, viewBulkSurcharge, viewEditBulkSurcharge, viewSurchargeConfirm, viewWorkflowSettings, viewSurchargeWaiver, viewTaskCenter, viewTaskProcess, viewFBXOrders, viewFBAOrderDetail, viewInsurance, viewCreateWorkflow, viewCustomerBill];
+            const allViews = [viewDefault, viewRoleMgmt, viewOrgMgmt, viewEmployeeMgmt, viewBulkSurcharge, viewEditBulkSurcharge, viewSurchargeConfirm, viewWorkflowSettings, viewSurchargeWaiver, viewTaskCenter, viewTaskProcess, viewFBXOrders, viewFBAOrderDetail, viewInsurance, viewCreateWorkflow, viewCustomerBill, viewIntegrationServices];
             allViews.forEach(v => {
                 if (v && v.style) v.style.display = 'none';
             });
@@ -9104,6 +9353,29 @@
                 switchView(viewBulkSurcharge, 'menu-bulk-surcharge');
             });
         }
+
+        if (menuIntegrationServices) {
+            menuIntegrationServices.addEventListener('click', (e) => {
+                e.preventDefault();
+                switchView(viewIntegrationServices, 'menu-integration-services');
+            });
+        }
+
+        const modalCTTConfig = document.getElementById('modal-ctt-config');
+        document.getElementById('btn-edit-ctt')?.addEventListener('click', () => {
+            modalCTTConfig.style.display = 'flex';
+        });
+        [document.getElementById('close-ctt-config'), document.getElementById('btn-cancel-ctt'), document.getElementById('btn-save-ctt')].forEach(b => {
+            b?.addEventListener('click', () => modalCTTConfig.style.display = 'none');
+        });
+
+        const modalDanDanYiConfig = document.getElementById('modal-dandanyi-config');
+        document.getElementById('btn-edit-dandanyi')?.addEventListener('click', () => {
+            modalDanDanYiConfig.style.display = 'flex';
+        });
+        [document.getElementById('close-dandanyi-config'), document.getElementById('btn-cancel-dandanyi'), document.getElementById('btn-save-dandanyi')].forEach(b => {
+            b?.addEventListener('click', () => modalDanDanYiConfig.style.display = 'none');
+        });
 
         if (menuSurchargeConfirm) {
             menuSurchargeConfirm.addEventListener('click', (e) => {
@@ -11249,7 +11521,7 @@
         const processDetailTbody = document.getElementById('process-detail-tbody');
         let currentWaiverId = null;
 
-        window.openProcessView = function(id, isReadOnly = false) {
+        window.openProcessView = function (id, isReadOnly = false) {
             currentWaiverId = id;
             const app = waiverApplications.find(a => a.id === id);
             if (!app) return;
@@ -11526,12 +11798,12 @@
                     <td style="padding: 12px; text-align: right; white-space: nowrap; color: #fa8c16;">${item.insValue.toFixed(2)}</td>
                     <td style="padding: 12px; text-align: right; white-space: nowrap;">${item.boxValue.toFixed(2)}</td>
                     <td style="padding: 12px; text-align: right; white-space: nowrap; color: #52c41a;">${item.premium.toFixed(2)}</td>
-                    <td style="padding: 12px; text-align: left; white-space: nowrap;">太平洋保险</td>
+                    <td style="padding: 12px; text-align: left; white-space: nowrap;">${item.insuranceCompany || '太平洋保险'}</td>
                     <td style="padding: 12px; text-align: center; white-space: nowrap; background: #fff; position: sticky; right: 0; z-index: 5; border-left: 1px solid #f0f0f0; display: flex; justify-content: center; align-items: center; gap: 8px; height: 100%; box-sizing: border-box;">
                         ${item.status === '未投保'
                     ? `
                         <button class="fbx-btn" onclick="insureRow('${item.id}')" style="padding: 2px 8px; font-size: 12px; background: #e6f7ff; color: #1890ff; border-color: #91d5ff;">投保</button>
-                        <button class="fbx-btn" onclick="editPremium('${item.id}')" style="padding: 2px 8px; font-size: 12px; background: #fff7e6; color: #fa8c16; border-color: #ffd591;">修改保费</button>
+                        <button class="fbx-btn" onclick="editInsValue('${item.id}')" style="padding: 2px 8px; font-size: 12px; background: #fff7e6; color: #fa8c16; border-color: #ffd591;">修改投保货值</button>
                     `
                     : `<span style="color: #52c41a; font-size: 12px;">已投保</span>`}
                     </td>
@@ -11556,6 +11828,13 @@
                 alert('请先勾选需要投保的订单 (仅限未投保状态)');
                 return;
             }
+            const modal = document.getElementById('modal-insurance-company');
+            if (modal) modal.style.display = 'flex';
+        };
+
+        window.confirmBatchInsure = () => {
+            const company = document.getElementById('insurance-company-select').value;
+            const checks = document.querySelectorAll('.insurance-row-check:checked');
             let count = 0;
             checks.forEach(chk => {
                 const id = chk.getAttribute('data-id');
@@ -11564,15 +11843,13 @@
                     item.status = '已投保';
                     item.insValue = parseFloat(item.amount);
                     item.premium = item.insValue * 0.003;
+                    item.insuranceCompany = company; // Update company
                     count++;
                 }
             });
-            if (count > 0) {
-                renderInsuranceTable(insuranceCurrentTab);
-                alert(`成功为 ${count} 个订单申请投保！`);
-            } else {
-                alert('所选订单都不具备投保条件');
-            }
+            document.getElementById('modal-insurance-company').style.display = 'none';
+            renderInsuranceTable(insuranceCurrentTab);
+            alert(`成功为 ${count} 个订单申请投保！保险公司：${company}`);
         };
 
         // All-Check listener
@@ -11656,23 +11933,28 @@
             btnCalcPremium.addEventListener('click', openCalcModal);
         }
 
-        // --- Inline Edit Premium ---
-        const editPremium = (id) => {
+        // --- Inline Edit Insured Value ---
+        const editInsValue = (id) => {
             const item = insuranceMockData.find(d => d.id === id);
             if (!item) return;
 
-            const newVal = prompt(`手动修改订单 ${id} 的保费额度:`, item.premium.toFixed(2));
+            const newVal = prompt(`手动修改订单 ${id} 的投保货值:`, item.insValue.toFixed(2));
             if (newVal !== null) {
-                const premium = parseFloat(newVal);
-                if (!isNaN(premium) && premium >= 0) {
-                    item.premium = premium;
+                const insVal = parseFloat(newVal);
+                if (!isNaN(insVal) && insVal >= 0) {
+                    item.insValue = insVal;
+                    // Recalculate related values
+                    if (item.items > 0) {
+                        item.boxValue = item.insValue / item.items;
+                    }
+                    item.premium = item.insValue * 0.003;
                     renderInsuranceTable(insuranceCurrentTab);
                 } else {
-                    alert('请输入有效的金额数值');
+                    alert('请输入有效的数值');
                 }
             }
         }
-        window.editPremium = editPremium;
+        window.editInsValue = editInsValue;
 
         // --- FBX Orders: Price Comparison & Printing logic ---
         let isCarrierSelected = false; // 业务状态：是否已选择承运商
@@ -11967,17 +12249,25 @@
 
             // Render selected items in modal
             waiverItemCount.innerText = checkedRows.length;
-            waiverModalTbody.innerHTML = checkedRows.map((item, idx) => `
+            waiverModalTbody.innerHTML = checkedRows.map((item, idx) => {
+                const amountNum = parseFloat(item.amount.replace(/[^0-9.-]+/g, ""));
+                const paidAmount = (amountNum * 0.1).toFixed(2); // 模拟已销10%
+                const unpaidAmount = (amountNum * 0.9).toFixed(2); // 模拟未销90%
+
+                return `
                 <tr style="border-bottom: 1px solid #f0f0f0;">
                     <td style="padding: 10px; border: 1px solid #f0f0f0;">${item.name}</td>
                     <td style="padding: 10px; border: 1px solid #f0f0f0; color: #8c8c8c;">${item.company}</td>
                     <td style="padding: 10px; border: 1px solid #f0f0f0; text-align: right; color: #595959;">${item.currency} ${item.amount}</td>
+                    <td style="padding: 10px; border: 1px solid #f0f0f0; text-align: right; color: #8c8c8c; background: #fafafa;">${item.currency} ${paidAmount}</td>
+                    <td style="padding: 10px; border: 1px solid #f0f0f0; text-align: right; color: #d48806; background: #fafafa;">${item.currency} ${unpaidAmount}</td>
                     <td style="padding: 10px; border: 1px solid #f0f0f0; text-align: center;">
                         <input type="number" class="waiver-input-amount" data-name="${item.name}" data-amount="${item.amount}" placeholder="减免金额" 
                             style="width: 100px; padding: 4px 8px; border: 1px solid #d9d9d9; border-radius: 4px; font-size: 13px;">
                     </td>
                 </tr>
-            `).join('');
+                `;
+            }).join('');
 
             modalFeeWaiver.style.display = 'flex';
         });
