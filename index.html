@@ -691,6 +691,114 @@
             border-color: #fff transparent transparent transparent;
         }
 
+        /* Downward expanding dropdown */
+        .fbx-dropdown-down .fbx-dropdown-content {
+            top: 100%;
+            bottom: auto;
+            margin-top: 8px;
+        }
+
+        .fbx-dropdown-down .fbx-dropdown-content::after {
+            bottom: 100%;
+            top: auto;
+            border-color: transparent transparent #fff transparent;
+        }
+
+        /* Multi-select Styles */
+        .fbx-multi-select {
+            position: relative;
+            width: 100%;
+        }
+
+        .fbx-multi-select-trigger {
+            width: 100%;
+            min-height: 32px;
+            padding: 4px 30px 4px 8px;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            background: #fff;
+            cursor: pointer;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            position: relative;
+            box-sizing: border-box;
+            align-items: center;
+        }
+
+        .fbx-multi-select-trigger::after {
+            content: '▼';
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 10px;
+            color: #bfbfbf;
+        }
+
+        .fbx-multi-select-tag {
+            background: #f5f5f5;
+            border: 1px solid #e8e8e8;
+            border-radius: 2px;
+            padding: 0 4px;
+            font-size: 12px;
+            color: #595959;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .fbx-multi-select-tag-close {
+            cursor: pointer;
+            color: #bfbfbf;
+        }
+
+        .fbx-multi-select-tag-close:hover {
+            color: #ff4d4f;
+        }
+
+        .fbx-multi-select-options {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            max-height: 200px;
+            overflow-y: auto;
+            background: #fff;
+            border: 1px solid #d9d9d9;
+            border-top: none;
+            border-radius: 0 0 4px 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            z-index: 100;
+            display: none;
+        }
+
+        .fbx-multi-select-options.open {
+            display: block;
+        }
+
+        .fbx-multi-select-option {
+            padding: 5px 12px;
+            cursor: pointer;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .fbx-multi-select-option:hover {
+            background: #f5f5f5;
+        }
+
+        .fbx-multi-select-option.selected {
+            background: #e6f7ff;
+            color: #1890ff;
+        }
+
+        .fbx-multi-select-option input[type="checkbox"] {
+            margin: 0;
+        }
+
         /* FBA Detail Page Styles */
         .fba-header {
             background: #fff;
@@ -1506,6 +1614,22 @@
 
         .ebs-switch input:checked+.ebs-slider:before {
             transform: translateX(22px);
+        }
+
+
+
+        /* 强制重置所有单选框为浏览器默认的正确大小和外观 */
+        input[type="radio"],
+        input[type="checkbox"] {
+            width: 14px !important;
+            height: 14px !important;
+            margin: 0 !important;
+            appearance: auto !important;
+            -webkit-appearance: radio !important;
+        }
+
+        input[type="checkbox"] {
+            -webkit-appearance: checkbox !important;
         }
 
         /* Modal */
@@ -4513,27 +4637,33 @@
             style="background: #fff; width: 400px; border-radius: 8px; box-shadow: 0 4px 24px rgba(0,0,0,0.2); overflow: hidden; padding: 0;">
             <div class="modal-header"
                 style="padding: 16px 20px; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; background: #fafafa;">
-                <h3 style="margin: 0; font-size: 15px; font-weight: 600;">批量投保 - 选择保险公司</h3>
-                <span class="modal-close" onclick="document.getElementById('modal-insurance-company').style.display='none'"
+                <h3 style="margin: 0; font-size: 15px; font-weight: 600;">批量修改保险公司</h3>
+                <span class="modal-close"
+                    onclick="document.getElementById('modal-insurance-company').style.display='none'"
                     style="cursor: pointer; font-size: 20px; color: #999;">&times;</span>
             </div>
             <div style="padding: 24px;">
                 <div style="margin-bottom: 16px;">
                     <label style="display: block; margin-bottom: 8px; font-size: 13px; color: #595959;">保险公司</label>
-                    <select id="insurance-company-select" 
+                    <select id="insurance-company-select"
                         style="width: 100%; height: 32px; border: 1px solid #d9d9d9; border-radius: 4px; padding: 0 10px; outline: none;">
                         <option value="太平洋保险">太平洋保险</option>
                         <option value="平安保险">平安保险</option>
                         <option value="中国人寿">中国人寿</option>
                     </select>
                 </div>
+                <div style="margin-bottom: 16px;">
+                    <label style="display: block; margin-bottom: 8px; font-size: 13px; color: #595959;">保险单号</label>
+                    <input type="text" id="insurance-policy-input" placeholder="请输入保险单号"
+                        style="width: 100%; height: 32px; border: 1px solid #d9d9d9; border-radius: 4px; padding: 0 10px; outline: none; box-sizing: border-box;">
+                </div>
             </div>
             <div class="modal-footer"
                 style="padding: 12px 20px; border-top: 1px solid #f0f0f0; text-align: right; background: #fafafa; display: flex; justify-content: flex-end; gap: 10px;">
                 <button onclick="document.getElementById('modal-insurance-company').style.display='none'"
                     style="height: 32px; padding: 0 15px; border: 1px solid #d9d9d9; background: #fff; border-radius: 4px; cursor: pointer; font-size: 13px;">取消</button>
-                <button onclick="confirmBatchInsure()"
-                    style="height: 32px; padding: 0 15px; border: none; background: #1890ff; color: #fff; border-radius: 4px; cursor: pointer; font-size: 13px;">确认投保</button>
+                <button onclick="confirmBatchModifyInsurance()"
+                    style="height: 32px; padding: 0 15px; border: none; background: #1890ff; color: #fff; border-radius: 4px; cursor: pointer; font-size: 13px;">确认修改</button>
             </div>
         </div>
     </div>
@@ -4720,7 +4850,7 @@
                                     <td style="padding: 12px;"></td>
                                     <td style="padding: 12px;"></td>
                                     <td style="padding: 12px;">YD260400001</td>
-                                    <td style="padding: 12px; text-align: center;">林权</td>
+                                    <td style="padding: 12px; text-align: center;">张三</td>
                                     <td style="padding: 12px; text-align: center;"></td>
                                     <td style="padding: 12px; text-align: center;" class="col-collection-status">
                                         <!-- Placeholder for View button if record exists -->
@@ -5404,7 +5534,7 @@
                                         style="color: #1890ff; margin-right: 8px;">推送</a>
                                     <a href="javascript:void(0)" class="fbx-copy-btn"
                                         style="color: #1890ff; margin-right: 8px;">复制</a>
-                                    <a href="javascript:void(0)" style="color: #1890ff;">详情</a>
+                                    <a href="javascript:void(0)" class="fbx-detail-btn" style="color: #1890ff;">详情</a>
                                 </td>
                             </tr>
                             <tr style="border-bottom: 1px solid #f0f0f0;">
@@ -5435,7 +5565,7 @@
                                         style="color: #1890ff; margin-right: 8px;">推送</a>
                                     <a href="javascript:void(0)" class="fbx-copy-btn"
                                         style="color: #1890ff; margin-right: 8px;">复制</a>
-                                    <a href="javascript:void(0)" style="color: #1890ff;">详情</a>
+                                    <a href="javascript:void(0)" class="fbx-detail-btn" style="color: #1890ff;">详情</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -5455,16 +5585,7 @@
                     <button class="fbx-btn">推送货主互联 <span style="font-size: 10px; margin-left: 2px;">▲</span></button>
                     <button class="fbx-btn">新建问题 <span style="font-size: 10px; margin-left: 2px;">▲</span></button>
                     <button class="fbx-btn">新增轨迹 <span style="font-size: 10px; margin-left: 2px;">▲</span></button>
-
-                    <div class="fbx-dropdown">
-                        <button class="fbx-btn" style="border-radius: 4px;">快递打单 <span
-                                style="font-size: 10px; margin-left: 2px;">▲</span></button>
-                        <div class="fbx-dropdown-content">
-                            <div class="fbx-dropdown-item" onclick="openPriceComparison()">价格对比</div>
-                            <div class="fbx-dropdown-item" onclick="openPrintPanel()">打印面单</div>
-                            <div class="fbx-dropdown-item" onclick="cancelPrinting()">取消打单</div>
-                        </div>
-                    </div>
+                    <button class="fbx-btn" onclick="openInsuranceModal()">额外购买保险</button>
 
                     <div
                         style="margin-left: auto; display: flex; align-items: center; gap: 16px; font-size: 13px; color: #595959;">
@@ -5498,6 +5619,16 @@
                 </div>
                 <div class="fba-action-bar-top">
                     <button class="fbx-btn" style="color: #1890ff;">修改轨迹</button>
+                    <button class="fbx-btn" style="color: #1890ff;" onclick="openInsuranceModal()">额外购买保险</button>
+                    <div class="fbx-dropdown fbx-dropdown-down">
+                        <button class="fbx-btn" style="border-radius: 4px;">快递打单 <span
+                                style="font-size: 10px; margin-left: 2px;">▼</span></button>
+                        <div class="fbx-dropdown-content" style="min-width: 100px;">
+                            <div class="fbx-dropdown-item" onclick="openPriceComparison()">价格对比</div>
+                            <div class="fbx-dropdown-item" onclick="openPrintPanel()">打印面单</div>
+                            <div class="fbx-dropdown-item" onclick="cancelPrinting()">取消打单</div>
+                        </div>
+                    </div>
                     <button class="fbx-btn fbx-btn-primary">创建</button>
                     <button class="fbx-btn" id="btn-back-to-fbx">返回</button>
                 </div>
@@ -5564,7 +5695,7 @@
                         </div>
 
                         <div class="fba-field"><label class="fba-label">客服</label><input type="text"
-                                class="fba-input-box" value="林权"></div>
+                                class="fba-input-box" value="张三"></div>
                         <div class="fba-field"><label class="fba-label">服务部门</label><select class="fba-select-box"
                                 disabled></select></div>
                         <div class="fba-field"><label class="fba-label">预计箱数</label><input type="text"
@@ -6008,19 +6139,26 @@
                     <div class="fbx-tabs-header" style="margin: 0; border: none; background: transparent; padding: 0;">
                         <div class="fbx-tab insurance-tab active">全部</div>
                         <div class="fbx-tab insurance-tab">待投保</div>
+                        <div class="fbx-tab insurance-tab">投保中</div>
                         <div class="fbx-tab insurance-tab">已投保</div>
                     </div>
                 </div>
                 <div style="display: flex; gap: 12px;">
+                    <button class="fbx-btn" id="btn-insurance-rule-config"
+                        style="display: flex; align-items: center; gap: 6px; color: #722ed1; border-color: #722ed1;">
+                        ⚙️ 投保货值规则配置
+                    </button>
                     <button class="fbx-btn" id="btn-calc-premium"
                         style="display: flex; align-items: center; gap: 6px; color: #fa8c16; border-color: #fa8c16;">
                         保费计算
                     </button>
+                    <button class="fbx-btn" style="color: #1890ff; border-color: #1890ff;">导出投保</button>
+                    <button class="fbx-btn fbx-btn-primary" id="btn-batch-modify-insurance-company"
+                        style="background: #1890ff;">批量修改保险公司</button>
                     <button class="fbx-btn fbx-btn-primary" id="btn-batch-insurance"
                         style="display: flex; align-items: center; gap: 6px;">
                         <span>🛡️</span> 批量投保
                     </button>
-                    <button class="fbx-btn" style="color: #1890ff; border-color: #1890ff;">导出投保</button>
                 </div>
             </div>
 
@@ -6136,7 +6274,10 @@
                                 style="padding: 12px; border-bottom: 2px solid #eee; text-align: left; width: 150px; white-space: nowrap;">
                                 保险公司</th>
                             <th
-                                style="padding: 12px; border-bottom: 2px solid #eee; text-align: center; width: 100px; white-space: nowrap; background: #fafafa; position: sticky; right: 0; z-index: 5;">
+                                style="padding: 12px; border-bottom: 2px solid #eee; text-align: left; width: 150px; white-space: nowrap;">
+                                保险单号</th>
+                            <th
+                                style="padding: 12px; border-bottom: 2px solid #eee; text-align: center; width: 180px; white-space: nowrap; background: #fafafa; position: sticky; right: 0; z-index: 5;">
                                 操作</th>
                         </tr>
                     </thead>
@@ -9066,6 +9207,42 @@
         </div>
     </div>
 
+    <!-- Modal: Insurance Rule Config (New) -->
+    <div class="modal-backdrop" id="modal-insurance-rule-config"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10003; align-items: center; justify-content: center;">
+        <div class="modal"
+            style="background: #fff; width: 900px; border-radius: 8px; box-shadow: 0 4px 24px rgba(0,0,0,0.2); overflow: hidden;">
+            <div class="modal-header"
+                style="padding: 16px 20px; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; background: #fafafa;">
+                <h3 style="margin: 0; font-size: 15px; font-weight: 600;">投保货值计算规则配置</h3>
+                <span class="modal-close"
+                    onclick="document.getElementById('modal-insurance-rule-config').style.display='none'"
+                    style="cursor: pointer; font-size: 20px; color: #999;">&times;</span>
+            </div>
+            <div style="padding: 20px;">
+                <div id="insurance-rules-tree" style="max-height: 500px; overflow-y: auto; padding-right: 10px; padding-bottom: 100px;">
+                    <!-- Tree nodes will be added here -->
+                </div>
+                
+                <div style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed #e8e8e8; padding-top: 15px;">
+                    <button class="fbx-btn" onclick="addInsuranceTreeNode(1)" style="color: #722ed1; border-color: #722ed1; background: #fff;">
+                        + 添加一级节点 (客户类型)
+                    </button>
+                    <div style="font-size: 12px; color: #8c8c8c; background: #fffbe6; border: 1px solid #ffe58f; padding: 6px 12px; border-radius: 4px;">
+                        💡 计算公式：投保货值 = 标准 (RMB/kg) * 计费重
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer"
+                style="padding: 12px 20px; border-top: 1px solid #f0f0f0; text-align: right; background: #fafafa; display: flex; justify-content: flex-end; gap: 10px;">
+                <button onclick="document.getElementById('modal-insurance-rule-config').style.display='none'"
+                    style="height: 32px; padding: 0 15px; border: 1px solid #d9d9d9; background: #fff; border-radius: 4px; cursor: pointer; font-size: 13px;">取消</button>
+                <button onclick="saveInsuranceRules()"
+                    style="height: 32px; padding: 0 15px; border: none; background: #1890ff; color: #fff; border-radius: 4px; cursor: pointer; font-size: 13px;">保存配置</button>
+            </div>
+        </div>
+    </div>
+
 
     <script>
         document.querySelectorAll('.menu-title.toggle').forEach(title => {
@@ -9195,7 +9372,7 @@
                 bookingNo: '',
                 containerNo: '',
                 jobNo: 'YD260400001',
-                salesman: '林权',
+                salesman: '张三',
                 operator: '',
                 billCompany: '深圳运物云科技有限公司',
                 collectionRecords: [] // Array of { content, time, operator }
@@ -11742,11 +11919,11 @@
         let insuranceCurrentTab = '全部';
 
         const insuranceMockData = [
-            { id: 'SO24041201', fba: 'FBA15GZ8JK', channel: '美森正班', date: '2024-04-12', track: '[上海] 已到达码头', type: '直客', customer: '客户A', ref: 'REF-99881', nameCn: '电子配件', nameEn: 'Electronic', items: 50, units: 500, weight: 850.5, bWeight: 950.0, amount: '12500.00', hbl: 'HBL001', ship: 'COSCO/098W', container: 'CSQU112233', expType: 'UPS', tracking: '1Z123...01', pol: 'SHA', pod: 'LAX', dest: 'ONT8', address: '24300 Nandina Ave...', inNote: '已报备', outNote: '无', insValue: 12500, boxValue: 250, premium: 37.5, status: '已投保' },
-            { id: 'SO24041202', fba: 'FBA15H9Y2M', channel: '以星快船', date: '2024-04-12', track: '[宁波] 待装箱', type: '同行', customer: '同行B', ref: 'REF-88772', nameCn: '生活用品', nameEn: 'Daily Use', items: 30, units: 300, weight: 450.0, bWeight: 500.0, amount: '5000.00', hbl: 'HBL002', ship: 'ZIM/221E', container: '', expType: 'FedEx', tracking: '7788...02', pol: 'NGB', pod: 'LGB', dest: 'LGB8', address: '1567 Industry Way...', inNote: '柜号待补', outNote: '急单', insValue: 5000, boxValue: 166.67, premium: 0, status: '未投保' },
-            { id: 'SO24041203', fba: 'FBA15K8L5P', channel: '美森加班', date: '2024-04-11', track: '[盐田] 已清关', type: '直客', customer: '客户C', ref: 'REF-77663', nameCn: '户外工具', nameEn: 'Outdoor Tools', items: 100, units: 1000, weight: 1200.0, bWeight: 1350.0, amount: '22000.00', hbl: 'HBL003', ship: 'MATSON/055S', container: 'MAEU665544', expType: 'UPS', tracking: '1Z99...03', pol: 'SHEN', pod: 'SEA', dest: 'BFI4', address: '21005 64th Ave S...', inNote: '需修改柜号', outNote: '无', insValue: 22000, boxValue: 220, premium: 66.0, status: '已投保' },
-            { id: 'SO24041204', fba: 'FBA15M9N0Q', channel: '盐田限时达', date: '2024-04-10', track: '[洛杉矶] 派送中', type: '直客', customer: '客户D', ref: 'REF-66554', nameCn: '服装', nameEn: 'Garmets', items: 80, units: 2400, weight: 350.0, bWeight: 400.0, amount: '8000.00', hbl: 'HBL004', ship: 'OOCL/889W', container: 'OOCU998877', expType: 'Truck', tracking: 'TK-8854', pol: 'SHEN', pod: 'LAX', dest: 'LAX9', address: '11201 Citrus Ave...', inNote: '入仓完成', outNote: '客户要求签收单', insValue: 8000, boxValue: 100, premium: 24.0, status: '已投保' },
-            { id: 'SO24041205', fba: 'FBA15P1R2S', channel: '普船海派', date: '2024-04-09', track: '[上海] 仓库收货', type: '同行', customer: '代理X', ref: 'REF-55443', nameCn: '灯具', nameEn: 'Lighting', items: 25, units: 250, weight: 300.2, bWeight: 310.5, amount: '3500.00', hbl: 'HBL005', ship: 'HPL/001S', container: '', expType: 'UPS', tracking: '1Z77...05', pol: 'SHA', pod: 'HOU', dest: 'HOU2', address: '123 Enterprise Dr...', inNote: '待投保', outNote: '无', insValue: 3500, boxValue: 140, premium: 0, status: '未投保' }
+            { id: 'SO24041201', fba: 'FBA15GZ8JK', channel: '美森正班', date: '2024-04-12', track: '[上海] 已到达码头', type: '直客', customer: '客户A', ref: 'REF-99881', nameCn: '电子配件', nameEn: 'Electronic', items: 50, units: 500, weight: 850.5, bWeight: 950.0, amount: '12500.00', hbl: 'HBL001', ship: 'COSCO/098W', container: 'CSQU112233', expType: 'UPS', tracking: '1Z123...01', pol: 'SHA', pod: 'LAX', dest: 'ONT8', address: '24300 Nandina Ave...', inNote: '已报备', outNote: '无', insValue: 12500, boxValue: 250, premium: 37.5, status: '已投保', insuranceCompany: '太平洋保险', policyNo: 'POL123456' },
+            { id: 'SO24041202', fba: 'FBA15H9Y2M', channel: '以星快船', date: '2024-04-12', track: '[宁波] 待装箱', type: '同行', customer: '同行B', ref: 'REF-88772', nameCn: '生活用品', nameEn: 'Daily Use', items: 30, units: 300, weight: 450.0, bWeight: 500.0, amount: '5000.00', hbl: 'HBL002', ship: 'ZIM/221E', container: '', expType: 'FedEx', tracking: '7788...02', pol: 'NGB', pod: 'LGB', dest: 'LGB8', address: '1567 Industry Way...', inNote: '柜号待补', outNote: '急单', insValue: 5000, boxValue: 166.67, premium: 0, status: '待投保', insuranceCompany: '', policyNo: '' },
+            { id: 'SO24041203', fba: 'FBA15K8L5P', channel: '美森加班', date: '2024-04-11', track: '[盐田] 已清关', type: '直客', customer: '客户C', ref: 'REF-77663', nameCn: '户外工具', nameEn: 'Outdoor Tools', items: 100, units: 1000, weight: 1200.0, bWeight: 1350.0, amount: '22000.00', hbl: 'HBL003', ship: 'MATSON/055S', container: 'MAEU665544', expType: 'UPS', tracking: '1Z99...03', pol: 'SHEN', pod: 'SEA', dest: 'BFI4', address: '21005 64th Ave S...', inNote: '需修改柜号', outNote: '无', insValue: 22000, boxValue: 220, premium: 66.0, status: '已投保', insuranceCompany: '太平洋保险', policyNo: 'POL789012' },
+            { id: 'SO24041204', fba: 'FBA15M9N0Q', channel: '盐田限时达', date: '2024-04-10', track: '[洛杉矶] 派送中', type: '直客', customer: '客户D', ref: 'REF-66554', nameCn: '服装', nameEn: 'Garmets', items: 80, units: 2400, weight: 350.0, bWeight: 400.0, amount: '8000.00', hbl: 'HBL004', ship: 'OOCL/889W', container: 'OOCU998877', expType: 'Truck', tracking: 'TK-8854', pol: 'SHEN', pod: 'LAX', dest: 'LAX9', address: '11201 Citrus Ave...', inNote: '入仓完成', outNote: '客户要求签收单', insValue: 8000, boxValue: 100, premium: 24.0, status: '投保中', insuranceCompany: '太平洋保险', policyNo: 'POL112233' },
+            { id: 'SO24041205', fba: 'FBA15P1R2S', channel: '普船海派', date: '2024-04-09', track: '[上海] 仓库收货', type: '同行', customer: '代理X', ref: 'REF-55443', nameCn: '灯具', nameEn: 'Lighting', items: 25, units: 250, weight: 300.2, bWeight: 310.5, amount: '3500.00', hbl: 'HBL005', ship: 'HPL/001S', container: '', expType: 'UPS', tracking: '1Z77...05', pol: 'SHA', pod: 'HOU', dest: 'HOU2', address: '123 Enterprise Dr...', inNote: '待投保', outNote: '无', insValue: 3500, boxValue: 140, premium: 0, status: '待投保', insuranceCompany: '', policyNo: '' }
         ];
 
         const renderInsuranceTable = (filterTab = '全部') => {
@@ -11759,8 +11936,7 @@
 
             let filteredData = insuranceMockData;
             if (filterTab !== '全部') {
-                const targetStatus = filterTab === '待投保' ? '未投保' : filterTab;
-                filteredData = insuranceMockData.filter(item => item.status === targetStatus);
+                filteredData = insuranceMockData.filter(item => item.status === filterTab);
             }
 
             tbody.innerHTML = filteredData.map(item => `
@@ -11794,62 +11970,100 @@
                     <td style="padding: 12px; white-space: nowrap;">${item.address}</td>
                     <td style="padding: 12px; white-space: nowrap; color: #8c8c8c;">${item.inNote}</td>
                     <td style="padding: 12px; white-space: nowrap; color: #8c8c8c;">${item.outNote}</td>
-                    <td style="padding: 12px; white-space: nowrap; color: #52c41a;">是</td>
+                    <td style="padding: 12px; white-space: nowrap; color: #52c41a;">
+                        ${(() => {
+                            const random = Math.random();
+                            if (random > 0.5) {
+                                return '是(按货值购买)';
+                            } else {
+                                const n = (Math.random() * 0.8 + 0.1).toFixed(1);
+                                return `是(按${n} CNY/KG购买)`;
+                            }
+                        })()}
+                    </td>
                     <td style="padding: 12px; text-align: right; white-space: nowrap; color: #fa8c16;">${item.insValue.toFixed(2)}</td>
                     <td style="padding: 12px; text-align: right; white-space: nowrap;">${item.boxValue.toFixed(2)}</td>
                     <td style="padding: 12px; text-align: right; white-space: nowrap; color: #52c41a;">${item.premium.toFixed(2)}</td>
-                    <td style="padding: 12px; text-align: left; white-space: nowrap;">${item.insuranceCompany || '太平洋保险'}</td>
+                    <td style="padding: 12px; text-align: left; white-space: nowrap;">${item.insuranceCompany || '-'}</td>
+                    <td style="padding: 12px; text-align: left; white-space: nowrap;">${item.policyNo || '-'}</td>
                     <td style="padding: 12px; text-align: center; white-space: nowrap; background: #fff; position: sticky; right: 0; z-index: 5; border-left: 1px solid #f0f0f0; display: flex; justify-content: center; align-items: center; gap: 8px; height: 100%; box-sizing: border-box;">
-                        ${item.status === '未投保'
+                        ${item.status === '待投保'
                     ? `
-                        <button class="fbx-btn" onclick="insureRow('${item.id}')" style="padding: 2px 8px; font-size: 12px; background: #e6f7ff; color: #1890ff; border-color: #91d5ff;">投保</button>
                         <button class="fbx-btn" onclick="editInsValue('${item.id}')" style="padding: 2px 8px; font-size: 12px; background: #fff7e6; color: #fa8c16; border-color: #ffd591;">修改投保货值</button>
                     `
-                    : `<span style="color: #52c41a; font-size: 12px;">已投保</span>`}
+                    : item.status === '投保中'
+                        ? `
+                        <button class="fbx-btn" onclick="cancelInsureRow('${item.id}')" style="padding: 2px 8px; font-size: 12px; background: #fff1f0; color: #ff4d4f; border-color: #ffa39e;">取消投保</button>
+                        `
+                        : `<span style="color: #52c41a; font-size: 12px;">已投保</span>`}
                     </td>
                 </tr>
             `).join('');
         };
 
-        window.insureRow = (orderId) => {
-            const item = insuranceMockData.find(d => d.id === orderId);
-            if (item && item.status === '未投保') {
-                item.status = '已投保';
-                item.insValue = parseFloat(item.amount);
-                item.premium = item.insValue * 0.003;
+        window.cancelInsureRow = (id) => {
+            const item = insuranceMockData.find(d => d.id === id);
+            if (item && item.status === '投保中') {
+                item.status = '待投保';
+                item.insuranceCompany = '';
+                item.policyNo = '';
                 renderInsuranceTable(insuranceCurrentTab);
-                alert(`订单 ${orderId} 投保成功！`);
+                alert(`订单 ${id} 已取消投保，状态已回退至待投保。`);
             }
         };
 
-        const batchInsure = () => {
+
+        const batchModifyInsurance = () => {
             const checks = document.querySelectorAll('.insurance-row-check:checked');
             if (checks.length === 0) {
-                alert('请先勾选需要投保的订单 (仅限未投保状态)');
+                alert('请先勾选需要修改的订单 (仅限待投保状态)');
                 return;
             }
             const modal = document.getElementById('modal-insurance-company');
-            if (modal) modal.style.display = 'flex';
+            if (modal) {
+                modal.style.display = 'flex';
+                document.getElementById('insurance-policy-input').value = '';
+            }
         };
 
-        window.confirmBatchInsure = () => {
+        window.confirmBatchModifyInsurance = () => {
             const company = document.getElementById('insurance-company-select').value;
+            const policyNo = document.getElementById('insurance-policy-input').value;
             const checks = document.querySelectorAll('.insurance-row-check:checked');
             let count = 0;
             checks.forEach(chk => {
                 const id = chk.getAttribute('data-id');
                 const item = insuranceMockData.find(d => d.id === id);
-                if (item && item.status === '未投保') {
-                    item.status = '已投保';
-                    item.insValue = parseFloat(item.amount);
-                    item.premium = item.insValue * 0.003;
-                    item.insuranceCompany = company; // Update company
+                if (item && item.status === '待投保') {
+                    item.status = '投保中';
+                    item.insuranceCompany = company;
+                    item.policyNo = policyNo;
                     count++;
                 }
             });
             document.getElementById('modal-insurance-company').style.display = 'none';
             renderInsuranceTable(insuranceCurrentTab);
-            alert(`成功为 ${count} 个订单申请投保！保险公司：${company}`);
+            alert(`成功将 ${count} 个订单修改为“投保中”！保险公司：${company}`);
+        };
+
+        const batchInsure = () => {
+            const checks = document.querySelectorAll('.insurance-row-check:checked');
+            const targetIds = Array.from(checks).map(chk => chk.getAttribute('data-id'));
+            const itemsToInsure = insuranceMockData.filter(d => targetIds.includes(d.id) && d.status === '投保中');
+
+            if (itemsToInsure.length === 0) {
+                alert('请先勾选状态为“投保中”的订单进行投保');
+                return;
+            }
+
+            itemsToInsure.forEach(item => {
+                item.status = '已投保';
+                item.insValue = parseFloat(item.amount);
+                item.premium = item.insValue * 0.003;
+            });
+
+            renderInsuranceTable(insuranceCurrentTab);
+            alert(`成功为 ${itemsToInsure.length} 个订单完成投保操作！`);
         };
 
         // All-Check listener
@@ -11865,6 +12079,202 @@
         const btnBatchInsurance = document.getElementById('btn-batch-insurance');
         if (btnBatchInsurance) {
             btnBatchInsurance.addEventListener('click', batchInsure);
+        }
+
+        const btnBatchModifyInsurance = document.getElementById('btn-batch-modify-insurance-company');
+        if (btnBatchModifyInsurance) {
+            btnBatchModifyInsurance.addEventListener('click', batchModifyInsurance);
+        }
+
+        // Helper to create multi-select
+        const createMultiSelect = (options, selectedValues = [], placeholder = '请选择') => {
+            const container = document.createElement('div');
+            container.className = 'fbx-multi-select';
+            
+            const trigger = document.createElement('div');
+            trigger.className = 'fbx-multi-select-trigger';
+            
+            const optionsPanel = document.createElement('div');
+            optionsPanel.className = 'fbx-multi-select-options';
+            
+            const updateTags = () => {
+                trigger.innerHTML = '';
+                if (selectedValues.length === 0) {
+                    trigger.innerHTML = `<span style="color: #bfbfbf;">${placeholder}</span>`;
+                } else {
+                    selectedValues.forEach(val => {
+                        const tag = document.createElement('span');
+                        tag.className = 'fbx-multi-select-tag';
+                        tag.innerHTML = `${val} <span class="fbx-multi-select-tag-close">×</span>`;
+                        tag.querySelector('.fbx-multi-select-tag-close').onclick = (e) => {
+                            e.stopPropagation();
+                            selectedValues = selectedValues.filter(v => v !== val);
+                            updateTags();
+                            updateOptions();
+                        };
+                        trigger.appendChild(tag);
+                    });
+                }
+            };
+            
+            const updateOptions = () => {
+                optionsPanel.innerHTML = '';
+                options.forEach(opt => {
+                    const div = document.createElement('div');
+                    div.className = 'fbx-multi-select-option' + (selectedValues.includes(opt) ? ' selected' : '');
+                    div.innerHTML = `<input type="checkbox" ${selectedValues.includes(opt) ? 'checked' : ''}> <span>${opt}</span>`;
+                    div.onclick = (e) => {
+                        e.stopPropagation();
+                        if (selectedValues.includes(opt)) {
+                            selectedValues = selectedValues.filter(v => v !== opt);
+                        } else {
+                            selectedValues.push(opt);
+                        }
+                        updateTags();
+                        updateOptions();
+                    };
+                    optionsPanel.appendChild(div);
+                });
+            };
+            
+            trigger.onclick = (e) => {
+                e.stopPropagation();
+                const isOpen = optionsPanel.classList.contains('open');
+                document.querySelectorAll('.fbx-multi-select-options').forEach(p => p.classList.remove('open'));
+                
+                if (!isOpen) {
+                    // Check space
+                    const rect = trigger.getBoundingClientRect();
+                    const windowHeight = window.innerHeight;
+                    const spaceBelow = windowHeight - rect.bottom;
+                    const spaceAbove = rect.top;
+                    const panelHeight = 200; // max-height in CSS
+                    
+                    if (spaceBelow < panelHeight && spaceAbove > spaceBelow) {
+                        optionsPanel.style.top = 'auto';
+                        optionsPanel.style.bottom = '100%';
+                        optionsPanel.style.borderRadius = '4px 4px 0 0';
+                        optionsPanel.style.boxShadow = '0 -2px 8px rgba(0,0,0,0.15)';
+                    } else {
+                        optionsPanel.style.top = '100%';
+                        optionsPanel.style.bottom = 'auto';
+                        optionsPanel.style.borderRadius = '0 0 4px 4px';
+                        optionsPanel.style.boxShadow = '0 2px 8px rgba(0,0,0,0.15)';
+                    }
+                    optionsPanel.classList.add('open');
+                }
+            };
+            
+            document.addEventListener('click', () => optionsPanel.classList.remove('open'));
+            
+            updateTags();
+            updateOptions();
+            
+            container.appendChild(trigger);
+            container.appendChild(optionsPanel);
+            
+            return {
+                dom: container,
+                getSelected: () => selectedValues
+            };
+        };
+
+        const addInsuranceTreeNode = (level, parentContainer = null, initialData = null) => {
+            const container = parentContainer || document.getElementById('insurance-rules-tree');
+            const node = document.createElement('div');
+            node.className = `insurance-tree-node level-${level}`;
+            node.style.cssText = `margin-bottom: 10px; border-left: 2px solid ${['#722ed1', '#1890ff', '#52c41a'][level-1]}; padding-left: 15px; position: relative;`;
+            
+            const header = document.createElement('div');
+            header.style.cssText = 'display: flex; align-items: center; gap: 10px; margin-bottom: 8px;';
+            
+            const expandBtn = document.createElement('span');
+            expandBtn.innerHTML = level < 3 ? '▼' : '•';
+            expandBtn.style.cssText = 'cursor: pointer; width: 15px; font-size: 10px; color: #8c8c8c;';
+            
+            const titleLabel = document.createElement('span');
+            titleLabel.innerText = ['一级节点：', '二级节点：', '三级节点：'][level-1];
+            titleLabel.style.cssText = 'font-size: 13px; font-weight: 600; color: #595959; white-space: nowrap;';
+            
+            let multiSelect;
+            if (level === 1) {
+                multiSelect = createMultiSelect(['直客', '同行'], initialData ? initialData.values : [], '选择客户类型');
+            } else if (level === 2) {
+                multiSelect = createMultiSelect(['快递', '卡派', '自提'], initialData ? initialData.values : [], '选择派送方式');
+            } else {
+                multiSelect = createMultiSelect(['亚马逊', '沃尔玛', '私人地址', '商业地址', '海外仓自提'], initialData ? initialData.values : [], '选择地址类型');
+            }
+            multiSelect.dom.style.width = '350px';
+            
+            header.appendChild(expandBtn);
+            header.appendChild(titleLabel);
+            header.appendChild(multiSelect.dom);
+            
+            if (level === 3) {
+                const valueLabel = document.createElement('span');
+                valueLabel.innerText = '标准：';
+                valueLabel.style.cssText = 'font-size: 13px; margin-left: 15px; color: #595959;';
+                
+                const input = document.createElement('input');
+                input.type = 'number';
+                input.className = 'fba-input-box';
+                input.value = initialData ? initialData.standard : '';
+                input.placeholder = 'RMB/kg';
+                input.style.cssText = 'width: 100px; height: 32px;';
+                
+                header.appendChild(valueLabel);
+                header.appendChild(input);
+            }
+            
+            const actionBtns = document.createElement('div');
+            actionBtns.style.cssText = 'margin-left: auto; display: flex; gap: 8px; align-items: center; white-space: nowrap; flex-shrink: 0;';
+            
+            if (level < 3) {
+                const addSubBtn = document.createElement('button');
+                addSubBtn.innerHTML = '+ 子节点';
+                addSubBtn.className = 'fbx-btn';
+                addSubBtn.style.cssText = 'padding: 0 8px; font-size: 11px; height: 24px; color: #1890ff; border-color: #1890ff;';
+                addSubBtn.onclick = () => addInsuranceTreeNode(level + 1, childrenContainer);
+                actionBtns.appendChild(addSubBtn);
+            }
+            
+            const delBtn = document.createElement('button');
+            delBtn.innerHTML = '删除';
+            delBtn.className = 'fbx-btn';
+            delBtn.style.cssText = 'padding: 0 8px; font-size: 11px; height: 24px; color: #ff4d4f; border-color: #ff4d4f;';
+            delBtn.onclick = () => node.remove();
+            actionBtns.appendChild(delBtn);
+            
+            header.appendChild(actionBtns);
+            node.appendChild(header);
+            
+            const childrenContainer = document.createElement('div');
+            childrenContainer.style.cssText = 'margin-left: 20px; border-left: 1px dashed #e8e8e8; padding-left: 10px; display: block;';
+            node.appendChild(childrenContainer);
+            
+            expandBtn.onclick = () => {
+                const isHidden = childrenContainer.style.display === 'none';
+                childrenContainer.style.display = isHidden ? 'block' : 'none';
+                expandBtn.innerHTML = isHidden ? '▼' : '▶';
+            };
+            
+            container.appendChild(node);
+            return childrenContainer; // Return for recursive building
+        };
+
+        const btnInsuranceRuleConfig = document.getElementById('btn-insurance-rule-config');
+        if (btnInsuranceRuleConfig) {
+            btnInsuranceRuleConfig.addEventListener('click', () => {
+                const container = document.getElementById('insurance-rules-tree');
+                container.innerHTML = ''; // Reset - Modal will open empty
+                
+                document.getElementById('modal-insurance-rule-config').style.display = 'flex';
+            });
+        }
+
+        window.saveInsuranceRules = () => {
+            alert('规则配置保存成功！');
+            document.getElementById('modal-insurance-rule-config').style.display = 'none';
         }
 
         if (menuInsurance) {
@@ -12355,6 +12765,20 @@
                         document.body.removeChild(textArea);
                         alert(`订单 [${orderNo}] 的数据已复制到剪切板(兼容模式)。`);
                     });
+                } else if (target.classList.contains('fbx-detail-btn')) {
+                    // 切换为 CRM 模式（如果当前不在 CRM 模式）
+                    if (typeof isCRM !== 'undefined' && !isCRM && typeof modeSwitcherBtn !== 'undefined') {
+                        modeSwitcherBtn.click();
+                    }
+                    // 展示 CRM 的新增 FBX 页面
+                    const viewFBAOrderDetail = document.getElementById('view-fba-order-detail');
+                    const crmOnlyFeesSection = document.getElementById('crm-only-fees-section');
+                    if (viewFBAOrderDetail) {
+                        switchView(viewFBAOrderDetail);
+                    }
+                    if (crmOnlyFeesSection && typeof isCRM !== 'undefined') {
+                        crmOnlyFeesSection.style.display = isCRM ? 'block' : 'none';
+                    }
                 }
             });
         }
@@ -12425,6 +12849,34 @@
         // 初始化搜索过滤
         filterTable('ebs-channel-search', 'ebs-channel-table-body');
         filterTable('ebs-customer-search', 'ebs-customer-table-body');
+
+        window.openInsuranceModal = (orderNo) => {
+            document.getElementById('insurance-order-no').innerText = orderNo || 'ORD20240408001';
+            document.getElementById('modal-extra-insurance').style.display = 'flex';
+            document.getElementById('insurance-plan-select').value = 'value';
+            toggleInsurancePriceInput();
+        };
+
+        window.closeInsuranceModal = () => {
+            document.getElementById('modal-extra-insurance').style.display = 'none';
+        };
+
+        window.toggleInsurancePriceInput = () => {
+            const select = document.getElementById('insurance-plan-select');
+            const group = document.getElementById('insurance-price-input-group');
+            group.style.display = select.value === 'price' ? 'block' : 'none';
+        };
+
+        window.confirmInsurance = () => {
+            const plan = document.getElementById('insurance-plan-select').value;
+            const price = document.getElementById('insurance-price-input').value;
+            if (plan === 'price' && !price) {
+                alert('请输入单价数值');
+                return;
+            }
+            alert('保险购买成功！');
+            closeInsuranceModal();
+        };
     </script>
 
     <!-- Modal: Premium Calculation -->
@@ -12508,6 +12960,43 @@
             <div style="display: flex; justify-content: flex-end; gap: 12px;">
                 <button class="fbx-btn" onclick="closePrintModal()" style="font-size: 13px;">关闭窗口</button>
                 <button class="fbx-btn fbx-btn-primary" style="font-size: 13px;">确认打印</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Extra Insurance -->
+    <div id="modal-extra-insurance"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10001; justify-content: center; align-items: center;">
+        <div
+            style="background: #fff; padding: 24px; border-radius: 8px; width: 440px; box-shadow: 0 6px 36px rgba(0,0,0,0.3);">
+            <h3
+                style="margin: 0 0 16px 0; font-size: 16px; color: #262626; border-bottom: 1px solid #f0f0f0; padding-bottom: 12px;">
+                额外购买保险</h3>
+            <div style="margin-bottom: 16px;">
+                <label style="display: block; margin-bottom: 8px; font-size: 14px; color: #595959;">订单号：</label>
+                <div id="insurance-order-no" style="font-weight: 500; font-size: 14px;">ORD20240408001</div>
+            </div>
+            <div style="margin-bottom: 16px;">
+                <label style="display: block; margin-bottom: 8px; font-size: 14px; color: #595959;">保险方案：</label>
+                <select id="insurance-plan-select"
+                    style="width: 100%; height: 32px; border: 1px solid #d9d9d9; border-radius: 4px; padding: 0 8px;"
+                    onchange="toggleInsurancePriceInput()">
+                    <option value="value">按货值购买</option>
+                    <option value="price">按单价购买</option>
+                </select>
+            </div>
+            <div id="insurance-price-input-group" style="display: none; margin-bottom: 16px;">
+                <label style="display: block; margin-bottom: 8px; font-size: 14px; color: #595959;">输入数值：</label>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <input type="number" id="insurance-price-input"
+                        style="flex: 1; height: 32px; border: 1px solid #d9d9d9; border-radius: 4px; padding: 0 8px;"
+                        placeholder="请输入数值">
+                    <span style="font-size: 13px; color: #8c8c8c;">CNY/KG</span>
+                </div>
+            </div>
+            <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px;">
+                <button class="fbx-btn" onclick="closeInsuranceModal()" style="font-size: 13px;">取消</button>
+                <button class="fbx-btn fbx-btn-primary" onclick="confirmInsurance()" style="font-size: 13px;">确认购买</button>
             </div>
         </div>
     </div>
